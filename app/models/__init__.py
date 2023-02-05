@@ -1,0 +1,1 @@
+from .videocassettes import Videocassette
