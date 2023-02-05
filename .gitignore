@@ -1,0 +1,5 @@
+env.py
+rb/
+__pycache__/
+.vscode
+.prettierignore
