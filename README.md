@@ -8,9 +8,11 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
 
 - [] Create navigation for the project for the following endpoints:
 
-  - [] main page
-  - [] videocassettes (VHS)
-  - [] add VHS
+  - [x] main page,
+  - [x] videocassettes (VHS),
+  - [x] VHS add,
+  - [] login,
+  - [] contact,
 
 - [x] Create VHS db model, and display all available video cassettes in the template. Route '/videocassettes'
 - [x] Add view for adding a videocassette (VHS). Route 'videocassettes/add_vhs'
@@ -23,7 +25,7 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
 ## TEST/BUGS:
 
 - bugs:
-  [] videocassette (VHS) search only works for the single input search, need to fix the query for multiple inputs.
+  [x] videocassette (VHS) search only works for the single input search, need to fix the query for multiple inputs.
 
 ## dirty notes for the development only!
 
