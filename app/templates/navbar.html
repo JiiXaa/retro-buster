@@ -1,1 +1,9 @@
-<p>retroBuster Navbar</p>
+<nav>
+  <a href="{{ url_for('main.index') }}">retroBuster</a>
+  <ul>
+    <li><a href="{{ url_for('main.index') }}">Home</a></li>
+    <li><a href="{{ url_for('videocassettes.index') }}">VHS</a></li>
+    <li><a href="{{ url_for('videocassettes.vhs_add') }}">VHS add</a></li>
+  </ul>
+</nav>
+
