@@ -12,7 +12,21 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
   - [x] videocassettes (VHS),
   - [x] VHS add,
   - [] login,
+  - [] registration,
   - [] contact,
+
+- [] Registration/Login logic
+
+  - [] Registration: need to figure out how will registration work in the project as it will be only limited registered people/users (mainly the employees of the retroBuster shop).
+    - [] Initial idea: When registering a user there will be input field (token) needed to be successfully registered. In that scenario the token would be provided to the potential employee by the owner or manager.
+    - [] Password needs to be hashed during registration (can use: werkzeug.security: generate_password_hash or bcrypt)
+    - [] Repeat password (to ensure the password is correct)
+    - [] Inputs need to be validated (for: fields are required, password length, password special characters)
+  - [] - Login:
+    - [] Input validations
+    - [] compare a password with the hash stored in the database
+
+- [] Show 'flash' messages to provide feedback about the status of the user's actions, or to guide the user through the app.
 
 - [x] Create VHS db model, and display all available video cassettes in the template. Route '/videocassettes'
 - [x] Add view for adding a videocassette (VHS). Route 'videocassettes/add_vhs'
@@ -21,6 +35,10 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
   - [x] When user clicks the delete button, show confirmation page including a form. When form is submitted the corresponding videocassette (VHS) entry is removed from database.
 - [x] Add view for editing a VHS (edit button located next to the title)
   - [x] When a user clicks the edit button, a form is displayed with inputs pre-filled with the corresponding videocassette (VHS) data. Upon submitting the form, the entry for that videocassette is updated in the database.
+
+### Database relationship model prototyping:
+
+- [] Videocassette class needs to have a one-to-one relationship with the Details class. Details instance will hold all important information about the the particular videocassette connected to it.
 
 ## TEST/BUGS:
 
