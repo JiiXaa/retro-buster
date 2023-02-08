@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models import Videocassette
+from app.models import Videocassette, Details
 from app import db
+import uuid
 
 bp = Blueprint("videocassettes", __name__, url_prefix="/videocassettes")
 
@@ -31,10 +32,20 @@ def search_vhs(search_queries):
 def index():
     search_queries = {}
     if request.method == "POST":
+        # Basic vhs data
         title = request.form.get("title")
         director = request.form.get("director")
         genre = request.form.get("genre")
 
+        # Additional vhs data stored in the details table
+        stock = request.form.get("stock")
+        length = request.form.get("length")
+        year = request.form.get("year")
+        rating = request.form.get("rating")
+        description = request.form.get("description")
+        image = request.form.get("image")
+
+        # Add the search terms to the search_queries dictionary if they are not empty to be used in the search_vhs function
         if title:
             search_queries["title"] = title
         if director:
@@ -53,14 +64,43 @@ def index():
 @bp.route("/vhs_add", methods=["GET", "POST"])
 def vhs_add():
     if request.method == "POST":
+        # Generate a unique public_id for each vhs tape added to the database using the uuid module
+        public_id = str(uuid.uuid4())
+
         title = request.form.get("title")
         director = request.form.get("director")
         genre = request.form.get("genre")
+
+        stock = request.form.get("stock")
+        length = request.form.get("length")
+        year = request.form.get("year")
+        rating = request.form.get("rating")
+        description = request.form.get("description")
+
+        ### ADD IMAGE UPLOAD FUNCTIONALITY ###
+        image = request.form.get("image")
+
+        # Create a new vhs tape object and add it to the database with the main details provided by the user
         vhs = Videocassette(
+            
+            public_id=public_id,
             title=title,
             director=director,
             genre=genre,
         )
+
+        # Create a new details object for the vhs tape and add it to the database with the additional details provided by the user
+        details = Details(
+            stock=stock,
+            length=length,
+            year=year,
+            rating=rating,
+            description=description,
+            image=image,
+        )
+
+        # Add the vhs tape and details objects to the database
+        vhs.details = details
         db.session.add(vhs)
         db.session.commit()
         return redirect(url_for("videocassettes.index"))
@@ -71,9 +111,18 @@ def vhs_add():
 def vhs_edit(id):
     vhs = Videocassette.query.get(id)
     if request.method == "POST":
+        # Get the vhs tape and details objects from the database and update them with the new data provided by the user
         vhs.title = request.form.get("title")
         vhs.director = request.form.get("director")
         vhs.genre = request.form.get("genre")
+
+        vhs.details.stock = request.form.get("stock")
+        vhs.details.length = request.form.get("length")
+        vhs.details.year = request.form.get("year")
+        vhs.details.rating = request.form.get("rating")
+        vhs.details.description = request.form.get("description")
+        vhs.details.image = request.form.get("image")
+
         db.session.commit()
         return redirect(url_for("videocassettes.index"))
     return render_template("videocassettes/vhs_edit.html", vhs=vhs)
