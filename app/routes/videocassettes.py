@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models import Videocassette, Details
 from app import db
-import uuid
 
 bp = Blueprint("videocassettes", __name__, url_prefix="/videocassettes")
 
@@ -64,9 +63,6 @@ def index():
 @bp.route("/vhs_add", methods=["GET", "POST"])
 def vhs_add():
     if request.method == "POST":
-        # Generate a unique public_id for each vhs tape added to the database using the uuid module
-        public_id = str(uuid.uuid4())
-
         title = request.form.get("title")
         director = request.form.get("director")
         genre = request.form.get("genre")
@@ -82,8 +78,6 @@ def vhs_add():
 
         # Create a new vhs tape object and add it to the database with the main details provided by the user
         vhs = Videocassette(
-            
-            public_id=public_id,
             title=title,
             director=director,
             genre=genre,
@@ -107,7 +101,7 @@ def vhs_add():
     return render_template("videocassettes/vhs_add.html")
 
 
-@bp.route("/<int:id>/vhs_edit", methods=["GET", "POST"])
+@bp.route("/<id>/vhs_edit", methods=["GET", "POST"])
 def vhs_edit(id):
     vhs = Videocassette.query.get(id)
     if request.method == "POST":
@@ -128,7 +122,7 @@ def vhs_edit(id):
     return render_template("videocassettes/vhs_edit.html", vhs=vhs)
 
 
-@bp.route("/<int:id>/delete", methods=["GET", "POST"])
+@bp.route("/<id>/delete", methods=["GET", "POST"])
 def vhs_delete(id):
     vhs = Videocassette.query.get(id)
     if request.method == "POST":
