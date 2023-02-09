@@ -38,6 +38,8 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
 
 ### Database relationship model prototyping:
 
+Database prototyping/building uses the SQLite library and the final version is stored on the ElephantSQL (PostgreSQL database hosting service)
+
 - [] Videocassette class needs to have a one-to-one relationship with the Details class. Details instance will hold all important information about the the particular videocassette connected to it.
 
 ## TEST/BUGS:
@@ -47,7 +49,11 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
 
 ## dirty notes for the development only!
 
-Credits:
+### Third-party packages used:
+
+UUID used for generating unique primary keys for tables in database.
+
+### Credits:
 
 - I have decided to create a well organized folder and file structure in my project, as I believe it greatly improves code readability and makes navigating the codebase way easier. After thorough research, I have implemented a common folder and file structure. Article can be found here: <br>
   https://stackoverflow.com/questions/14415500/

@@ -24,40 +24,33 @@ def search_vhs(search_queries):
             query = query.filter(
                 Videocassette.genre.ilike("%" + search_queries[term] + "%")
             )
+    value = query.all()
+
+    if not value:
+        flash("No results found.")
+    else:
+        flash(f"Search results for: '{''.join(search_queries.values())}'.")
     return query.all()
 
 
 @bp.route("/", methods=["GET", "POST"])
 def index():
-    search_queries = {}
-    if request.method == "POST":
-        # Basic vhs data
-        title = request.form.get("title")
-        director = request.form.get("director")
-        genre = request.form.get("genre")
-
-        # Additional vhs data stored in the details table
-        stock = request.form.get("stock")
-        length = request.form.get("length")
-        year = request.form.get("year")
-        rating = request.form.get("rating")
-        description = request.form.get("description")
-        image = request.form.get("image")
-
-        # Add the search terms to the search_queries dictionary if they are not empty to be used in the search_vhs function
-        if title:
-            search_queries["title"] = title
-        if director:
-            search_queries["director"] = director
-        if genre:
-            search_queries["genre"] = genre
-
-        vhs_query = search_vhs(search_queries)
-        print("vhs_query: ", vhs_query)
-        return render_template("videocassettes/vhs_search.html", vhs_query=vhs_query)
     vhs_all = Videocassette.query.all()
     print("vhs_all", vhs_all)
     return render_template("videocassettes/index.html", vhs_all=vhs_all)
+
+
+@bp.route("/vhs_search", methods=["GET", "POST"])
+def vhs_search():
+    if request.method == "POST":
+        search_queries = {
+            "title": request.form.get("title"),
+            "director": request.form.get("director"),
+            "genre": request.form.get("genre"),
+        }
+        vhs_query = search_vhs(search_queries)
+        return render_template("videocassettes/vhs_found.html", vhs_query=vhs_query)
+    return render_template("videocassettes/vhs_search.html")
 
 
 @bp.route("/vhs_add", methods=["GET", "POST"])
@@ -75,6 +68,11 @@ def vhs_add():
 
         ### ADD IMAGE UPLOAD FUNCTIONALITY ###
         image = request.form.get("image")
+
+        # Check that all fields are filled out
+        if not all([title, director, genre, stock, length, year, rating, description]):
+            flash("Please fill out all fields.")
+            return redirect(url_for("videocassettes.vhs_add"))
 
         # Create a new vhs tape object and add it to the database with the main details provided by the user
         vhs = Videocassette(
@@ -97,11 +95,13 @@ def vhs_add():
         vhs.details = details
         db.session.add(vhs)
         db.session.commit()
+
+        flash("VHS tape added successfully.")
         return redirect(url_for("videocassettes.index"))
     return render_template("videocassettes/vhs_add.html")
 
 
-@bp.route("/<id>/vhs_edit", methods=["GET", "POST"])
+@bp.route("/vhs_edit/<id>", methods=["GET", "POST"])
 def vhs_edit(id):
     vhs = Videocassette.query.get(id)
     if request.method == "POST":

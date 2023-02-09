@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>VHS FOUND</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Director</th>
+    <th>Genre</th>
+  </tr>
+  {% for vhs in vhs_query %}
+  <tr>
+    <td>{{ vhs.title }}</td>
+    <td>{{ vhs.director }}</td>
+    <td>{{ vhs.genre }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
