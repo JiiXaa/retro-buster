@@ -11,7 +11,7 @@
   <input type="text" id="director" name="director" value="{{ vhs.director }}" required>
   <br>
   <label for="genre">Genre:</label>
-  <select id="genre" name="genre">
+  <select id="genre" name="genre" required>
     <option value="Fantasy" {% if vhs.genre == "Fantasy" %}selected{% endif %}>Fantasy</option>
     <option value="Horror" {% if vhs.genre == "Horror" %}selected{% endif %}>Horror</option>
     <option value="Thriller" {% if vhs.genre == "Thriller" %}selected{% endif %}>Thriller</option>
@@ -29,19 +29,19 @@
     <option value="Romance" {% if vhs.genre == "Romance" %}selected{% endif %}>Romance</option>
     <option value="Drama" {% if vhs.genre == "Drama" %}selected{% endif %}>Drama</option>
   </select> <br>
-  <label for="stock">Stock</label>
-  <input type="number" name="stock" id="stock" value="{{ vhs.details.stock }}" required> <br>
+  <label for="copies_available">Copies Available</label>
+  <input type="number" name="copies_available" id="copies_available" value="{{ vhs.vhs_details.copies_available }}" required> <br>
   <label for="length">Length</label>
-  <input type="number" name="length" id="length" value="{{ vhs.details.length }}" required> <br>
+  <input type="number" name="length" id="length" value="{{ vhs.length }}" required> <br>
   <label for="year">Year</label>
-  <input type="number" name="year" id="year" value="{{ vhs.details.year }}" required> <br>
+  <input type="number" name="year" id="year" value="{{ vhs.year }}" required> <br>
   <label for="rating">Rating</label>
-  <input type="text" name="rating" id="rating" value="{{ vhs.details.rating }}" required> <br>
+  <input type="text" name="rating" id="rating" value="{{ vhs.rating }}" required> <br>
   <label for="description">Description</label>
-  <textarea name="description" id="description" rows="4" cols="25">{{ vhs.details.description }}</textarea>
+  <textarea name="description" id="description" rows="4" cols="25">{{ vhs.description }}</textarea>
   <br>
   <label for="image">Image URL</label>
-  <input type="text" name="image" id="image" value="{{ vhs.details.image }}"> <br>
+  <input type="text" name="image" id="image" value="{{ vhs.image }}"> <br>
 
   <button type="submit">Update</button>
   <button type="button"><a href="{{ url_for('videocassettes.index') }}">Cancel</a></button>

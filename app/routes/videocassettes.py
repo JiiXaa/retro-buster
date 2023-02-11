@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models import Videocassette, Details
+from app.models import Videocassette, VhsDetails
 from app import db
 
 bp = Blueprint("videocassettes", __name__, url_prefix="/videocassettes")
@@ -60,7 +60,7 @@ def vhs_add():
         director = request.form.get("director")
         genre = request.form.get("genre")
 
-        stock = request.form.get("stock")
+        copies_available = request.form.get("copies_available")
         length = request.form.get("length")
         year = request.form.get("year")
         rating = request.form.get("rating")
@@ -70,20 +70,26 @@ def vhs_add():
         image = request.form.get("image")
 
         # Check that all fields are filled out
-        if not all([title, director, genre, stock, length, year, rating, description]):
+        if not all(
+            [
+                title,
+                director,
+                genre,
+                copies_available,
+                length,
+                year,
+                rating,
+                description,
+            ]
+        ):
             flash("Please fill out all fields.")
             return redirect(url_for("videocassettes.vhs_add"))
 
-        # Create a new vhs tape object and add it to the database with the main details provided by the user
+        # Create a new vhs tape object and add it to the database with the movie details provided by the user
         vhs = Videocassette(
             title=title,
             director=director,
             genre=genre,
-        )
-
-        # Create a new details object for the vhs tape and add it to the database with the additional details provided by the user
-        details = Details(
-            stock=stock,
             length=length,
             year=year,
             rating=rating,
@@ -91,8 +97,13 @@ def vhs_add():
             image=image,
         )
 
+        # Create a new details object for the vhs tape and add it to the database with the additional details provided by the user
+        vhs_details = VhsDetails(
+            copies_available=copies_available,
+        )
+
         # Add the vhs tape and details objects to the database
-        vhs.details = details
+        vhs.vhs_details = vhs_details
         db.session.add(vhs)
         db.session.commit()
 
@@ -109,13 +120,14 @@ def vhs_edit(id):
         vhs.title = request.form.get("title")
         vhs.director = request.form.get("director")
         vhs.genre = request.form.get("genre")
+        vhs.length = request.form.get("length")
+        vhs.year = request.form.get("year")
+        vhs.rating = request.form.get("rating")
+        vhs.description = request.form.get("description")
+        vhs.image = request.form.get("image")
 
-        vhs.details.stock = request.form.get("stock")
-        vhs.details.length = request.form.get("length")
-        vhs.details.year = request.form.get("year")
-        vhs.details.rating = request.form.get("rating")
-        vhs.details.description = request.form.get("description")
-        vhs.details.image = request.form.get("image")
+        vhs.vhs_details.copies_available = request.form.get("copies_available")
+        print("vhs.vhs_details.copies_available", vhs.vhs_details.copies_available)
 
         db.session.commit()
         return redirect(url_for("videocassettes.index"))

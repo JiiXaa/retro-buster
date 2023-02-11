@@ -40,7 +40,7 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
 
 Database prototyping/building uses the SQLite library and the final version is stored on the ElephantSQL (PostgreSQL database hosting service)
 
-- [] Videocassette class needs to have a one-to-one relationship with the Details class. Details instance will hold all important information about the the particular videocassette connected to it.
+- [] Videocassette class needs to have a one-to-one relationship with the VhsDetails class. VhsDetails instance will hold all important information about the the particular videocassette connected to it.
 
 ## TEST/BUGS:
 

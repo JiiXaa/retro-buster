@@ -1,2 +1,2 @@
 from .videocassettes import Videocassette
-from .videocassettes import Details
+from .videocassettes import VhsDetails
