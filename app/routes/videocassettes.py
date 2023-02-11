@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models import Videocassette, VhsDetails
+from app.models import Videocassette, VhsDetails, VhsRental, Customer
 from app import db
 
 bp = Blueprint("videocassettes", __name__, url_prefix="/videocassettes")

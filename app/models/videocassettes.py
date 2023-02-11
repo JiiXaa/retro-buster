@@ -17,6 +17,9 @@ class Videocassette(db.Model):
     description = db.Column(db.String(250), nullable=False)
     image = db.Column(db.String(200), nullable=False)
 
+    total_copies = db.Column(db.Integer, nullable=False)
+    available_copies = db.Column(db.Integer, nullable=False)
+
     vhs_details = db.relationship(
         "VhsDetails",
         back_populates="videocassette",
@@ -30,11 +33,32 @@ class Videocassette(db.Model):
 
 class VhsDetails(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    copies_available = db.Column(db.Integer, nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
+    copies_available = db.Column(db.Integer, nullable=False)
+    copy_number = db.Column(db.Integer, nullable=False)
 
+    videocassette_id = db.Column(
+        UUID(as_uuid=True), db.ForeignKey("videocassette.id"), nullable=False
+    )
     videocassette = db.relationship("Videocassette", back_populates="vhs_details")
-    videocassette_id = db.Column(UUID(as_uuid=True), db.ForeignKey("videocassette.id"))
+    rentals = db.relationship("VhsRental", back_populates="vhs_details")
 
     def __repr__(self):
         return f"<VhsDetails id={self.id}, videocassette_id={self.videocassette_id}>"
+
+    class VhsRental(db.Model):
+        id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+        date_rented = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+        date_returned = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+        customer_id = db.Column(
+            UUID(as_uuid=True), db.ForeignKey("customer.id"), nullable=False
+        )
+        customer = db.relationship("Customer", back_populates="rentals")
+        vhs_details_id = db.Column(
+            UUID(as_uuid=True), db.ForeignKey("vhs_details.id"), nullable=False
+        )
+        vhs_details = db.relationship("VhsDetails", back_populates="rentals")
+
+        def __repr__(self):
+            return f"<VhsRental id={self.id}, vhs_details_id={self.vhs_details_id}, customer_id={self.customer_id}>"
