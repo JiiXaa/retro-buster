@@ -1,5 +1,5 @@
-from .videocassettes import Videocassette
-from .videocassettes import VhsDetails
-from .videocassettes import VhsRental
+from .videocassettes import Videocassette, VhsDetails
 
 from .customers import Customer
+
+from .rentals import VhsRental

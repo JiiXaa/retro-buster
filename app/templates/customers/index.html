@@ -16,22 +16,15 @@
 
 <table>
   <tr>
-    <th>Id</th>
-    <th>Title</th>
-    <th>Director</th>
-    <th>Genre</th>
-    <th>Actions</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Address</th>
   </tr>
-  {% for vhs in vhs_all %}
+  {% for customer in customer_all %}
   <tr>
-    <td>{{ vhs.id }}</td>
-    <td>{{ vhs.title }}</td>
-    <td>{{ vhs.director }}</td>
-    <td>{{ vhs.genre }}</td>
-    <td>
-      <a href="{{ url_for('videocassettes.vhs_edit', id=vhs.id) }}" id="{{ vhs.id }}">Edit</a>
-      <a href="{{ url_for('videocassettes.vhs_delete', id=vhs.id) }}" id="{{ vhs.id }}">Delete</a>
-    </td>
+    <td>{{ customer.clientName }}</td>
+    <td>{{ customer.clientSurname }}</td>
+    <td>{{ customer.clientAddress }}</td>
   </tr>
   {% endfor %}
 </table>

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models import Videocassette, VhsDetails, VhsRental, Customer
+from app.models import Videocassette, VhsDetails
 from app import db
 
 bp = Blueprint("videocassettes", __name__, url_prefix="/videocassettes")
@@ -60,11 +60,13 @@ def vhs_add():
         director = request.form.get("director")
         genre = request.form.get("genre")
 
-        copies_available = request.form.get("copies_available")
         length = request.form.get("length")
         year = request.form.get("year")
         rating = request.form.get("rating")
         description = request.form.get("description")
+        total_copies = request.form.get("total_copies")
+
+        copy_number = request.form.get("copy_number")
 
         ### ADD IMAGE UPLOAD FUNCTIONALITY ###
         image = request.form.get("image")
@@ -75,11 +77,12 @@ def vhs_add():
                 title,
                 director,
                 genre,
-                copies_available,
                 length,
                 year,
                 rating,
                 description,
+                total_copies,
+                copy_number,
             ]
         ):
             flash("Please fill out all fields.")
@@ -94,12 +97,14 @@ def vhs_add():
             year=year,
             rating=rating,
             description=description,
+            total_copies=total_copies,
+            available_copies=total_copies,
             image=image,
         )
 
         # Create a new details object for the vhs tape and add it to the database with the additional details provided by the user
         vhs_details = VhsDetails(
-            copies_available=copies_available,
+            copy_number=copy_number,
         )
 
         # Add the vhs tape and details objects to the database
@@ -124,10 +129,10 @@ def vhs_edit(id):
         vhs.year = request.form.get("year")
         vhs.rating = request.form.get("rating")
         vhs.description = request.form.get("description")
+        vhs.copy_number = request.form.get("copy_number")
+        vhs.total_copies = request.form.get("total_copies")
+        vhs.available_copies = request.form.get("available_copies")
         vhs.image = request.form.get("image")
-
-        vhs.vhs_details.copies_available = request.form.get("copies_available")
-        print("vhs.vhs_details.copies_available", vhs.vhs_details.copies_available)
 
         db.session.commit()
         return redirect(url_for("videocassettes.index"))
