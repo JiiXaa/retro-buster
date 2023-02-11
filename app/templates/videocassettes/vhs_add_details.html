@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Add VHS Tape Details</h1>
+
+<p><strong>Title:</strong> {{ vhs.title }}</p>
+<p><strong>Director:</strong> {{ vhs.director }}</p>
+<p><strong>Genre:</strong> {{ vhs.genre }}</p>
+<p><strong>Length:</strong> {{ vhs.length }} mins</p>
+<p><strong>Year:</strong> {{ vhs.year }}</p>
+<p><strong>Rating:</strong> {{ vhs.rating }}</p>
+<p><strong>Description:</strong> {{ vhs.description }}</p>
+<p><strong>Image:</strong> {{ vhs.image }}</p>
+
+<hr>
+<h2>Add Copy Number</h2>
+
+<form action="{{ url_for('videocassettes.vhs_add_details', vhs_id=vhs.id) }}" method="post">
+
+  <p>VHS: {{ vhs.title }}</p>
+
+  <label for="copy_number">Copy Number (id)</label>
+  <input type="text" name="copy_number" id="copy_number" required> <br>
+
+  <button type="submit">Add Copy</button>
+</form>
+
+{% endblock %}

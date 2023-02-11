@@ -6,9 +6,9 @@ import uuid
 
 class Customer(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    first_name = db.Column(db.String(100), nullable=False)
-    last_name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable=False, unique=True)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(25), nullable=False, unique=True)
     # phone_number = db.Column(db.String(100), nullable=False)
     # address = db.Column(db.String(100), nullable=False)
     # city = db.Column(db.String(100), nullable=False)

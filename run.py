@@ -1,6 +1,7 @@
 from app import create_app
 from app import db
-from app.models.videocassettes import Videocassette
+from app.models.videocassettes import Videocassette, VhsDetails
+from app.models.rentals import VhsRental
 from app.models.customers import Customer
 
 app = create_app()

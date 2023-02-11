@@ -8,12 +8,12 @@ import uuid
 
 class Videocassette(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    title = db.Column(db.String(100), nullable=False)
-    director = db.Column(db.String(100), nullable=False)
-    genre = db.Column(db.String(100), nullable=False)
+    title = db.Column(db.String(50), nullable=False)
+    director = db.Column(db.String(50), nullable=False)
+    genre = db.Column(db.String(30), nullable=False)
     length = db.Column(db.Integer, nullable=False)
     year = db.Column(db.Integer, nullable=False)
-    rating = db.Column(db.String(100), nullable=False)
+    rating = db.Column(db.String(10), nullable=False)
     description = db.Column(db.String(250), nullable=False)
     image = db.Column(db.String(200), nullable=False)
 
@@ -34,7 +34,7 @@ class Videocassette(db.Model):
 class VhsDetails(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
-    copy_number = db.Column(db.Integer, nullable=False)
+    copy_number = db.Column(db.String(20), nullable=False)
 
     videocassette_id = db.Column(
         UUID(as_uuid=True), db.ForeignKey("videocassette.id"), nullable=False

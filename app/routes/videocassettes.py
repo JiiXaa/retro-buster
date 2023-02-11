@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models import Videocassette, VhsDetails
 from app import db
+from sqlalchemy.exc import SQLAlchemyError
 
 bp = Blueprint("videocassettes", __name__, url_prefix="/videocassettes")
 
@@ -59,14 +60,12 @@ def vhs_add():
         title = request.form.get("title")
         director = request.form.get("director")
         genre = request.form.get("genre")
-
         length = request.form.get("length")
         year = request.form.get("year")
         rating = request.form.get("rating")
         description = request.form.get("description")
         total_copies = request.form.get("total_copies")
-
-        copy_number = request.form.get("copy_number")
+        available_copies = request.form.get("available_copies")
 
         ### ADD IMAGE UPLOAD FUNCTIONALITY ###
         image = request.form.get("image")
@@ -82,7 +81,7 @@ def vhs_add():
                 rating,
                 description,
                 total_copies,
-                copy_number,
+                available_copies,
             ]
         ):
             flash("Please fill out all fields.")
@@ -98,22 +97,18 @@ def vhs_add():
             rating=rating,
             description=description,
             total_copies=total_copies,
-            available_copies=total_copies,
+            available_copies=available_copies,
             image=image,
         )
 
-        # Create a new details object for the vhs tape and add it to the database with the additional details provided by the user
-        vhs_details = VhsDetails(
-            copy_number=copy_number,
-        )
-
-        # Add the vhs tape and details objects to the database
-        vhs.vhs_details = vhs_details
+        # Add the vhs tape objects to the database
         db.session.add(vhs)
         db.session.commit()
 
         flash("VHS tape added successfully.")
-        return redirect(url_for("videocassettes.index"))
+        # Redirect to the vhs tape details page for the newly added vhs tape
+        return redirect(url_for("videocassettes.vhs_add_details", vhs_id=vhs.id))
+    # If the user is not submitting a form, render the vhs tape add form
     return render_template("videocassettes/vhs_add.html")
 
 
@@ -129,7 +124,6 @@ def vhs_edit(id):
         vhs.year = request.form.get("year")
         vhs.rating = request.form.get("rating")
         vhs.description = request.form.get("description")
-        vhs.copy_number = request.form.get("copy_number")
         vhs.total_copies = request.form.get("total_copies")
         vhs.available_copies = request.form.get("available_copies")
         vhs.image = request.form.get("image")
@@ -147,3 +141,34 @@ def vhs_delete(id):
         db.session.commit()
         return redirect(url_for("videocassettes.index"))
     return render_template("videocassettes/vhs_delete.html", vhs=vhs)
+
+
+@bp.route("/vhs_add_details/<vhs_id>", methods=["GET", "POST"])
+def vhs_add_details(vhs_id):
+    try:
+        if request.method == "POST":
+            print("request.form", request.form)
+            copy_number = request.form.get("copy_number")
+            print(f"copy_number: {copy_number}")
+
+            vhs_details = VhsDetails(
+                videocassette_id=vhs_id,
+                copy_number=copy_number,
+            )
+
+            db.session.add(vhs_details)
+            db.session.commit()
+
+            print(type(VhsDetails.copy_number))
+
+            flash("VHS tape details added successfully.")
+            return redirect(url_for("videocassettes.vhs_add_details", vhs_id=vhs_id))
+
+        vhs = Videocassette.query.get_or_404(vhs_id)
+        print("vhs", vhs)
+        return render_template("videocassettes/vhs_add_details.html", vhs=vhs)
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        error = str(e.__dict__.get("orig") or e)
+        flash(f"An error occurred: {error}", "error")
+        return redirect(url_for("videocassettes.vhs_add_details", vhs_id=vhs_id))
