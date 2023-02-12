@@ -20,7 +20,9 @@
     <th>Title</th>
     <th>Director</th>
     <th>Genre</th>
+    <th>In Stock</th>
     <th>Actions</th>
+    <th>Details</th>
   </tr>
   {% for vhs in vhs_all %}
   <tr>
@@ -28,12 +30,18 @@
     <td>{{ vhs.title }}</td>
     <td>{{ vhs.director }}</td>
     <td>{{ vhs.genre }}</td>
+    <td>{{ vhs.total_copies }}</td>
     <td>
       <a href="{{ url_for('videocassettes.vhs_edit', id=vhs.id) }}" id="{{ vhs.id }}">Edit</a>
       <a href="{{ url_for('videocassettes.vhs_delete', id=vhs.id) }}" id="{{ vhs.id }}">Delete</a>
     </td>
+    <td>    <p>{{ vhs.vhs_details|length }} copies of this VHS are in the database.</p>
+      {% for vhs_detail in vhs.vhs_details %}
+      <p>{{ vhs_detail.copy_number }} - {% if vhs_detail.is_available %}
+          This VHS copy is available.
+      {% endif %}</p>
+      {% endfor %}</td>
   </tr>
-  <ul>
   {% endfor %}
 </table>
 

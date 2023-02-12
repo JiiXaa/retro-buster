@@ -37,6 +37,15 @@ def search_vhs(search_queries):
 @bp.route("/", methods=["GET", "POST"])
 def index():
     vhs_all = Videocassette.query.all()
+
+    ### Check that the number of copies in the database matches the total number of copies for each vhs tape ###
+    ### If not, flash a message to the user to update ###
+    for vhs in vhs_all:
+        if len(vhs.vhs_details) < vhs.total_copies:
+            flash(f"Copy numbers are missing for VHS {vhs.title}")
+        elif len(vhs.vhs_details) > vhs.total_copies:
+            flash(f"Too many copies for VHS {vhs.title}")
+
     print("vhs_all", vhs_all)
     for vhs in vhs_all:
         print("vhs.vhs_details", vhs.vhs_details)
