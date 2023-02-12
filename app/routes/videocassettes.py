@@ -38,6 +38,17 @@ def search_vhs(search_queries):
 def index():
     vhs_all = Videocassette.query.all()
     print("vhs_all", vhs_all)
+    for vhs in vhs_all:
+        print("vhs.vhs_details", vhs.vhs_details)
+    for vhs in vhs_all:
+        print("Title:", vhs.title)
+        print("Director:", vhs.director)
+        print("Genre:", vhs.genre)
+        print("Copy Numbers:")
+    for copy in vhs.vhs_details:
+        print("Copy Number:", copy.copy_number)
+        print("Is Available:", copy.is_available)
+        print("Available Copies:", vhs.available_copies)
     return render_template("videocassettes/index.html", vhs_all=vhs_all)
 
 
@@ -147,18 +158,19 @@ def vhs_delete(id):
 def vhs_add_details(vhs_id):
     try:
         if request.method == "POST":
-            print("request.form", request.form)
             copy_number = request.form.get("copy_number")
-            print(f"copy_number: {copy_number}")
 
             vhs_details = VhsDetails(
                 videocassette_id=vhs_id,
                 copy_number=copy_number,
+                is_available=True,
             )
 
             db.session.add(vhs_details)
             db.session.commit()
 
+            print("request.form", request.form)
+            print(f"copy_number: {copy_number}")
             print(type(VhsDetails.copy_number))
 
             flash("VHS tape details added successfully.")

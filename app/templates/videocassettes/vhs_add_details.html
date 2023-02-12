@@ -18,6 +18,7 @@
 <form action="{{ url_for('videocassettes.vhs_add_details', vhs_id=vhs.id) }}" method="post">
 
   <p>VHS: {{ vhs.title }}</p>
+  <p>test: {{ vhs.vhs_details }}</p>
 
   <label for="copy_number">Copy Number (id)</label>
   <input type="text" name="copy_number" id="copy_number" required> <br>

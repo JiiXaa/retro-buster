@@ -23,7 +23,7 @@ class Videocassette(db.Model):
     vhs_details = db.relationship(
         "VhsDetails",
         back_populates="videocassette",
-        uselist=False,
+        uselist=True,
         cascade="all, delete, delete-orphan",
     )
 
@@ -35,6 +35,7 @@ class VhsDetails(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
     copy_number = db.Column(db.String(20), nullable=False)
+    is_available = db.Column(db.Boolean, default=True)
 
     videocassette_id = db.Column(
         UUID(as_uuid=True), db.ForeignKey("videocassette.id"), nullable=False
