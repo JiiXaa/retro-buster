@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>CUSTOMER SEARCH</h1>
+
+<h3>Quick search:</h3>
+<form action="{{ url_for('customers.customer_search') }}" method="post">
+  <label for="first_name">First Name</label>
+  <input type="text" name="first_name" id="first_name"> <br>
+  <label for="last_name">Last Name</label>
+  <input type="text" name="last_name" id="last_name"> <br>
+  <label for="email">Email</label>
+  <input type="email" name="email" id="email"> <br>
+
+  <input type="submit" value="Search">
+</form>
+
+<table>
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email</th>
+  </tr>
+  {% for customer in customer_query %}
+  <tr>
+    <td>{{ customer.first_name }}</td>
+    <td>{{ customer.last_name }}</td>
+    <td>{{ customer.email }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

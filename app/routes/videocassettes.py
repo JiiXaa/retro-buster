@@ -7,7 +7,7 @@ bp = Blueprint("videocassettes", __name__, url_prefix="/videocassettes")
 
 # Utility function to search for vhs tapes by title, director, or genre.
 # Returns a list of vhs tapes that match the search criteria (case insensitive)
-def search_vhs(search_queries):
+def find_vhs(search_queries):
     if not search_queries:
         flash("Please provide at least one search term.")
 
@@ -69,7 +69,7 @@ def vhs_search():
             "director": request.form.get("director"),
             "genre": request.form.get("genre"),
         }
-        vhs_query = search_vhs(search_queries)
+        vhs_query = find_vhs(search_queries)
         return render_template("videocassettes/vhs_found.html", vhs_query=vhs_query)
     return render_template("videocassettes/vhs_search.html")
 
