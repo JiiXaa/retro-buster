@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Show all VHS in the database</h1>
+<h1>Show all Customers in the database</h1>
 
 <h3>Quick search:</h3>
-<form action="{{ url_for('videocassettes.vhs_search') }}" method="post">
+<form action="{{ url_for('customers.customer_search') }}" method="post">
   <label for="first_name">First Name</label>
   <input type="text" name="first_name" id="first_name"> <br>
   <label for="last_name">Last Name</label>

@@ -25,12 +25,23 @@ def find_vhs(search_queries):
             query = query.filter(
                 Videocassette.genre.ilike("%" + search_queries[term] + "%")
             )
-    value = query.all()
+    query_value = query.all()
 
-    if not value:
+    if not query_value:
         flash("No results found.")
     else:
-        flash(f"Search results for: '{''.join(search_queries.values())}'.")
+        # I had to find a way to get the key and value from the dictionary and return them as a string in the flash message.
+        # https://stackoverflow.com/questions/26660654/how-do-i-print-the-key-value-pairs-of-a-dictionary-in-python
+        # https://stackoverflow.com/questions/58626415/turning-key-value-pairs-from-a-dictionary-into-strings
+
+        search_strings = [
+            f"{key.replace('_', ' ').title()}: {value}"
+            for key, value in search_queries.items()
+            if value and value.strip()
+        ]
+        if search_strings:
+            search_message = ", ".join(search_strings)
+            flash(f"Search results for: {search_message}.")
     return query.all()
 
 
