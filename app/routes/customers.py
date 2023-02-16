@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models import Customer
 from app import db
+from sqlalchemy.exc import SQLAlchemyError
+
 
 bp = Blueprint("customers", __name__, url_prefix="/customers")
 
@@ -64,3 +66,46 @@ def customer_search():
             "customers/customer_found.html", customer_query=customer_query
         )
     return render_template("customers/customer_search.html")
+
+
+@bp.route("/customer_add", methods=["GET", "POST"])
+def customer_add():
+
+    # TODO: fix error duplicate key value violates unique constraint "customer_email_key" (Error comes from the email field being unique in the database, need to add a check to see if the email already exists in the database. If it does, flash an error message and redirect to the customer add form.)
+
+    if request.method == "POST":
+        first_name = request.form.get("first_name")
+        last_name = request.form.get("last_name")
+        email = request.form.get("email")
+
+        # Check that all fields are filled out
+        if not all([first_name, last_name, email]):
+            flash("Please fill out all fields.")
+            return redirect(url_for("customers.customer_add"))
+
+        # Create a new customer object and add it to the database with the customer details provided by the user
+        customer = Customer(first_name=first_name, last_name=last_name, email=email)
+
+        # Add the customer object to the database
+        db.session.add(customer)
+        db.session.commit()
+
+        flash("Customer added successfully.")
+        # Redirect to the customer profile page
+        return redirect(url_for("customers.customer_profile", customer_id=customer.id))
+    # If the user is not submitting a form, render the customer add form
+    return render_template("customers/customer_add.html")
+
+
+@bp.route("/customer_profile/<customer_id>", methods=["GET", "POST"])
+def customer_profile(customer_id):
+    try:
+        customer = Customer.query.get_or_404(customer_id)
+        print("customer", customer)
+
+        return render_template("customers/customer_profile.html", customer=customer)
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        error = str(e.__dict__.get("orig") or e)
+        flash(f"An error occurred: {error}", "error")
+        return redirect(url_for("customers.index"))

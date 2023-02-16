@@ -132,12 +132,13 @@ def vhs_add():
             image=image,
         )
 
-        # Add the vhs tape objects to the database
+        # Add the vhs tape object to the database
         db.session.add(vhs)
         db.session.commit()
 
         flash("VHS tape added successfully.")
         # Redirect to the vhs tape details page for the newly added vhs tape
+        print("vhs", vhs)
         return redirect(url_for("videocassettes.vhs_add_details", vhs_id=vhs.id))
     # If the user is not submitting a form, render the vhs tape add form
     return render_template("videocassettes/vhs_add.html")
