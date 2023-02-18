@@ -34,15 +34,12 @@
     <td>
       <a href="{{ url_for('videocassettes.vhs_edit', id=vhs.id) }}" id="{{ vhs.id }}">Edit</a>
       <a href="{{ url_for('videocassettes.vhs_delete', id=vhs.id) }}" id="{{ vhs.id }}">Delete</a>
-      <a href="{{ url_for('videocassettes.vhs_details', id=vhs.id) }}" id="{{ vhs.id }}">Details</a>
     </td>
-    <td>
-      <p>{{ vhs.vhs_details|length }} copies of this VHS are in the database.</p>
+    <td>    <p>{{ vhs.vhs_details|length }} copies of this VHS are in the database.</p>
       {% for vhs_detail in vhs.vhs_details %}
       <p>{{ vhs_detail.copy_number }} - {% if vhs_detail.is_available %}
           This VHS copy is available.
-      {% endif %}
-      </p>
+      {% endif %}</p>
       {% endfor %}</td>
   </tr>
   {% endfor %}

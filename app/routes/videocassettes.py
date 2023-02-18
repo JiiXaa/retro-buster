@@ -53,9 +53,7 @@ def index():
     ### If not, flash a message to the user to update ###
     for vhs in vhs_all:
         if len(vhs.vhs_details) < vhs.total_copies:
-            flash(
-                f"Copy numbers are missing {len(vhs.vhs_details)}/{vhs.total_copies} for VHS {vhs.title} - with ID: {vhs.id} please update."
-            )
+            flash(f"Copy numbers are missing for VHS {vhs.title}")
         elif len(vhs.vhs_details) > vhs.total_copies:
             flash(f"Too many copies for VHS {vhs.title}")
 
@@ -175,12 +173,6 @@ def vhs_delete(id):
         db.session.commit()
         return redirect(url_for("videocassettes.index"))
     return render_template("videocassettes/vhs_delete.html", vhs=vhs)
-
-
-@bp.route("/vhs_details/<id>", methods=["GET", "POST"])
-def vhs_details(id):
-    vhs = Videocassette.query.get(id)
-    return render_template("videocassettes/vhs_details.html", vhs=vhs)
 
 
 @bp.route("/vhs_add_details/<vhs_id>", methods=["GET", "POST"])
