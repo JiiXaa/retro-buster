@@ -70,9 +70,7 @@ def customer_search():
 
 @bp.route("/customer_add", methods=["GET", "POST"])
 def customer_add():
-
-    # TODO: fix error duplicate key value violates unique constraint "customer_email_key" (Error comes from the email field being unique in the database, need to add a check to see if the email already exists in the database. If it does, flash an error message and redirect to the customer add form.)
-
+    # If the user is submitting a form, add the customer to the database
     if request.method == "POST":
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
@@ -85,6 +83,13 @@ def customer_add():
 
         # Create a new customer object and add it to the database with the customer details provided by the user
         customer = Customer(first_name=first_name, last_name=last_name, email=email)
+
+        # Check if the customer already exists in the database
+        ### found solution here: https://stackoverflow.com/questions/32938475/flask-sqlalchemy-check-if-row-exists-in-table
+        is_existing_customer = Customer.query.filter_by(email=email).first()
+        if is_existing_customer:
+            flash("Customer already exists.")
+            return redirect(url_for("customers.customer_add"))
 
         # Add the customer object to the database
         db.session.add(customer)
