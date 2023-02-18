@@ -8,9 +8,15 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
 
 - [] Create navigation for the project for the following endpoints:
 
-  - [x] main page,
+  - [] main page (Could use advertisement data for cashiers to easily promote new or featured VHS tapes, and other deals to customers. Display this information to quickly recommend products and increase sales. This can also help manage inventory and promote slow-moving products.) - (loose design idea: could have 10 featured record shown, and if there is less featured tapes at the time in the database, could add if statement for adding popular tapes to populate missing numbers),
+  - [x] Customers,
+  - [x] Customers search/filter,
+  - [x] Customer add,
   - [x] videocassettes (VHS),
-  - [x] VHS add,
+  - [x] VHS main page (show all available VHS list, this would be good idea to incorporate pagination to help improve loading time of the page by requesting 10-20 records or so)
+  - [x] Movie add (Add movie title to database),
+  - [] tape add (Add copy tapes of the movie),
+  - [x] VHS search/filter,
   - [] login,
   - [] registration,
   - [] contact,
@@ -40,7 +46,9 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
 
 Database prototyping/building uses the SQLite library and the final version is stored on the ElephantSQL (PostgreSQL database hosting service)
 
-- [] Videocassette class needs to have a one-to-one relationship with the VhsDetails class. VhsDetails instance will hold all important information about the the particular videocassette connected to it.
+- [x] 'Videocassette' class needs to have a one-to-many relationship with the 'VhsDetails' class. 'VhsDetails' instance will hold all important information about the all instances (vhs copies) connected to it (copy number/id, date added, is available).
+- [x] 'VhsDetails' (tape copy) class needs to have many-to-one relationship with the 'VhsRental' model to be able to track rental information such as which customer has rented that particular copy, when was borrowed, due to bring back.
+- [x] 'VhsRental' class needs to have many-to-one relationship with 'Customer' as one customer can have multiple rental transaction/movies rented at the same time.
 
 ## TEST/BUGS:
 
