@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>{{ customer.last_name }} EDIT</h1>
+
+<form action="{{ url_for('customers.customer_edit', id=customer.id) }}" method="post">
+
+  <label for="first_name">First Name</label>
+  <input type="text" name="first_name" id="first_name" value="{{ customer.first_name }}"> <br>
+  <label for="last_name">Last Name</label>
+  <input type="text" name="last_name" id="last_name" value="{{ customer.last_name }}"> <br>
+  <label for="email">Email</label>
+  <input type="email" name="email" id="email" value="{{ customer.email }}"> <br>
+
+  <button type="submit">Update</button>
+  <button type="button"><a href="{{ url_for('customers.index') }}">Cancel</a></button>
+</form>
+
+
+{% endblock %}

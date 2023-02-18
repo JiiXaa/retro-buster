@@ -97,20 +97,42 @@ def customer_add():
 
         flash("Customer added successfully.")
         # Redirect to the customer profile page
-        return redirect(url_for("customers.customer_profile", customer_id=customer.id))
+        return redirect(url_for("customers.customer_profile", id=customer.id))
     # If the user is not submitting a form, render the customer add form
     return render_template("customers/customer_add.html")
 
 
-@bp.route("/customer_profile/<customer_id>", methods=["GET", "POST"])
-def customer_profile(customer_id):
-    try:
-        customer = Customer.query.get_or_404(customer_id)
-        print("customer", customer)
+@bp.route("/customer_edit/<id>", methods=["GET", "POST"])
+def customer_edit(id):
+    customer = Customer.query.get_or_404(id)
+    if request.method == "POST":
+        customer.first_name = request.form.get("first_name")
+        customer.last_name = request.form.get("last_name")
+        customer.email = request.form.get("email")
 
-        return render_template("customers/customer_profile.html", customer=customer)
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        error = str(e.__dict__.get("orig") or e)
-        flash(f"An error occurred: {error}", "error")
+        # Check that all fields are filled out
+        if not all([customer.first_name, customer.last_name, customer.email]):
+            flash("Please fill out all fields.")
+            return redirect(url_for("customers.customer_edit", id=customer.id))
+
+        db.session.commit()
+        flash("Customer updated successfully.")
         return redirect(url_for("customers.index"))
+    return render_template("customers/customer_edit.html", customer=customer)
+
+
+@bp.route("/<id>/customer_delete", methods=["GET", "POST"])
+def customer_delete(id):
+    customer = Customer.query.get_or_404(id)
+    if request.method == "POST":
+        db.session.delete(customer)
+        db.session.commit()
+        flash("Customer deleted successfully.")
+        return redirect(url_for("customers.index"))
+    return render_template("customers/customer_delete.html", customer=customer)
+
+
+@bp.route("/customer_profile/<id>", methods=["GET", "POST"])
+def customer_profile(id):
+    customer = Customer.query.get_or_404(id)
+    return render_template("customers/customer_profile.html", customer=customer)

@@ -169,17 +169,18 @@ def vhs_edit(id):
 
 @bp.route("/<id>/delete", methods=["GET", "POST"])
 def vhs_delete(id):
-    vhs = Videocassette.query.get(id)
+    vhs = Videocassette.query.get_or_404(id)
     if request.method == "POST":
         db.session.delete(vhs)
         db.session.commit()
+        flash("VHS tape deleted successfully.")
         return redirect(url_for("videocassettes.index"))
     return render_template("videocassettes/vhs_delete.html", vhs=vhs)
 
 
 @bp.route("/vhs_details/<id>", methods=["GET", "POST"])
 def vhs_details(id):
-    vhs = Videocassette.query.get(id)
+    vhs = Videocassette.query.get_or_404(id)
     return render_template("videocassettes/vhs_details.html", vhs=vhs)
 
 

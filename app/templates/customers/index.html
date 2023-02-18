@@ -19,12 +19,17 @@
     <th>First Name</th>
     <th>Last Name</th>
     <th>Email</th>
+    <th>Actions</th>
   </tr>
   {% for customer in customers_all %}
   <tr>
     <td>{{ customer.first_name }}</td>
     <td>{{ customer.last_name }}</td>
     <td>{{ customer.email }}</td>
+    <td>
+      <a href="{{ url_for('customers.customer_edit', id=customer.id) }}" id="{{ customer.id }}">Edit</a>
+      <a href="{{ url_for('customers.customer_delete', id=customer.id) }}" id="{{ customer.id }}">Delete</a>
+      <a href="{{ url_for('customers.customer_profile', id=customer.id) }}" id="{{ customer.id }}">Details</a>
   </tr>
   {% endfor %}
 </table>
