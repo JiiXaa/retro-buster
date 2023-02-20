@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
 
@@ -14,6 +15,8 @@ def create_app():
     app.template_folder = "templates"
 
     db.init_app(app)
+    # Used Flask-Migrate documentation to set up and use migrations in the project: https://flask-migrate.readthedocs.io/en/latest/
+    migrate = Migrate(app, db)
 
     from app.routes.videocassettes import bp as videocassettes_bp
     from app.routes.main import bp as main_bp
