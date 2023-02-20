@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p>Id: {{ vhs_details.id }}</p>
+<p>Added to database: {{ vhs_details.date_added.strftime('%d-%m-%y') }}</p>
+<p>Copy number: {{ vhs_details.copy_number }}</p>
+<p>
+  {% if vhs_details.is_available %}
+    Available
+  {% else %}
+    Not available
+  {% endif %}
+</p>
+
+<form action="" method="post">
+  <label for="customer_query">Customer</label>
+  <input type="email" name="customer_query" id="customer_query" required> <br>
+  <input type="submit" value="Rent">
+</form>
+
+
+{% endblock %}

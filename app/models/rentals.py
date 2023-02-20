@@ -7,7 +7,7 @@ import uuid
 class VhsRental(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     date_rented = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    date_returned = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    date_returned = db.Column(db.DateTime, default=None, nullable=True)
 
     customer_id = db.Column(
         UUID(as_uuid=True), db.ForeignKey("customer.id"), nullable=False

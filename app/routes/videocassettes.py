@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models import Videocassette, VhsDetails
+from app.models import Videocassette, VhsDetails, Customer, VhsRental
 from app import db
+from sqlalchemy import or_
 from sqlalchemy.exc import SQLAlchemyError
+from datetime import datetime
 
 bp = Blueprint("videocassettes", __name__, url_prefix="/videocassettes")
 
@@ -214,3 +216,48 @@ def vhs_add_details(vhs_id):
         error = str(e.__dict__.get("orig") or e)
         flash(f"An error occurred: {error}", "error")
         return redirect(url_for("videocassettes.vhs_add_details", vhs_id=vhs_id))
+
+
+@bp.route("/vhs_rent/<vhs_id>/<vhs_detail_id>", methods=["GET", "POST"])
+def vhs_rent(vhs_id, vhs_detail_id):
+    # Get the vhs copy tape object from the database
+    vhs_details = VhsDetails.query.filter_by(videocassette_id=vhs_id).first()
+    if not vhs_details:
+        flash("Invalid VHS tape selected.")
+        return redirect(url_for("videocassettes.index"))
+
+    if request.method == "POST":
+        customer_query = request.form.get("customer_query")
+        if not customer_query:
+            flash("Please enter a customer name or email address.")
+            return redirect(
+                url_for(
+                    "videocassettes.vhs_rent",
+                    vhs_id=vhs_id,
+                    vhs_detail_id=vhs_detail_id,
+                )
+            )
+
+        customer = Customer.query.filter_by(email=customer_query).first()
+        print("customer", customer)
+        if not customer:
+            flash("Customer not found")
+            return redirect(
+                url_for(
+                    "customers.customer_add",
+                )
+            )
+
+        rental = VhsRental(
+            date_rented=datetime.utcnow(), vhs_details=vhs_details, customer=customer
+        )
+        db.session.add(rental)
+        db.session.commit()
+
+        flash("Rental created successfully.")
+        return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
+
+    return render_template(
+        "videocassettes/vhs_rent.html",
+        vhs_details=vhs_details,
+    )

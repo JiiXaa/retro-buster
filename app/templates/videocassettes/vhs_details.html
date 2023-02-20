@@ -15,6 +15,7 @@
     <th>Copy number</th>
     <th>Is available</th>
     <th>Customer</th>
+    <th>Rent</th>
   </tr>
   {% for vhs_detail in vhs.vhs_details %}
   <tr>
@@ -31,6 +32,13 @@
         -
       {% else %}
         {{ vhs_detail.customer.first_name }} {{ vhs_detail.customer.last_name }}
+      {% endif %}
+    </td>
+    <td>
+      {% if vhs_detail.is_available %}
+        <a href="{{ url_for('videocassettes.vhs_rent', vhs_id=vhs.id, vhs_detail_id=vhs_detail.id) }}">Rent</a>
+      {% else %}
+        <a href="{{ url_for('videocassettes.vhs_return', vhs_id=vhs.id, vhs_detail_id=vhs_detail.id) }}">Return</a>
       {% endif %}
     </td>
   </tr>
