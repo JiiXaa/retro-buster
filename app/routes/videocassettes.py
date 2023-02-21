@@ -217,7 +217,8 @@ def vhs_add_details(vhs_id):
 @bp.route("/vhs_rent/<vhs_id>/<vhs_detail_id>", methods=["GET", "POST"])
 def vhs_rent(vhs_id, vhs_detail_id):
     # Get the vhs copy tape object from the database
-    vhs_details = VhsDetails.query.filter_by(videocassette_id=vhs_id).first()
+    vhs_details = VhsDetails.query.get_or_404(vhs_detail_id)
+    print("vhs_details", vhs_details)
     if not vhs_details:
         flash("Invalid VHS tape selected.")
         return redirect(url_for("videocassettes.index"))
@@ -226,7 +227,7 @@ def vhs_rent(vhs_id, vhs_detail_id):
     if request.method == "POST":
         customer_query = request.form.get("customer_query")
         if not customer_query:
-            flash("Please enter a customer name or email address.")
+            flash("Please enter a customer email address.")
             return redirect(
                 url_for(
                     "videocassettes.vhs_rent",
@@ -268,58 +269,42 @@ def vhs_rent(vhs_id, vhs_detail_id):
     )
 
 
-##########################
-# TODO: REDO THIS FUNCTION dont forget about to change is_available to true after returning the vhs tape
 @bp.route("/vhs_return/<vhs_id>/<vhs_detail_id>", methods=["GET", "POST"])
 def vhs_return(vhs_id, vhs_detail_id):
     # Get the vhs copy tape object from the database
-    vhs_details = VhsDetails.query.filter_by(videocassette_id=vhs_id).first()
+    vhs_details = VhsDetails.query.filter_by(
+        id=vhs_detail_id, videocassette_id=vhs_id
+    ).first()
     if not vhs_details:
         flash("Invalid VHS tape selected.")
         return redirect(url_for("videocassettes.index"))
 
-    # Find the customer in the database
-    if request.method == "POST":
-        customer_query = request.form.get("customer_query")
-        if not customer_query:
-            flash("Please enter a customer name or email address.")
-            return redirect(
-                url_for(
-                    "videocassettes.vhs_rent",
-                    vhs_id=vhs_id,
-                    vhs_detail_id=vhs_detail_id,
-                )
-            )
-
-        customer = Customer.query.filter_by(email=customer_query).first()
-        if not customer:
-            flash("Customer not found")
-            return redirect(
-                url_for(
-                    "customers.customer_add",
-                )
-            )
-
-        # Create a new rental object,
-        rental = VhsRental(
-            date_returned=datetime.utcnow(), vhs_details=vhs_details, customer=customer
-        )
-        db.session.add(rental)
-        db.session.commit()
-
-        flash("Rental created successfully.")
+    # Find the rental object in the database
+    rental = VhsRental.query.filter_by(
+        vhs_details_id=vhs_detail_id, date_returned=None
+    ).first()
+    if not rental:
+        flash("VHS tape is not rented.")
+        return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
+    elif rental.date_returned is not None:
+        flash("VHS tape has already been returned.")
         return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
 
-    return render_template(
-        "videocassettes/vhs_return.html",
-        vhs_details=vhs_details,
-    )
+    # Update the VhsRental and VhsDetails objects
+    rental.date_returned = datetime.utcnow()
+    vhs_details.is_available = True
+    db.session.commit()
+
+    flash("VHS returned successfully.")
+    return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
 
 
-@bp.route("vhs_history/<vhs_id>/<vhs_detail_id>", methods=["GET", "POST"])
+@bp.route("/vhs_history/<vhs_id>/<vhs_detail_id>", methods=["GET", "POST"])
 def vhs_history(vhs_id, vhs_detail_id):
     vhs_history = VhsRental.query.filter_by(vhs_details_id=vhs_detail_id).all()
-    vhs_detail = VhsDetails.query.filter_by(videocassette_id=vhs_id).first()
+    vhs_detail = VhsDetails.query.filter_by(
+        id=vhs_detail_id, videocassette_id=vhs_id
+    ).first()
     vhs = Videocassette.query.filter_by(id=vhs_id).first()
     today = datetime.utcnow()
     return render_template(
