@@ -18,13 +18,15 @@ def create_app():
     # Used Flask-Migrate documentation to set up and use migrations in the project: https://flask-migrate.readthedocs.io/en/latest/
     migrate = Migrate(app, db)
 
-    from app.routes.videocassettes import bp as videocassettes_bp
     from app.routes.main import bp as main_bp
+    from app.routes.videocassettes import bp as videocassettes_bp
     from app.routes.customers import bp as customers_bp
+    from app.routes.rentals import bp as rentals_bp
 
-    app.register_blueprint(videocassettes_bp)
     app.register_blueprint(main_bp)
+    app.register_blueprint(videocassettes_bp)
     app.register_blueprint(customers_bp)
+    app.register_blueprint(rentals_bp)
 
     @app.errorhandler(404)
     def page_not_found(error):

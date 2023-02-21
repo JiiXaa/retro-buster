@@ -201,15 +201,11 @@ def vhs_add_details(vhs_id):
             db.session.add(vhs_details)
             db.session.commit()
 
-            print("request.form", request.form)
-            print(f"copy_number: {copy_number}")
-            print(type(VhsDetails.copy_number))
-
             flash("VHS tape details added successfully.")
             return redirect(url_for("videocassettes.vhs_add_details", vhs_id=vhs_id))
 
         vhs = Videocassette.query.get_or_404(vhs_id)
-        print("vhs", vhs)
+
         return render_template("videocassettes/vhs_add_details.html", vhs=vhs)
     except SQLAlchemyError as e:
         db.session.rollback()
@@ -226,6 +222,7 @@ def vhs_rent(vhs_id, vhs_detail_id):
         flash("Invalid VHS tape selected.")
         return redirect(url_for("videocassettes.index"))
 
+    # Find the customer in the database
     if request.method == "POST":
         customer_query = request.form.get("customer_query")
         if not customer_query:
@@ -239,7 +236,6 @@ def vhs_rent(vhs_id, vhs_detail_id):
             )
 
         customer = Customer.query.filter_by(email=customer_query).first()
-        print("customer", customer)
         if not customer:
             flash("Customer not found")
             return redirect(
@@ -248,6 +244,15 @@ def vhs_rent(vhs_id, vhs_detail_id):
                 )
             )
 
+        # Check if the vhs tape is available
+        if vhs_details.is_available == False:
+            flash("VHS tape is not available.")
+            return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
+
+        # If the vhs tape is available, set the is_available field to False
+        vhs_details.is_available = False
+
+        # Create a new rental object,
         rental = VhsRental(
             date_rented=datetime.utcnow(), vhs_details=vhs_details, customer=customer
         )
@@ -259,6 +264,54 @@ def vhs_rent(vhs_id, vhs_detail_id):
 
     return render_template(
         "videocassettes/vhs_rent.html",
+        vhs_details=vhs_details,
+    )
+
+
+##########################
+# TODO: REDO THIS FUNCTION dont forget about to change is_available to true after returning the vhs tape
+@bp.route("/vhs_return/<vhs_id>/<vhs_detail_id>", methods=["GET", "POST"])
+def vhs_return(vhs_id, vhs_detail_id):
+    # Get the vhs copy tape object from the database
+    vhs_details = VhsDetails.query.filter_by(videocassette_id=vhs_id).first()
+    if not vhs_details:
+        flash("Invalid VHS tape selected.")
+        return redirect(url_for("videocassettes.index"))
+
+    # Find the customer in the database
+    if request.method == "POST":
+        customer_query = request.form.get("customer_query")
+        if not customer_query:
+            flash("Please enter a customer name or email address.")
+            return redirect(
+                url_for(
+                    "videocassettes.vhs_rent",
+                    vhs_id=vhs_id,
+                    vhs_detail_id=vhs_detail_id,
+                )
+            )
+
+        customer = Customer.query.filter_by(email=customer_query).first()
+        if not customer:
+            flash("Customer not found")
+            return redirect(
+                url_for(
+                    "customers.customer_add",
+                )
+            )
+
+        # Create a new rental object,
+        rental = VhsRental(
+            date_returned=datetime.utcnow(), vhs_details=vhs_details, customer=customer
+        )
+        db.session.add(rental)
+        db.session.commit()
+
+        flash("Rental created successfully.")
+        return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
+
+    return render_template(
+        "videocassettes/vhs_return.html",
         vhs_details=vhs_details,
     )
 

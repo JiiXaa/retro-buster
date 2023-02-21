@@ -6,7 +6,7 @@
 
 {% if vhs_history %}
   {% for tape_history in vhs_history %}
-      <p>Customer: {{ tape_history.customer.first_name }} {{ tape_history.customer.last_name }}</p>
+      <p>Customer: {{ tape_history.customer.first_name }} {{ tape_history.customer.last_name }} - {{ tape_history.customer.email }}</p>
       <p>Rent date: {{ tape_history.date_rented.strftime('%d-%m-%y') }}</p>
       {% if tape_history.date_returned %}
         <p>Return date: {{ tape_history.date_returned.strftime('%d-%m-%y') }}</p>

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Show all Rentals in the database</h1>
+
+{% if rental_data %}
+      {% for rental in rental_data %}
+        <div>
+          <p>Title: {{ rental.vhs_title }}</p>
+          <p>Copy number: {{ rental.vhs_copy_number }}</p>
+          <p>Director: {{ rental.vhs_director }}</p>
+          <p>Genre: {{ rental.vhs_genre }}</p>
+          <p>Customer: {{ rental.customer_name }}</p>
+          <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%y') }}</p>
+          {% if rental.date_returned %}
+            <p>Return date: {{ rental.date_returned.strftime('%d-%m-%y') }}</p>
+          {% else %}
+            <p>Return date: not returned </p>
+          {% endif %}
+          <p>Rent days
+            {% if rental.date_returned %}
+              {{ (rental.date_returned - rental.date_rented).days }}
+            {% else %}
+              {{ (today - rental.date_rented).days }}
+            {% endif %}
+        </div>
+          <hr>
+      {% endfor %}
+    {% else %}
+      <p>No rentals in the database</p>
+  {% endif %}
+
+{% endblock %}
