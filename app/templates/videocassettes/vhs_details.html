@@ -16,6 +16,7 @@
     <th>Is available</th>
     <th>Customer</th>
     <th>Rent</th>
+    <th>History</th>
   </tr>
   {% for vhs_detail in vhs.vhs_details %}
   <tr>
@@ -41,6 +42,8 @@
         <a href="{{ url_for('videocassettes.vhs_return', vhs_id=vhs.id, vhs_detail_id=vhs_detail.id) }}">Return</a>
       {% endif %}
     </td>
+    <td>
+      <a href="{{ url_for('videocassettes.vhs_history', vhs_id=vhs.id, vhs_detail_id=vhs_detail.id) }}">History</a>
   </tr>
   {% endfor %}
 </table>

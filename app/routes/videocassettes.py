@@ -261,3 +261,19 @@ def vhs_rent(vhs_id, vhs_detail_id):
         "videocassettes/vhs_rent.html",
         vhs_details=vhs_details,
     )
+
+
+@bp.route("vhs_history/<vhs_id>/<vhs_detail_id>", methods=["GET", "POST"])
+def vhs_history(vhs_id, vhs_detail_id):
+    vhs_history = VhsRental.query.filter_by(vhs_details_id=vhs_detail_id).all()
+    vhs_detail = VhsDetails.query.filter_by(videocassette_id=vhs_id).first()
+    vhs = Videocassette.query.filter_by(id=vhs_id).first()
+    today = datetime.utcnow()
+    return render_template(
+        "videocassettes/vhs_history.html",
+        vhs=vhs,
+        vhs_detail=vhs_detail,
+        vhs_detail_id=vhs_detail_id,
+        vhs_history=vhs_history,
+        today=today,
+    )

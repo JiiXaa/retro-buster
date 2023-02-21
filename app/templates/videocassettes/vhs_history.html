@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Rental History</h1>
+<h3>{{ vhs.title }} <span>(tape - {{ vhs_detail.copy_number }}</span>)</h3>
+
+{% if vhs_history %}
+  {% for tape_history in vhs_history %}
+      <p>Customer: {{ tape_history.customer.first_name }} {{ tape_history.customer.last_name }}</p>
+      <p>Rent date: {{ tape_history.date_rented.strftime('%d-%m-%y') }}</p>
+      {% if tape_history.date_returned %}
+        <p>Return date: {{ tape_history.date_returned.strftime('%d-%m-%y') }}</p>
+      {% else %}
+        <p>Return date: not returned </p>
+      {% endif %}
+      <p>Rent days
+        {% if tape_history.date_returned %}
+          {{ (tape_history.date_returned - tape_history.date_rented).days }}
+        {% else %}
+          {{ (today - tape_history.date_rented).days }}
+        {% endif %}
+      </p>
+      <hr>
+  {% endfor %}
+{% else %}
+  <p>No VHS history for copy with ID: {{ vhs_detail_id }} with the copy number: <span><b>{{ vhs_detail.copy_number }}</b></span></p>
+{% endif %}
+{% endblock %}
