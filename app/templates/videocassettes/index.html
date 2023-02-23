@@ -24,6 +24,8 @@
     <th>Actions</th>
     <th>Details</th>
   </tr>
+
+  {% if vhs_all %}
   {% for vhs in vhs_all %}
   <tr>
     <td>{{ vhs.id }}</td>
@@ -47,5 +49,12 @@
   </tr>
   {% endfor %}
 </table>
+
+{% else %}
+<tr>
+  <td colspan="7">No VHS in the database.</td>
+</tr>
+
+{% endif %}
 
 {% endblock %}

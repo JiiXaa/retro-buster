@@ -24,7 +24,7 @@ class Videocassette(db.Model):
         "VhsDetails",
         back_populates="videocassette",
         uselist=True,
-        cascade="all, delete, delete-orphan",
+        cascade="save-update, merge, refresh-expire",
     )
 
     def __repr__(self):
@@ -38,7 +38,7 @@ class VhsDetails(db.Model):
     is_available = db.Column(db.Boolean, default=True)
 
     videocassette_id = db.Column(
-        UUID(as_uuid=True), db.ForeignKey("videocassette.id"), nullable=False
+        UUID(as_uuid=True), db.ForeignKey("videocassette.id"), nullable=True
     )
     videocassette = db.relationship("Videocassette", back_populates="vhs_details")
     rentals = db.relationship("VhsRental", back_populates="vhs_details")
