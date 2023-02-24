@@ -14,6 +14,8 @@ class Customer(db.Model):
     # city = db.Column(db.String(100), nullable=False)
     # postcode = db.Column(db.String(100), nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # VhsRental relationship with Customer table (one-to-many)
     rentals = db.relationship("VhsRental", back_populates="customer")
 
     def __repr__(self):

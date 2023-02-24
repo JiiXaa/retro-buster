@@ -9,10 +9,20 @@ class VhsRental(db.Model):
     date_rented = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     date_returned = db.Column(db.DateTime, default=None, nullable=True)
 
+    # Customer relationship with VhsRental table (one-to-many)
     customer_id = db.Column(
         UUID(as_uuid=True), db.ForeignKey("customer.id"), nullable=False
     )
     customer = db.relationship("Customer", back_populates="rentals")
+
+    # Videocassette relationship with VhsRental table (one-to-many)
+    videocassette = db.relationship("Videocassette", back_populates="rentals")
+
+    videocassette_id = db.Column(
+        UUID(as_uuid=True), db.ForeignKey("videocassette.id"), nullable=False
+    )
+
+    # VhsDetails relationship with VhsRental table (one-to-many)
     vhs_details_id = db.Column(
         UUID(as_uuid=True), db.ForeignKey("vhs_details.id"), nullable=False
     )

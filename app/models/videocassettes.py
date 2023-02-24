@@ -17,15 +17,16 @@ class Videocassette(db.Model):
     description = db.Column(db.String(250), nullable=False)
     image = db.Column(db.String(200), nullable=False)
 
-    total_copies = db.Column(db.Integer, nullable=False)
-    available_copies = db.Column(db.Integer, nullable=False)
-
+    # VhsDetails relationship with Videocassette table (one-to-many)
     vhs_details = db.relationship(
-        "VhsDetails",
-        back_populates="videocassette",
-        uselist=True,
-        cascade="save-update, merge, refresh-expire",
+        "VhsDetails", back_populates="videocassette", uselist=True
     )
+
+    # VhsRental relationship with Videocassette table (one-to-many)
+    rentals = db.relationship("VhsRental", back_populates="videocassette")
+
+    def available_count(self):
+        return sum(1 for detail in self.vhs_details if detail.is_available)
 
     def __repr__(self):
         return f"<Videocassette id={self.id}, title={self.title}>"
@@ -36,6 +37,24 @@ class VhsDetails(db.Model):
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
     copy_number = db.Column(db.String(20), nullable=False)
     is_available = db.Column(db.Boolean, default=True)
+
+    # Videocassette relationship with VhsDetails table (one-to-many)
+    # ondelete="CASCADE" deletes the VhsDetails record if the Videocassette record is deleted
+    # https://docs.sqlalchemy.org/en/13/orm/cascades.html
+    # https://stackoverflow.com/questions/5033547/sqlalchemy-cascade-delete
+    videocassette_id = db.Column(
+        UUID(as_uuid=True),
+        db.ForeignKey("videocassette.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+
+    # Videocassette relationship with VhsDetails table (one-to-many)
+    # cascade="all, delete-orphan" deletes the VhsDetails record if the Videocassette record is deleted. The 'delete-orphan' option deletes the VhsDetails record if the Videocassette record is deleted
+    rentals = db.relationship(
+        "VhsRental",
+        back_populates="vhs_details",
+        cascade="all, delete-orphan",
+    )
 
     videocassette_id = db.Column(
         UUID(as_uuid=True), db.ForeignKey("videocassette.id"), nullable=True

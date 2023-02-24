@@ -51,17 +51,6 @@ def find_vhs(search_queries):
 def index():
     vhs_all = Videocassette.query.all()
 
-    ### Check that the number of copies in the database matches the total number of copies for each vhs tape ###
-    ### If not, flash a message to the user to update ###
-    for vhs in vhs_all:
-        if len(vhs.vhs_details) < vhs.total_copies:
-            flash(
-                f"Copy numbers are missing {len(vhs.vhs_details)}/{vhs.total_copies} for VHS {vhs.title} - with ID: {vhs.id} please update."
-            )
-        elif len(vhs.vhs_details) > vhs.total_copies:
-            flash(f"Too many copies for VHS {vhs.title}")
-
-    print("vhs_all", vhs_all)
     return render_template("videocassettes/index.html", vhs_all=vhs_all)
 
 
@@ -88,8 +77,6 @@ def vhs_add():
         year = request.form.get("year")
         rating = request.form.get("rating")
         description = request.form.get("description")
-        total_copies = request.form.get("total_copies")
-        available_copies = request.form.get("available_copies")
 
         ### ADD IMAGE UPLOAD FUNCTIONALITY ###
         image = request.form.get("image")
@@ -104,8 +91,6 @@ def vhs_add():
                 year,
                 rating,
                 description,
-                total_copies,
-                available_copies,
             ]
         ):
             flash("Please fill out all fields.")
@@ -120,8 +105,6 @@ def vhs_add():
             year=year,
             rating=rating,
             description=description,
-            total_copies=total_copies,
-            available_copies=available_copies,
             image=image,
         )
 
@@ -222,7 +205,7 @@ def vhs_rent(vhs_id, vhs_detail_id):
                 url_for(
                     "videocassettes.vhs_rent",
                     vhs_id=vhs_id,
-                    vhs_details=vhs_details,
+                    vhs_detail_id=vhs_detail_id,
                 )
             )
 
@@ -236,33 +219,37 @@ def vhs_rent(vhs_id, vhs_detail_id):
             )
 
         # Check if the vhs tape is available
-        if vhs_details.is_available == False:
+        if not vhs_details.is_available:
             flash("VHS tape is not available.")
             return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
 
-        # If the vhs tape is available, set the is_available field to False
+        # Check if the VHS tape is already rented by the same customer
+        existing_rental = VhsRental.query.filter_by(
+            vhs_details=vhs_details, customer=customer
+        ).first()
+        if existing_rental:
+            flash("This VHS tape is already rented by this customer.")
+            return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
+
+        # If the VHS tape is available and not already rented by the same customer,
+        # set the is_available field to False
         vhs_details.is_available = False
 
-        print("vhs_details.id before creating rental object:", vhs_details.id)
-        print("vhs_details before creating rental object:", vhs_details)
+        # Get the corresponding videocassette object and set the videocassette_id attribute
+        videocassette = Videocassette.query.filter_by(id=vhs_id).first()
 
-        # Create a new rental object,
-        if vhs_details is not None:
-            rental = VhsRental(
-                date_rented=datetime.utcnow(),
-                vhs_details=vhs_details,
-                customer=customer,
-            )
-            print("rental: object to test", rental.vhs_details_id)
-            print("rental: date_rented", rental.date_rented)
-            db.session.add(rental)
-            db.session.commit()
+        # Create a new rental object and set the videocassette_id attribute
+        rental = VhsRental(
+            date_rented=datetime.utcnow(),
+            vhs_details=vhs_details,
+            customer=customer,
+            videocassette=videocassette,
+        )
+        db.session.add(rental)
+        db.session.commit()
 
-            flash("Rental created successfully.")
-            return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
-        else:
-            flash("VHS tape not found.")
-            return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
+        flash("Rental created successfully.")
+        return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
 
     return render_template(
         "videocassettes/vhs_rent.html",

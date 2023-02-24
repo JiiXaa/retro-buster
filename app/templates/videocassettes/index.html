@@ -20,7 +20,6 @@
     <th>Title</th>
     <th>Director</th>
     <th>Genre</th>
-    <th>In Stock</th>
     <th>Actions</th>
     <th>Details</th>
   </tr>
@@ -32,7 +31,6 @@
     <td>{{ vhs.title }}</td>
     <td>{{ vhs.director }}</td>
     <td>{{ vhs.genre }}</td>
-    <td>{{ vhs.total_copies }}</td>
     <td>
       <a href="{{ url_for('videocassettes.vhs_edit', id=vhs.id) }}" id="{{ vhs.id }}">Edit</a>
       <a href="{{ url_for('videocassettes.vhs_delete', id=vhs.id) }}" id="{{ vhs.id }}">Delete</a>
@@ -48,12 +46,13 @@
       {% endfor %}</td>
   </tr>
   {% endfor %}
+  {% else %}
+  <tr>
+    <td colspan="7">No VHS in the database.</td>
+  </tr>
 </table>
 
-{% else %}
-<tr>
-  <td colspan="7">No VHS in the database.</td>
-</tr>
+
 
 {% endif %}
 

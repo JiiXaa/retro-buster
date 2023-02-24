@@ -21,6 +21,8 @@
     <th>Email</th>
     <th>Actions</th>
   </tr>
+
+  {% if customers_all %}
   {% for customer in customers_all %}
   <tr>
     <td>{{ customer.first_name }}</td>
@@ -32,6 +34,12 @@
       <a href="{{ url_for('customers.customer_profile', id=customer.id) }}" id="{{ customer.id }}">Details</a>
   </tr>
   {% endfor %}
+
+  {% else %}
+  <tr>
+    <td colspan="7">No customers in the database.</td>
+  </tr>
+  {% endif %}
 </table>
 
 {% endblock %}
