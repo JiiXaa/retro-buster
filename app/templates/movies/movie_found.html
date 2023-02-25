@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>VHS FOUND</h1>
+<h1>Movie FOUND</h1>
 
 <table>
   <tr>
@@ -9,11 +9,11 @@
     <th>Director</th>
     <th>Genre</th>
   </tr>
-  {% for vhs in vhs_query %}
+  {% for movie in movie_query %}
   <tr>
-    <td>{{ vhs.title }}</td>
-    <td>{{ vhs.director }}</td>
-    <td>{{ vhs.genre }}</td>
+    <td>{{ movie.title }}</td>
+    <td>{{ movie.director }}</td>
+    <td>{{ movie.genre }}</td>
   </tr>
   {% endfor %}
 </table>

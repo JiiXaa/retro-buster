@@ -5,7 +5,7 @@ from sqlalchemy import or_
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
 
-bp = Blueprint("videocassettes", __name__, url_prefix="/videocassettes")
+bp = Blueprint("movies", __name__, url_prefix="/movies")
 
 # Utility function to search for vhs tapes by title, director, or genre.
 # Returns a list of vhs tapes that match the search criteria (case insensitive)
@@ -49,26 +49,26 @@ def find_vhs(search_queries):
 
 @bp.route("/", methods=["GET", "POST"])
 def index():
-    vhs_all = Videocassette.query.all()
+    movies_all = Videocassette.query.all()
 
-    return render_template("videocassettes/index.html", vhs_all=vhs_all)
+    return render_template("movies/index.html", movies_all=movies_all)
 
 
-@bp.route("/vhs_search", methods=["GET", "POST"])
-def vhs_search():
+@bp.route("/movie_search", methods=["GET", "POST"])
+def movie_search():
     if request.method == "POST":
         search_queries = {
             "title": request.form.get("title"),
             "director": request.form.get("director"),
             "genre": request.form.get("genre"),
         }
-        vhs_query = find_vhs(search_queries)
-        return render_template("videocassettes/vhs_found.html", vhs_query=vhs_query)
-    return render_template("videocassettes/vhs_search.html")
+        movie_query = find_vhs(search_queries)
+        return render_template("movies/movie_found.html", movie_query=movie_query)
+    return render_template("movies/movie_search.html")
 
 
-@bp.route("/vhs_add", methods=["GET", "POST"])
-def vhs_add():
+@bp.route("/movie_add", methods=["GET", "POST"])
+def movie_add():
     if request.method == "POST":
         title = request.form.get("title")
         director = request.form.get("director")
@@ -94,7 +94,7 @@ def vhs_add():
             ]
         ):
             flash("Please fill out all fields.")
-            return redirect(url_for("videocassettes.vhs_add"))
+            return redirect(url_for("movies.movie_add"))
 
         # Create a new vhs tape object and add it to the database with the movie details provided by the user
         vhs = Videocassette(
@@ -115,81 +115,80 @@ def vhs_add():
         flash("VHS tape added successfully.")
         # Redirect to the vhs tape details page for the newly added vhs tape
         print("vhs", vhs)
-        return redirect(url_for("videocassettes.vhs_add_details", vhs_id=vhs.id))
+        return redirect(url_for("videocassettes.vhs_add_tape", vhs_id=vhs.id))
     # If the user is not submitting a form, render the vhs tape add form
-    return render_template("videocassettes/vhs_add.html")
+    return render_template("movies/movie_add.html")
 
 
-@bp.route("/vhs_edit/<id>", methods=["GET", "POST"])
-def vhs_edit(id):
-    vhs = Videocassette.query.get(id)
+@bp.route("/movie_edit/<movie_id>", methods=["GET", "POST"])
+def movie_edit(movie_id):
+    movie = Videocassette.query.get(movie_id)
     if request.method == "POST":
-        # Get the vhs tape and details objects from the database and update them with the new data provided by the user
-        vhs.title = request.form.get("title")
-        vhs.director = request.form.get("director")
-        vhs.genre = request.form.get("genre")
-        vhs.length = request.form.get("length")
-        vhs.year = request.form.get("year")
-        vhs.rating = request.form.get("rating")
-        vhs.description = request.form.get("description")
-        vhs.total_copies = request.form.get("total_copies")
-        vhs.available_copies = request.form.get("available_copies")
-        vhs.image = request.form.get("image")
+        # Get the movie and tape copy objects from the database and update them with the new data provided by the user
+        movie.title = request.form.get("title")
+        movie.director = request.form.get("director")
+        movie.genre = request.form.get("genre")
+        movie.length = request.form.get("length")
+        movie.year = request.form.get("year")
+        movie.rating = request.form.get("rating")
+        movie.description = request.form.get("description")
+        movie.image = request.form.get("image")
 
         db.session.commit()
-        return redirect(url_for("videocassettes.index"))
-    return render_template("videocassettes/vhs_edit.html", vhs=vhs)
+        return redirect(url_for("movies.index"))
+    return render_template("movies/movie_edit.html", movie=movie)
 
 
-@bp.route("/delete/<id>", methods=["GET", "POST"])
-def vhs_delete(id):
-    vhs = Videocassette.query.get_or_404(id)
+@bp.route("/movie_delete/<movie_id>", methods=["GET", "POST"])
+def movie_delete(movie_id):
+    movie = Videocassette.query.get_or_404(movie_id)
     if request.method == "POST":
-        # Delete the Video Cassette object from the database
-        db.session.delete(vhs)
+        # Delete the Movie object from the database
+        db.session.delete(movie)
         db.session.commit()
 
-        flash("VHS tape deleted successfully.")
-        return redirect(url_for("videocassettes.index"))
-    return render_template("videocassettes/vhs_delete.html", vhs=vhs)
+        flash("Movie deleted successfully.")
+        return redirect(url_for("movies.index"))
+    return render_template("movies/movie_delete.html", movie=movie)
 
 
-@bp.route("/vhs_details/<id>", methods=["GET", "POST"])
-def vhs_details(id):
-    vhs = Videocassette.query.get_or_404(id)
-    return render_template("videocassettes/vhs_details.html", vhs=vhs)
+# change vhs_details to vhs_tape
+@bp.route("/vhs_details/<movie_id>", methods=["GET", "POST"])
+def vhs_details(movie_id):
+    movie = Videocassette.query.get_or_404(movie_id)
+    return render_template("videocassettes/vhs_details.html", movie=movie)
 
 
-@bp.route("/vhs_add_details/<vhs_id>", methods=["GET", "POST"])
-def vhs_add_details(vhs_id):
+@bp.route("/vhs_add_tape/<movie_id>", methods=["GET", "POST"])
+def vhs_add_tape(movie_id):
     try:
         if request.method == "POST":
             copy_number = request.form.get("copy_number")
 
-            vhs_details = VhsDetails(
-                videocassette_id=vhs_id,
+            vhs_copy = VhsDetails(
+                videocassette_id=movie_id,
                 copy_number=copy_number,
                 is_available=True,
             )
 
-            db.session.add(vhs_details)
+            db.session.add(vhs_copy)
             db.session.commit()
 
-            flash("VHS tape details added successfully.")
-            return redirect(url_for("videocassettes.vhs_add_details", vhs_id=vhs_id))
+            flash("VHS tape copy added successfully.")
+            return redirect(url_for("movies.vhs_add_tape", movie_id=movie_id))
 
-        vhs = Videocassette.query.get_or_404(vhs_id)
+        movie = Videocassette.query.get_or_404(movie_id)
 
-        return render_template("videocassettes/vhs_add_details.html", vhs=vhs)
+        return render_template("videocassettes/vhs_add_tape.html", movie=movie)
     except SQLAlchemyError as e:
         db.session.rollback()
         error = str(e.__dict__.get("orig") or e)
         flash(f"An error occurred: {error}", "error")
-        return redirect(url_for("videocassettes.vhs_add_details", vhs_id=vhs_id))
+        return redirect(url_for("videocassettes.vhs_add_tape", movie_id=movie_id))
 
 
-@bp.route("/vhs_rent/<vhs_id>/rent_copy/<vhs_detail_id>", methods=["GET", "POST"])
-def vhs_rent(vhs_id, vhs_detail_id):
+@bp.route("/vhs_rent/<movie_id>/rent_copy/<vhs_detail_id>", methods=["GET", "POST"])
+def vhs_rent(movie_id, vhs_detail_id):
     # Get the vhs copy tape object from the database
     vhs_details = VhsDetails.query.filter_by(id=vhs_detail_id).first()
     if not vhs_details:
@@ -204,7 +203,7 @@ def vhs_rent(vhs_id, vhs_detail_id):
             return redirect(
                 url_for(
                     "videocassettes.vhs_rent",
-                    vhs_id=vhs_id,
+                    movie_id=movie_id,
                     vhs_detail_id=vhs_detail_id,
                 )
             )
@@ -221,22 +220,22 @@ def vhs_rent(vhs_id, vhs_detail_id):
         # Check if the vhs tape is available
         if not vhs_details.is_available:
             flash("VHS tape is not available.")
-            return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
+            return redirect(url_for("movies.vhs_details", movie_id=movie_id))
 
         # Check if the VHS tape is already rented by the same customer
         existing_rental = VhsRental.query.filter_by(
             vhs_details=vhs_details, customer=customer
         ).first()
-        if existing_rental:
+        if existing_rental and existing_rental.date_returned is None:
             flash("This VHS tape is already rented by this customer.")
-            return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
+            return redirect(url_for("movies.vhs_details", movie_id=movie_id))
 
         # If the VHS tape is available and not already rented by the same customer,
         # set the is_available field to False
         vhs_details.is_available = False
 
         # Get the corresponding videocassette object and set the videocassette_id attribute
-        videocassette = Videocassette.query.filter_by(id=vhs_id).first()
+        videocassette = Videocassette.query.filter_by(id=movie_id).first()
 
         # Create a new rental object and set the videocassette_id attribute
         rental = VhsRental(
@@ -249,7 +248,7 @@ def vhs_rent(vhs_id, vhs_detail_id):
         db.session.commit()
 
         flash("Rental created successfully.")
-        return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
+        return redirect(url_for("movies.vhs_details", movie_id=movie_id))
 
     return render_template(
         "videocassettes/vhs_rent.html",
@@ -257,16 +256,15 @@ def vhs_rent(vhs_id, vhs_detail_id):
     )
 
 
-@bp.route("/vhs_return/<vhs_id>/<vhs_detail_id>", methods=["GET", "POST"])
-def vhs_return(vhs_id, vhs_detail_id):
+@bp.route("/vhs_return/<movie_id>/<vhs_detail_id>", methods=["GET", "POST"])
+def vhs_return(movie_id, vhs_detail_id):
     # Get the vhs copy tape object from the database
     vhs_details = VhsDetails.query.filter_by(
-        id=vhs_detail_id, videocassette_id=vhs_id
+        id=vhs_detail_id, videocassette_id=movie_id
     ).first()
-    print("vhs_detail_id from return:", vhs_detail_id)
     if not vhs_details:
         flash("Invalid VHS tape selected.")
-        return redirect(url_for("videocassettes.index"))
+        return redirect(url_for("movies.index"))
 
     # Find the rental object in the database
     rental = VhsRental.query.filter_by(
@@ -274,10 +272,10 @@ def vhs_return(vhs_id, vhs_detail_id):
     ).first()
     if not rental:
         flash("VHS tape is not rented.")
-        return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
+        return redirect(url_for("movies.vhs_details", movie_id=movie_id))
     elif rental.date_returned is not None:
         flash("VHS tape has already been returned.")
-        return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
+        return redirect(url_for("movies.vhs_details", movie_id=movie_id))
 
     # Update the VhsRental and VhsDetails objects
     rental.date_returned = datetime.utcnow()
@@ -285,16 +283,16 @@ def vhs_return(vhs_id, vhs_detail_id):
     db.session.commit()
 
     flash("VHS returned successfully.")
-    return redirect(url_for("videocassettes.vhs_details", id=vhs_id))
+    return redirect(url_for("movies.vhs_details", movie_id=movie_id))
 
 
-@bp.route("/vhs_history/<vhs_id>/<vhs_detail_id>", methods=["GET", "POST"])
-def vhs_history(vhs_id, vhs_detail_id):
+@bp.route("/vhs_history/<movie_id>/<vhs_detail_id>", methods=["GET", "POST"])
+def vhs_history(movie_id, vhs_detail_id):
     vhs_history = VhsRental.query.filter_by(vhs_details_id=vhs_detail_id).all()
     vhs_detail = VhsDetails.query.filter_by(
-        id=vhs_detail_id, videocassette_id=vhs_id
+        id=vhs_detail_id, videocassette_id=movie_id
     ).first()
-    vhs = Videocassette.query.filter_by(id=vhs_id).first()
+    vhs = Videocassette.query.filter_by(id=movie_id).first()
     today = datetime.utcnow()
     return render_template(
         "videocassettes/vhs_history.html",

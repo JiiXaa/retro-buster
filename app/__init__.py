@@ -19,12 +19,12 @@ def create_app():
     migrate = Migrate(app, db)
 
     from app.routes.main import bp as main_bp
-    from app.routes.videocassettes import bp as videocassettes_bp
+    from app.routes.movies import bp as movies_bp
     from app.routes.customers import bp as customers_bp
     from app.routes.rentals import bp as rentals_bp
 
     app.register_blueprint(main_bp)
-    app.register_blueprint(videocassettes_bp)
+    app.register_blueprint(movies_bp)
     app.register_blueprint(customers_bp)
     app.register_blueprint(rentals_bp)
 

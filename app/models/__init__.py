@@ -1,4 +1,4 @@
-from .videocassettes import Videocassette, VhsDetails
+from .movies import Videocassette, VhsDetails
 
 from .customers import Customer
 
