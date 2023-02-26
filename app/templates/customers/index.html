@@ -29,9 +29,9 @@
     <td>{{ customer.last_name }}</td>
     <td>{{ customer.email }}</td>
     <td>
-      <a href="{{ url_for('customers.customer_edit', id=customer.id) }}" id="{{ customer.id }}">Edit</a>
-      <a href="{{ url_for('customers.customer_delete', id=customer.id) }}" id="{{ customer.id }}">Delete</a>
-      <a href="{{ url_for('customers.customer_profile', id=customer.id) }}" id="{{ customer.id }}">Details</a>
+      <a href="{{ url_for('customers.customer_edit', customer_id=customer.id) }}" id="{{ customer.id }}">Edit</a>
+      <a href="{{ url_for('customers.customer_delete', customer_id=customer.id) }}" id="{{ customer.id }}">Delete</a>
+      <a href="{{ url_for('customers.customer_profile', customer_id=customer.id) }}" id="{{ customer.id }}">Details</a>
   </tr>
   {% endfor %}
 

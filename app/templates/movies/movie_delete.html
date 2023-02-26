@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>VHS DELETE</h1>
+<h1>{{ movie.title }} Movie DELETE</h1>
 
-<form action="{{ url_for('videocassettes.vhs_delete', id=vhs.id) }}" method="post">
-  <p>Are you sure you want to delete "{{ vhs.title }}" by {{ vhs.director }}?</p>
+<form action="{{ url_for('movies.movie_delete', movie_id=movie.id) }}" method="post">
+  <p>Are you sure you want to delete "{{ movie.title }}" by {{ movie.director }}?</p>
   <button type="submit">Confirm</button>
-  <button type="button"><a href="{{ url_for('videocassettes.index') }}">Cancel</a></button>
+  <button type="button"><a href="{{ url_for('movies.index') }}">Cancel</a></button>
 </form>
 {% endblock %}

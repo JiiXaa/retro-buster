@@ -20,7 +20,7 @@
 <form action="{{ url_for('movies.vhs_add_tape', movie_id=movie.id) }}" method="post">
 
   <p>VHS: {{ movie.title }}</p>
-  <p>test: {{ movie.vhs_details }}</p>
+  <p>test: {{ movie.vhs_tape_copy }}</p>
 
   <label for="copy_number">Copy Number (id)</label>
   <input type="text" name="copy_number" id="copy_number" required> <br>

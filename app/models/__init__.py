@@ -1,4 +1,4 @@
-from .movies import Videocassette, VhsDetails
+from .movies import Movie, VhsTapeCopy
 
 from .customers import Customer
 

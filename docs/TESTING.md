@@ -27,5 +27,5 @@ https://geoalchemy-2.readthedocs.io/en/latest/orm_tutorial.html <br>
 "uselist=True" indicates that the property should be loaded as a list, as opposed to a scalar.
 ```
 
-In the Videocassette db model uselist was set to False
+In the Movie db model uselist was set to False
 in the relationship definition. That is the reason why vhs.vhs_details was't a list, but rather a single object of VhsDetails class.

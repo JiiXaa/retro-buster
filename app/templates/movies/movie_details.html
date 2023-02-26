@@ -6,10 +6,10 @@
 
 <p>Director: {{ movie.director }}</p>
 <p>Genre: {{ movie.genre }}</p>
-<p>Total copies: {{ movie.vhs_details|length }}</p>
+<p>Total copies: {{ movie.vhs_tape_copy|length }}</p>
 <p>Available copies: {{ movie.available_count() }}</p>
 
-<h3>Copy details:</h3>
+<h3>VHS copy details:</h3>
 <table>
   <tr>
     <th>Copy number</th>
@@ -17,24 +17,24 @@
     <th>Rent</th>
     <th>History</th>
   </tr>
-  {% for vhs_detail in movie.vhs_details %}
+  {% for vhs_tape in movie.vhs_tape_copy %}
   <tr>
-    <td>{{ vhs_detail.copy_number }}</td>
-    <td>{% if vhs_detail.is_available %}
+    <td>{{ vhs_tape.copy_number }}</td>
+    <td>{% if vhs_tape.is_available %}
         Yes
     {% else %}
         No
     {% endif %}
     </td>
     <td>
-      {% if vhs_detail.is_available %}
-        <a href="{{ url_for('movies.vhs_rent', movie_id=movie.id, vhs_detail_id=vhs_detail.id) }}">Rent</a>
+      {% if vhs_tape.is_available %}
+        <a href="{{ url_for('movies.vhs_rent', movie_id=movie.id, vhs_tape_copy_id=vhs_tape.id) }}">Rent</a>
       {% else %}
-        <a href="{{ url_for('movies.vhs_return', movie_id=movie.id, vhs_detail_id=vhs_detail.id) }}">Return</a>
+        <a href="{{ url_for('movies.vhs_return', movie_id=movie.id, vhs_tape_copy_id=vhs_tape.id) }}">Return</a>
       {% endif %}
     </td>
     <td>
-      <a href="{{ url_for('movies.vhs_history', movie_id=movie.id, vhs_detail_id=vhs_detail.id) }}">History</a>
+      <a href="{{ url_for('movies.vhs_history', movie_id=movie.id, vhs_tape_copy_id=vhs_tape.id) }}">History</a>
     </td>
   </tr>
   {% endfor %}

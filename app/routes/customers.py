@@ -62,6 +62,10 @@ def customer_search():
             "email": request.form.get("email"),
         }
         customer_query = find_customer(search_queries)
+
+        if all(value == "" for value in search_queries.values()):
+            flash("Please provide at least one search term.")
+            return redirect(url_for("customers.customer_search"))
         return render_template(
             "customers/customer_found.html", customer_query=customer_query
         )
@@ -97,14 +101,14 @@ def customer_add():
 
         flash("Customer added successfully.")
         # Redirect to the customer profile page
-        return redirect(url_for("customers.customer_profile", id=customer.id))
+        return redirect(url_for("customers.customer_profile", customer_id=customer.id))
     # If the user is not submitting a form, render the customer add form
     return render_template("customers/customer_add.html")
 
 
-@bp.route("/customer_edit/<id>", methods=["GET", "POST"])
-def customer_edit(id):
-    customer = Customer.query.get_or_404(id)
+@bp.route("/customer_edit/<customer_id>", methods=["GET", "POST"])
+def customer_edit(customer_id):
+    customer = Customer.query.get_or_404(customer_id)
     if request.method == "POST":
         customer.first_name = request.form.get("first_name")
         customer.last_name = request.form.get("last_name")
@@ -113,7 +117,7 @@ def customer_edit(id):
         # Check that all fields are filled out
         if not all([customer.first_name, customer.last_name, customer.email]):
             flash("Please fill out all fields.")
-            return redirect(url_for("customers.customer_edit", id=customer.id))
+            return redirect(url_for("customers.customer_edit", customer_id=customer.id))
 
         db.session.commit()
         flash("Customer updated successfully.")
@@ -121,9 +125,9 @@ def customer_edit(id):
     return render_template("customers/customer_edit.html", customer=customer)
 
 
-@bp.route("/<id>/customer_delete", methods=["GET", "POST"])
-def customer_delete(id):
-    customer = Customer.query.get_or_404(id)
+@bp.route("/<customer_id>/customer_delete", methods=["GET", "POST"])
+def customer_delete(customer_id):
+    customer = Customer.query.get_or_404(customer_id)
     if request.method == "POST":
         db.session.delete(customer)
         db.session.commit()
@@ -132,7 +136,7 @@ def customer_delete(id):
     return render_template("customers/customer_delete.html", customer=customer)
 
 
-@bp.route("/customer_profile/<id>", methods=["GET", "POST"])
-def customer_profile(id):
-    customer = Customer.query.get_or_404(id)
+@bp.route("/customer_profile/<customer_id>", methods=["GET", "POST"])
+def customer_profile(customer_id):
+    customer = Customer.query.get_or_404(customer_id)
     return render_template("customers/customer_profile.html", customer=customer)

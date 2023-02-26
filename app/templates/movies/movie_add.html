@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>VHS ADD</h1>
+<h1>Movie ADD</h1>
 
-<form action="{{ url_for('videocassettes.vhs_add') }}" method="post">
+<form action="{{ url_for('movies.movie_add') }}" method="post">
   <label for="title">Title</label>
   <input type="text" name="title" id="title"> <br>
 
@@ -47,7 +47,7 @@
   <label for="image">Image URL</label>
   <input type="text" name="image" id="image"> <br>
 
-  <input type="submit" value="Add VHS">
+  <input type="submit" value="Add Movie">
 </form>
 
 

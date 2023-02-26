@@ -15,8 +15,8 @@ def index():
     rental_data = []
 
     for rental in rentals_all:
-        vhs_details = rental.vhs_details
-        videocassette = vhs_details.videocassette
+        vhs_tape_copy = rental.vhs_tape_copy
+        movie = vhs_tape_copy.movie
         rental_data.append(
             {
                 "id": rental.id,
@@ -24,10 +24,10 @@ def index():
                 "date_returned": rental.date_returned,
                 "customer_id": rental.customer_id,
                 "customer_name": f"{rental.customer.first_name} {rental.customer.last_name}",
-                "vhs_title": videocassette.title,
-                "vhs_director": videocassette.director,
-                "vhs_genre": videocassette.genre,
-                "vhs_copy_number": vhs_details.copy_number,
+                "vhs_title": movie.title,
+                "vhs_director": movie.director,
+                "vhs_genre": movie.genre,
+                "vhs_copy_number": vhs_tape_copy.copy_number,
             }
         )
     return render_template("rentals/index.html", rental_data=rental_data, today=today)

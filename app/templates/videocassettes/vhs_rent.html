@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p>Id: {{ vhs_details.id }}</p>
-<p>Added to database: {{ vhs_details.date_added.strftime('%d-%m-%y') }}</p>
-<p>Copy number: {{ vhs_details.copy_number }}</p>
+<p>Id: {{ vhs_tape_copy.id }}</p>
+<p>Added to database: {{ vhs_tape_copy.date_added.strftime('%d-%m-%y') }}</p>
+<p>Copy number: {{ vhs_tape_copy.copy_number }}</p>
 <p>
-  {% if vhs_details.is_available %}
+  {% if vhs_tape_copy.is_available %}
     Available
   {% else %}
     Not available

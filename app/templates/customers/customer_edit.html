@@ -3,7 +3,7 @@
 
 <h1>{{ customer.last_name }} EDIT</h1>
 
-<form action="{{ url_for('customers.customer_edit', id=customer.id) }}" method="post">
+<form action="{{ url_for('customers.customer_edit', customer_id=customer.id) }}" method="post">
 
   <label for="first_name">First Name</label>
   <input type="text" name="first_name" id="first_name" value="{{ customer.first_name }}"> <br>
