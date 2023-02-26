@@ -12,7 +12,7 @@
 <p><strong>Description:</strong> {{ movie.description }}</p>
 <p><strong>Image:</strong> {{ movie.image }}</p>
 
-<a href="{{ url_for('movies.vhs_details', movie_id=movie.id) }}" id="{{ movie.id }}">Movie Details</a>
+<a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}" id="{{ movie.id }}">{{ movie.title }} Movie Details</a>
 
 <hr>
 <h2>Add Copy Number</h2>

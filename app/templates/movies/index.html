@@ -34,7 +34,7 @@
     <td>
       <a href="{{ url_for('movies.movie_edit', movie_id=movie.id) }}" id="{{ movie.id }}">Edit</a>
       <a href="{{ url_for('movies.movie_delete', movie_id=movie.id) }}" id="{{ movie.id }}">Delete</a>
-      <a href="{{ url_for('movies.vhs_details', movie_id=movie.id) }}" id="{{ movie.id }}">Details</a>
+      <a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}" id="{{ movie.id }}">Details</a>
     </td>
     <td>
       <p>{{ movie.vhs_details|length }} copies of this VHS are in the database.</p>
