@@ -3,7 +3,7 @@
 
 <h1>Customer DELETE</h1>
 
-<form action="{{ url_for('customers.customer_delete', id=customer.id) }}" method="post">
+<form action="{{ url_for('customers.customer_delete', customer_id=customer.id) }}" method="post">
   <p>Are you sure you want to delete {{ customer.first_name }} {{ customer.last_name }} {{ customer.email }}?</p>
   <button type="submit">Confirm</button>
   <button type="button"><a href="{{ url_for('customers.index') }}">Cancel</a></button>

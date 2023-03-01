@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>{{ movie.title }} Movie DELETE</h1>
+{% if vhs_tape_copy.is_available %}
+<form action="{{ url_for('movies.vhs_remove', movie_id=movie_id, vhs_tape_copy_id=vhs_tape_copy_id) }}" method="post">
+  <p>Are you sure you want to remove "{{ vhs_tape_copy.copy_number }}" from the database?</p>
+  <button type="submit">Confirm</button>
+  <button type="button"><a href="{{ url_for('movies.movie_details', movie_id=movie_id) }}">Cancel</a></button>
+</form>
+{% else %}
+<p>This VHS copy is rented and cannot be deleted.</p>
+<button type="button"><a href="{{ url_for('movies.movie_details', movie_id=movie_id) }}">Go Back</a></button>
+{% endif %}
+{% endblock %}

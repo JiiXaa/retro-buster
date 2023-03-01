@@ -125,7 +125,7 @@ def customer_edit(customer_id):
     return render_template("customers/customer_edit.html", customer=customer)
 
 
-@bp.route("/<customer_id>/customer_delete", methods=["GET", "POST"])
+@bp.route("customer_delete/<customer_id>", methods=["GET", "POST"])
 def customer_delete(customer_id):
     customer = Customer.query.get_or_404(customer_id)
     if request.method == "POST":

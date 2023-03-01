@@ -40,7 +40,9 @@
       <p>{{ movie.vhs_tape_copy|length }} copies of this VHS are in the database.</p>
       {% for vhs_detail in movie.vhs_tape_copy %}
       <p>{{ vhs_detail.copy_number }} - {% if vhs_detail.is_available %}
-          This VHS copy is available.
+          <span>This VHS copy is available.</span>
+      {% else %}
+          <span style="text-decoration:line-through;">This VHS copy is not available.</span>
       {% endif %}
       </p>
       {% endfor %}</td>

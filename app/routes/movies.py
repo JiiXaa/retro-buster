@@ -7,8 +7,10 @@ from datetime import datetime
 
 bp = Blueprint("movies", __name__, url_prefix="/movies")
 
+##################################################
 # Utility function to search for movies by title, director, or genre.
 # Returns a list of movies that match the search criteria (case insensitive)
+##################################################
 def find_movie(search_queries):
     if not search_queries:
         flash("Please provide at least one search term.")
@@ -39,6 +41,11 @@ def find_movie(search_queries):
             search_message = ", ".join(search_strings)
             flash(f"Search results for: {search_message}.")
     return query.all()
+
+
+##################################################
+# Movie routes
+##################################################
 
 
 @bp.route("/", methods=["GET", "POST"])
@@ -155,6 +162,11 @@ def movie_details(movie_id):
     return render_template("movies/movie_details.html", movie=movie)
 
 
+##################################################
+# VHS Tape routes
+##################################################
+
+
 @bp.route("/vhs_add_tape/<movie_id>", methods=["GET", "POST"])
 def vhs_add_tape(movie_id):
     try:
@@ -181,6 +193,25 @@ def vhs_add_tape(movie_id):
         error = str(e.__dict__.get("orig") or e)
         flash(f"An error occurred: {error}", "error")
         return redirect(url_for("videocassettes.vhs_add_tape", movie_id=movie_id))
+
+
+@bp.route("/vhs_remove/<movie_id>/<vhs_tape_copy_id>", methods=["GET", "POST"])
+def vhs_remove(movie_id, vhs_tape_copy_id):
+    vhs_tape_copy = VhsTapeCopy.query.get_or_404(vhs_tape_copy_id)
+    movie = Movie.query.get_or_404(movie_id)
+    if request.method == "POST":
+        # Delete the VhsTapeCopy object from the database
+        db.session.delete(vhs_tape_copy)
+        db.session.commit()
+
+        flash("VHS tape copy deleted successfully.")
+        return redirect(url_for("movies.movie_details", movie_id=movie_id))
+    return render_template(
+        "videocassettes/vhs_remove.html",
+        vhs_tape_copy=vhs_tape_copy,
+        movie=movie,
+        movie_id=movie_id,
+    )
 
 
 @bp.route("/vhs_rent/<movie_id>/rent_copy/<vhs_tape_copy_id>", methods=["GET", "POST"])

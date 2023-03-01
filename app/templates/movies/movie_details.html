@@ -16,6 +16,7 @@
     <th>Is available</th>
     <th>Rent</th>
     <th>History</th>
+    <th>Actions</th>
   </tr>
   {% for vhs_tape in movie.vhs_tape_copy %}
   <tr>
@@ -35,6 +36,9 @@
     </td>
     <td>
       <a href="{{ url_for('movies.vhs_history', movie_id=movie.id, vhs_tape_copy_id=vhs_tape.id) }}">History</a>
+    </td>
+    <td>
+      <a href="{{ url_for('movies.vhs_remove', movie_id=movie.id, vhs_tape_copy_id=vhs_tape.id) }}">Delete</a>
     </td>
   </tr>
   {% endfor %}
