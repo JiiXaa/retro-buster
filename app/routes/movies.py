@@ -200,15 +200,26 @@ def vhs_remove(movie_id, vhs_tape_copy_id):
     vhs_tape_copy = VhsTapeCopy.query.get_or_404(vhs_tape_copy_id)
     movie = Movie.query.get_or_404(movie_id)
     if request.method == "POST":
+
+        # Remove all rentals associated with the VhsTapeCopy object
+        rentals = vhs_tape_copy.rentals
+        for rental in rentals:
+            # Set the rental.vhs_tape_copy to None to avoid a foreign key constraint error
+            rental.vhs_tape_copy = None
+            db.session.delete(rental)
+
         # Delete the VhsTapeCopy object from the database
         db.session.delete(vhs_tape_copy)
         db.session.commit()
+
+        # TODO: Add archived rentals table to store rental history for deleted VHS tapes
 
         flash("VHS tape copy deleted successfully.")
         return redirect(url_for("movies.movie_details", movie_id=movie_id))
     return render_template(
         "videocassettes/vhs_remove.html",
         vhs_tape_copy=vhs_tape_copy,
+        vhs_tape_copy_id=vhs_tape_copy_id,
         movie=movie,
         movie_id=movie_id,
     )
