@@ -50,7 +50,18 @@ def find_movie(search_queries):
 
 @bp.route("/", methods=["GET", "POST"])
 def index():
-    movies_all = Movie.query.all()
+    # TODO: Add date_added to the movies table and sort by date added by default (most recent first)
+    sort_by = request.args.get("sort_by")
+    if sort_by == "title":
+        movies_all = Movie.query.order_by(Movie.title.asc()).all()
+    elif sort_by == "director":
+        movies_all = Movie.query.order_by(Movie.director.asc()).all()
+    elif sort_by == "genre":
+        movies_all = Movie.query.order_by(Movie.genre.asc()).all()
+    elif sort_by == "rating":
+        movies_all = Movie.query.order_by(Movie.rating.asc()).all()
+    else:
+        movies_all = Movie.query.all()
 
     return render_template("movies/index.html", movies_all=movies_all)
 

@@ -14,6 +14,11 @@
   <input type="submit" value="Search">
 </form>
 
+<button id="sortByTitle">Sort by Title</button>
+<button id="sortByDirector">Sort by Director</button>
+<button id="sortByGenre">Sort by Genre</button>
+<button id="sortByRating">Sort by Rating</button>
+
 <table>
   <tr>
     <th>Id</th>
@@ -58,4 +63,22 @@
 
 {% endif %}
 
+<script>
+  console.log('movies index');
+  function sortBy(value) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('sort_by', value);
+    window.location.href = url.toString();
+  }
+
+  document.getElementById('sortByTitle').addEventListener('click', () => sortBy('title'));
+
+  document.getElementById('sortByDirector').addEventListener('click', () => sortBy('director'));
+
+  document.getElementById('sortByGenre').addEventListener('click', () => sortBy('genre'));
+
+  document.getElementById('sortByRating').addEventListener('click', () => sortBy('rating'));
+</script>
+
 {% endblock %}
+

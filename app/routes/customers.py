@@ -138,5 +138,9 @@ def customer_delete(customer_id):
 
 @bp.route("/customer_profile/<customer_id>", methods=["GET", "POST"])
 def customer_profile(customer_id):
+    # TODO: Add a form to add a new video rental to the customer's account
+    # TODO: Add a form to edit the customer's information
+    # TODO: Add a form to delete the customer's account
+    # TODO: Show a list of all videos the customer has rented
     customer = Customer.query.get_or_404(customer_id)
     return render_template("customers/customer_profile.html", customer=customer)
