@@ -19,7 +19,9 @@
 <button id="sortByGenre">Sort by Genre</button>
 <button id="sortByRating">Sort by Rating</button>
 
-<table>
+<div class="loadingSpinner">Loading...</div>
+<div id="moviesList"></div>
+<!-- <table>
   <tr>
     <th>Id</th>
     <th>Title</th>
@@ -61,24 +63,135 @@
 
 
 
-{% endif %}
+{% endif %} -->
 
 <script>
-  console.log('movies index');
-  function sortBy(value) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('sort_by', value);
-    window.location.href = url.toString();
+  let movies = []
+
+  function displayMovies() {
+    const moviesList = document.getElementById('moviesList');
+    moviesList.innerHTML = '';
+    movies.forEach(function(movie) {
+      const movieDiv = document.createElement('div');
+      movieDiv.classList.add('movie__container');
+      movieDiv.innerHTML = `
+        <section class="movie__details">
+          <h2>${movie.title}</h2>
+          <p>${movie.director}</p>
+          <p>${movie.genre}</p>
+          <p>${movie.rating}</p>
+          <a href="{{ url_for('movies.movie_edit', movie_id="") }}${movie.id}">Edit</a>
+          <a href="{{ url_for('movies.movie_delete', movie_id="") }}${movie.id}">Delete</a>
+          <a href="{{ url_for('movies.movie_details', movie_id="") }}${movie.id}">Details</a>
+        </section>
+        <article class="vhs-copy__details">
+          <p>${movie.vhs_copies.length} copies of this VHS are in the database.</p>
+          <ul>
+            ${movie.vhs_copies.map(function(copy) {
+              return `
+                <li>${copy.copy_number} - ${copy.is_available ? '<span>This VHS copy is available.</span>' : '<span style="text-decoration:line-through;">This VHS copy is not available.</span>'}</li>
+              `;
+            }).join('')}
+          </ul>
+        </article>
+      `;
+      moviesList.appendChild(movieDiv);
+    });
   }
 
-  document.getElementById('sortByTitle').addEventListener('click', () => sortBy('title'));
+  function getMovies() {
+    fetch('/movies/movies-data')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        movies = data.movies;
+        document.querySelector('.loadingSpinner').style.display = 'none';
+        displayMovies();
+      })
+      .catch(error => {
+        console.error(error);
+        moviesList.innerHTML = '<p>There was an error loading the movies.</p>';
+      });
+  }
 
-  document.getElementById('sortByDirector').addEventListener('click', () => sortBy('director'));
+  // Sort movies functionality
+  let sortAscending = false;
 
-  document.getElementById('sortByGenre').addEventListener('click', () => sortBy('genre'));
+  function sortByTitle() {
+    if (sortAscending) {
+      movies.sort(function(a, b) {
+        return a.title.localeCompare(b.title);
+      });
+    } else {
+      movies.sort(function(a, b) {
+        return b.title.localeCompare(a.title);
+      });
+    }
+    sortAscending = !sortAscending;
+    displayMovies();
+  }
 
-  document.getElementById('sortByRating').addEventListener('click', () => sortBy('rating'));
+  function sortByDirector() {
+    if (sortAscending) {
+      movies.sort(function(a, b) {
+        return a.director.localeCompare(b.director);
+      });
+    } else {
+      movies.sort(function(a, b) {
+        return b.director.localeCompare(a.director);
+      });
+    }
+    sortAscending = !sortAscending;
+    displayMovies();
+  }
+
+  function sortByGenre() {
+    if (sortAscending) {
+      movies.sort(function(a, b) {
+        return a.genre.localeCompare(b.genre);
+      });
+    } else {
+      movies.sort(function(a, b) {
+        return b.genre.localeCompare(a.genre);
+      });
+    }
+    sortAscending = !sortAscending;
+    displayMovies();
+  }
+
+  function sortByRating() {
+    if (sortAscending) {
+      movies.sort(function(a, b) {
+        return a.rating - b.rating;
+      });
+    } else {
+      movies.sort(function(a, b) {
+        return b.rating - a.rating;
+      });
+    }
+    sortAscending = !sortAscending;
+    displayMovies();
+  }
+
+  // Run the getMovies function when the page loads
+  getMovies();
+
+  /////// Add event listeners to the sort buttons
+  // Sort the movies by title when the "Sort by Title" button is clicked
+  document.querySelector('#sortByTitle').addEventListener('click', sortByTitle);
+  // Sort the movies by director when the "Sort by Director" button is clicked
+  document.querySelector('#sortByDirector').addEventListener('click', sortByDirector);
+  // Sort the movies by genre when the "Sort by Genre" button is clicked
+  document.querySelector('#sortByGenre').addEventListener('click', sortByGenre);
+  // Sort the movies by rating when the "Sort by Rating" button is clicked
+  document.querySelector('#sortByRating').addEventListener('click', sortByRating);
+
 </script>
+
 
 {% endblock %}
 

@@ -26,6 +26,27 @@ class Movie(db.Model):
     def available_count(self):
         return sum(1 for tape in self.vhs_tape_copy if tape.is_available)
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "director": self.director,
+            "genre": self.genre,
+            "length": self.length,
+            "year": self.year,
+            "rating": self.rating,
+            "description": self.description,
+            "image": self.image,
+            "available_count": self.available_count(),
+            "vhs_copies": [
+                {
+                    "copy_number": vhs_tape_copy.copy_number,
+                    "is_available": vhs_tape_copy.is_available,
+                }
+                for vhs_tape_copy in self.vhs_tape_copy
+            ],
+        }
+
     def __repr__(self):
         return f"<Movie id={self.id}, title={self.title}>"
 

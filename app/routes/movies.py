@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from app.models import Movie, VhsTapeCopy, Customer, VhsRental
 from app import db
 from sqlalchemy import or_
@@ -50,20 +50,21 @@ def find_movie(search_queries):
 
 @bp.route("/", methods=["GET", "POST"])
 def index():
-    # TODO: Add date_added to the movies table and sort by date added by default (most recent first)
-    sort_by = request.args.get("sort_by")
-    if sort_by == "title":
-        movies_all = Movie.query.order_by(Movie.title.asc()).all()
-    elif sort_by == "director":
-        movies_all = Movie.query.order_by(Movie.director.asc()).all()
-    elif sort_by == "genre":
-        movies_all = Movie.query.order_by(Movie.genre.asc()).all()
-    elif sort_by == "rating":
-        movies_all = Movie.query.order_by(Movie.rating.asc()).all()
-    else:
-        movies_all = Movie.query.all()
+    return render_template("movies/index.html")
 
-    return render_template("movies/index.html", movies_all=movies_all)
+
+# endpoint to get all movies from the database and pass them to the JavaScript in JSON format
+@bp.route("/movies-data", methods=["GET", "POST"])
+def movies_data():
+    ### Passing a JSON object to JavaScript ###
+    # https://stackoverflow.com/questions/42499535/passing-a-json-object-from-flask-to-javascript
+
+    # Get all movies from the database
+    movies_all = Movie.query.all()
+    # Convert the movie objects to dictionaries
+    movies = [movie.to_dict() for movie in movies_all]
+
+    return jsonify(movies=movies)
 
 
 @bp.route("/movie_search", methods=["GET", "POST"])

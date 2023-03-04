@@ -1,3 +1,13 @@
 body {
   background-color: #494c6f;
 }
+
+.movie__container {
+  margin: 1rem auto;
+  padding: 1rem;
+  max-width: 800px;
+  display: flex;
+  border: 2px solid black;
+  align-items: center;
+  justify-content: center;
+}
