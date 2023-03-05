@@ -338,6 +338,7 @@ def vhs_return(movie_id, vhs_tape_copy_id):
 
 @bp.route("/vhs_history/<movie_id>/<vhs_tape_copy_id>", methods=["GET", "POST"])
 def vhs_history(movie_id, vhs_tape_copy_id):
+    movie = Movie.query.get_or_404(movie_id)
     vhs_history = VhsRental.query.filter_by(vhs_tape_copy_id=vhs_tape_copy_id).all()
     vhs_detail = VhsTapeCopy.query.filter_by(
         id=vhs_tape_copy_id, movie_id=movie_id
@@ -346,6 +347,7 @@ def vhs_history(movie_id, vhs_tape_copy_id):
     today = datetime.utcnow()
     return render_template(
         "videocassettes/vhs_history.html",
+        movie=movie,
         vhs=vhs,
         vhs_detail=vhs_detail,
         vhs_tape_copy_id=vhs_tape_copy_id,

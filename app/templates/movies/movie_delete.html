@@ -6,6 +6,6 @@
 <form action="{{ url_for('movies.movie_delete', movie_id=movie.id) }}" method="post">
   <p>Are you sure you want to delete "{{ movie.title }}" by {{ movie.director }}?</p>
   <button type="submit">Confirm</button>
-  <button type="button"><a href="{{ url_for('movies.index') }}">Cancel</a></button>
+  <a href="{{ url_for('movies.index') }}">Cancel</a></>
 </form>
 {% endblock %}

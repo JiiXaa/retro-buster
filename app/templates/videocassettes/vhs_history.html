@@ -25,4 +25,6 @@
 {% else %}
   <p>No VHS history for copy with ID: {{ vhs_detail_id }} with the copy number: <span><b>{{ vhs_detail.copy_number }}</b></span></p>
 {% endif %}
+
+<a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}"">Go Back</a>
 {% endblock %}
