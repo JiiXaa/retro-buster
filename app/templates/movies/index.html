@@ -14,10 +14,10 @@
   <input type="submit" value="Search">
 </form>
 
-<button id="sortByTitle">Sort by Title</button>
-<button id="sortByDirector">Sort by Director</button>
-<button id="sortByGenre">Sort by Genre</button>
-<button id="sortByRating">Sort by Rating</button>
+<button class="btn-sort" data-sortby="title">Sort by Title</button>
+<button class="btn-sort" data-sortby="director">Sort by Director</button>
+<button class="btn-sort" data-sortby="genre">Sort by Genre</button>
+<button class="btn-sort" data-sortby="rating">Sort by Rating</button>
 
 <div class="loadingSpinner">Loading...</div>
 <div id="moviesList"></div>
@@ -71,6 +71,7 @@
   function displayMovies() {
     const moviesList = document.getElementById('moviesList');
     moviesList.innerHTML = '';
+    console.log(movies);
     movies.forEach(function(movie) {
       const movieDiv = document.createElement('div');
       movieDiv.classList.add('movie__container');
@@ -121,57 +122,11 @@
   // Sort movies functionality
   let sortAscending = false;
 
-  function sortByTitle() {
+  function sortMovies(sortBy) {
     if (sortAscending) {
-      movies.sort(function(a, b) {
-        return a.title.localeCompare(b.title);
-      });
+      movies.sort((a, b) => a[sortBy] > b[sortBy] ? 1 : -1);
     } else {
-      movies.sort(function(a, b) {
-        return b.title.localeCompare(a.title);
-      });
-    }
-    sortAscending = !sortAscending;
-    displayMovies();
-  }
-
-  function sortByDirector() {
-    if (sortAscending) {
-      movies.sort(function(a, b) {
-        return a.director.localeCompare(b.director);
-      });
-    } else {
-      movies.sort(function(a, b) {
-        return b.director.localeCompare(a.director);
-      });
-    }
-    sortAscending = !sortAscending;
-    displayMovies();
-  }
-
-  function sortByGenre() {
-    if (sortAscending) {
-      movies.sort(function(a, b) {
-        return a.genre.localeCompare(b.genre);
-      });
-    } else {
-      movies.sort(function(a, b) {
-        return b.genre.localeCompare(a.genre);
-      });
-    }
-    sortAscending = !sortAscending;
-    displayMovies();
-  }
-
-  function sortByRating() {
-    if (sortAscending) {
-      movies.sort(function(a, b) {
-        return a.rating - b.rating;
-      });
-    } else {
-      movies.sort(function(a, b) {
-        return b.rating - a.rating;
-      });
+      movies.sort((a, b) => a[sortBy] < b[sortBy] ? 1 : -1);
     }
     sortAscending = !sortAscending;
     displayMovies();
@@ -182,13 +137,12 @@
 
   /////// Add event listeners to the sort buttons
   // Sort the movies by title when the "Sort by Title" button is clicked
-  document.querySelector('#sortByTitle').addEventListener('click', sortByTitle);
-  // Sort the movies by director when the "Sort by Director" button is clicked
-  document.querySelector('#sortByDirector').addEventListener('click', sortByDirector);
-  // Sort the movies by genre when the "Sort by Genre" button is clicked
-  document.querySelector('#sortByGenre').addEventListener('click', sortByGenre);
-  // Sort the movies by rating when the "Sort by Rating" button is clicked
-  document.querySelector('#sortByRating').addEventListener('click', sortByRating);
+  document.querySelectorAll('.btn-sort').forEach(function(btn) {
+    const sortBy = btn.dataset.sortby;
+    btn.addEventListener('click', function() {
+      sortMovies(sortBy);
+    });
+  });
 
 </script>
 

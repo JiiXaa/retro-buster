@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Movie FOUND</h1>
+<h3>Movie FOUND</h3>
 
 <table>
   <tr>
@@ -9,6 +9,7 @@
     <th>Director</th>
     <th>Genre</th>
   </tr>
+  {% if movie_query %}
   {% for movie in movie_query %}
   <tr>
     <td>{{ movie.title }}</td>
@@ -16,5 +17,10 @@
     <td>{{ movie.genre }}</td>
   </tr>
   {% endfor %}
+  {% else %}
+  <tr>
+    <td colspan="3">No movies in the database.</td>
+  </tr>
+  {% endif %}
 </table>
 {% endblock %}
