@@ -4,7 +4,10 @@
 <h1>{{ movie.title }} Movie DELETE</h1>
 
 <form action="{{ url_for('movies.movie_delete', movie_id=movie.id) }}" method="post">
-  <p>Are you sure you want to delete "{{ movie.title }}" by {{ movie.director }}?</p>
+  <div class="movie-delete__info">
+    <p>Are you sure you want to delete "{{ movie.title }}" by {{ movie.director }}?</p>
+    <p>This action cannot be undone. All vhs tape and rental history associated with them will be lost.</p>
+  </div>
   <button type="submit">Confirm</button>
   <a href="{{ url_for('movies.index') }}">Cancel</a></>
 </form>

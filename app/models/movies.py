@@ -18,10 +18,17 @@ class Movie(db.Model):
     image = db.Column(db.String(200), nullable=False)
 
     # VhsCopy relationship with Movie table (one-to-many)
-    vhs_tape_copy = db.relationship("VhsTapeCopy", back_populates="movie", uselist=True)
+    vhs_tape_copy = db.relationship(
+        "VhsTapeCopy",
+        back_populates="movie",
+        uselist=True,
+        cascade="all, delete-orphan",
+    )
 
     # VhsRental relationship with Movie table (one-to-many)
-    rentals = db.relationship("VhsRental", back_populates="movie")
+    rentals = db.relationship(
+        "VhsRental", back_populates="movie", cascade="all, delete-orphan"
+    )
 
     def available_count(self):
         return sum(1 for tape in self.vhs_tape_copy if tape.is_available)
