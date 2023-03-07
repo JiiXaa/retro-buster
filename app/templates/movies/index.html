@@ -14,6 +14,7 @@
   <input type="submit" value="Search">
 </form>
 
+<button class="btn-sort-date" data-sortby="date_added">Sort by Date</button>
 <button class="btn-sort" data-sortby="title">Sort by Title</button>
 <button class="btn-sort" data-sortby="director">Sort by Director</button>
 <button class="btn-sort" data-sortby="genre">Sort by Genre</button>
@@ -65,13 +66,19 @@
 
 {% endif %} -->
 
-<script>
+<script type="module">
+  // found option to import (up-to-date) date-fns from CDN here: https://www.skypack.dev/view/date-fns
+  import { parse, compareAsc, compareDesc } from "https://cdn.skypack.dev/date-fns";
   let movies = []
 
   function displayMovies() {
     const moviesList = document.getElementById('moviesList');
     moviesList.innerHTML = '';
     console.log(movies);
+    if (movies.length === 0 || movies === undefined) {
+      moviesList.innerHTML = '<p>No movies in the database.</p>';
+      return;
+    }
     movies.forEach(function(movie) {
       const movieDiv = document.createElement('div');
       movieDiv.classList.add('movie__container');
@@ -115,7 +122,7 @@
       })
       .catch(error => {
         console.error(error);
-        moviesList.innerHTML = '<p>There was an error loading the movies.</p>';
+        moviesList.innerHTML = '<p>There was an error loading the movies, Please contact developer.</p>';
       });
   }
 
@@ -127,6 +134,16 @@
       movies.sort((a, b) => a[sortBy] > b[sortBy] ? 1 : -1);
     } else {
       movies.sort((a, b) => a[sortBy] < b[sortBy] ? 1 : -1);
+    }
+    sortAscending = !sortAscending;
+    displayMovies();
+  }
+
+  function sortByDate(sortBy) {
+    if (sortAscending) {
+      movies.sort((a, b) => compareAsc(parse(a[sortBy], 'dd-MM-yyyy HH:mm:ss', new Date()), parse(b[sortBy], 'dd-MM-yyyy HH:mm:ss', new Date())));
+    } else {
+      movies.sort((a, b) => compareDesc(parse(a[sortBy], 'dd-MM-yyyy HH:mm:ss', new Date()), parse(b[sortBy], 'dd-MM-yyyy HH:mm:ss', new Date())));
     }
     sortAscending = !sortAscending;
     displayMovies();
@@ -144,8 +161,11 @@
     });
   });
 
+  // Sort the movies by date when the "Sort by Date" button is clicked
+  document.querySelector('.btn-sort-date').addEventListener('click', function() {
+    sortByDate('date_added');
+  });
 </script>
 
 
 {% endblock %}
-

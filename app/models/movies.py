@@ -8,6 +8,7 @@ import uuid
 
 class Movie(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    date_added = db.Column(db.DateTime, default=datetime.utcnow)
     title = db.Column(db.String(50), nullable=False)
     director = db.Column(db.String(50), nullable=False)
     genre = db.Column(db.String(30), nullable=False)
@@ -36,6 +37,7 @@ class Movie(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
+            "date_added": self.date_added.strftime("%d-%m-%Y %H:%M:%S"),
             "title": self.title,
             "director": self.director,
             "genre": self.genre,
