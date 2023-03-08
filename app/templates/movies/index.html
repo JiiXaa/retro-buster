@@ -5,13 +5,24 @@
 
 <h3>Quick search:</h3>
 <form action="{{ url_for('movies.movie_search') }}" method="post">
-  <label for="title">Title</label>
-  <input type="text" name="title" id="title"> <br>
-  <label for="director">Director</label>
-  <input type="text" name="director" id="director"> <br>
-  <label for="genre">Genre</label>
-  <input type="text" name="genre" id="genre"> <br>
+
+  <div class="form-control">
+    <label for="title">Title</label>
+    <input type="text" name="title" id="title"> <br>
+  </div>
+
+  <div class="form-control">
+    <label for="director">Director</label>
+    <input type="text" name="director" id="director"> <br>
+  </div>
+
+  <div class="form-control">
+    <label for="genre">Genre</label>
+    <input type="text" name="genre" id="genre"> <br>
+  </div>
+
   <input type="submit" value="Search">
+
 </form>
 
 <button class="btn-sort-date" data-sortby="date_added">Sort by Date</button>

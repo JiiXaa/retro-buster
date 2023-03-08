@@ -4,14 +4,20 @@
 <h1>Customer ADD</h1>
 
 <form action="{{ url_for('customers.customer_add') }}" method="post">
-  <label for="first_name">First Name</label>
-  <input type="text" name="first_name" id="first_name"> <br>
+  <div class="form-control">
+    <label for="first_name">First Name</label>
+    <input type="text" name="first_name" id="first_name"> <br>
+  </div>
 
-  <label for="last_name">Last Name</label>
-  <input type="text" name="last_name" id="last_name" required> <br>
+  <div class="form-control">
+    <label for="last_name">Last Name</label>
+    <input type="text" name="last_name" id="last_name" required> <br>
+  </div>
 
-  <label for="email">Email</label>
-  <input type="email" name="email" id="email" required> <br>
+  <div class="form-control">
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" required> <br>
+  </div>
 
   <input type="submit" value="Add Customer">
 </form>

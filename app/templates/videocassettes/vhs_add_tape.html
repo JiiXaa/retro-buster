@@ -22,10 +22,13 @@
   <p>VHS: {{ movie.title }}</p>
   <p>test: {{ movie.vhs_tape_copy }}</p>
 
-  <label for="copy_number">Copy Number (id)</label>
-  <input type="text" name="copy_number" id="copy_number" autofocus required> <br>
+  <div class="form-control">
+    <label for="copy_number">Copy Number (id)</label>
+    <input type="text" name="copy_number" id="copy_number" autofocus required> <br>
+  </div>
 
   <button type="submit">Add Copy</button>
+
 </form>
 
 {% endblock %}
