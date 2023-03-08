@@ -18,11 +18,13 @@ def create_app():
     # Used Flask-Migrate documentation to set up and use migrations in the project: https://flask-migrate.readthedocs.io/en/latest/
     migrate = Migrate(app, db)
 
+    from app.routes.users import bp as users_bp
     from app.routes.main import bp as main_bp
     from app.routes.movies import bp as movies_bp
     from app.routes.customers import bp as customers_bp
     from app.routes.rentals import bp as rentals_bp
 
+    app.register_blueprint(users_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(movies_bp)
     app.register_blueprint(customers_bp)
