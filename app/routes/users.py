@@ -15,6 +15,7 @@ def register():
         email = request.form.get("email")
         password = request.form.get("password")
         password_confirm = request.form.get("password_confirm")
+        token = request.form.get("token")
 
         # Check if all fields are filled out
         if (
@@ -23,6 +24,7 @@ def register():
             or not email
             or not password
             or not password_confirm
+            or not token
         ):
             flash("Please fill out all fields.")
             return redirect(url_for("users.register"))
@@ -40,6 +42,10 @@ def register():
         # Check if the email is already in use
         if User.query.filter_by(email=email).first():
             flash("User with this email already exists.")
+            return redirect(url_for("users.register"))
+
+        if not token == "token":
+            flash("Invalid token. Please contact the supervisor.")
             return redirect(url_for("users.register"))
 
         # Hash the password
