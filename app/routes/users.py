@@ -10,6 +10,7 @@ bp = Blueprint("users", __name__, url_prefix="/users")
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        username = request.form.get("username")
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
         email = request.form.get("email")
@@ -19,7 +20,8 @@ def register():
 
         # Check if all fields are filled out
         if (
-            not first_name
+            not username
+            or not first_name
             or not last_name
             or not email
             or not password
@@ -39,6 +41,11 @@ def register():
             flash("Password must be at least 8 characters.")
             return redirect(url_for("users.register"))
 
+        # Check if the username is already in use
+        if User.query.filter_by(username=username).first():
+            flash("Username already exists.")
+            return redirect(url_for("users.register"))
+
         # Check if the email is already in use
         if User.query.filter_by(email=email).first():
             flash("User with this email already exists.")
@@ -53,6 +60,7 @@ def register():
 
         # Create a new user object and add it to the database with the user details provided by the user
         new_user = User(
+            username=username,
             first_name=first_name,
             last_name=last_name,
             email=email,

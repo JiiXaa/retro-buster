@@ -7,6 +7,7 @@ import uuid
 class User(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
+    username = db.Column(db.String(25), nullable=False, unique=True)
     first_name = db.Column(db.String(25), nullable=False)
     last_name = db.Column(db.String(25), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
