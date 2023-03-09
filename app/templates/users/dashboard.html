@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Dashboard</h1>
+
+<p>Welcome, {{ user.username|capitalize }}!</p>
+<p>{{ user.first_name }} {{ user.last_name }}</p>
+<p>{{ user.email }}</p>
+
+{% endblock %}

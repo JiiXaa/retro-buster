@@ -1,10 +1,62 @@
 from app import db
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session
 from app.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.exc import SQLAlchemyError
 
 bp = Blueprint("users", __name__, url_prefix="/users")
+
+
+@bp.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        # Verify the user's credentials
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        # Check if all fields are filled out
+        if not username or not password:
+            flash("Please fill out all fields.")
+            return redirect(url_for("users.login"))
+
+        # Check if the user exists or password is correct
+        user = User.query.filter_by(username=username).first()
+        if user is None:
+            flash("Invalid username or password.")
+            return redirect(url_for("users.login"))
+        password_hashed = check_password_hash(user.password_hash, password)
+        if not user or not password_hashed:
+            flash("Invalid username or password.")
+            return redirect(url_for("users.login"))
+
+        # log the user in / set session variables
+        session["logged_in"] = True
+        session["username"] = user.username
+
+        flash(f"Welcome, {user.username.capitalize()}")
+        return redirect(url_for("users.dashboard"))
+
+    return render_template("users/login.html")
+
+
+@bp.route("/logout")
+def logout():
+    # Clear session variables
+    session.clear()
+    flash("You have been logged out.")
+    return redirect(url_for("users.login"))
+
+
+@bp.route("/dashboard/<username>")
+def dashboard(username):
+    # Check if the user is logged in
+    if not session.get("logged_in"):
+        flash("Please log in to view the dashboard.")
+        return redirect(url_for("users.login"))
+    else:
+        username = session.get("username")
+        user = User.query.filter_by(username=username).first()
+        return render_template("users/dashboard.html", user=user)
 
 
 @bp.route("/register", methods=["GET", "POST"])
@@ -72,10 +124,9 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             flash("User registered successfully.")
-            # TODO: redirect to the user profile page / login page
-            return redirect(url_for("users.register"))
-        # If there is an error, rollback the changes to the database and display the error message
+            return redirect(url_for("users.login"))
         except SQLAlchemyError as e:
+            # If there is an error, rollback the changes to the database and display the error message
             db.session.rollback()
             error = str(e.__dict__["orig"])
             flash(error)
