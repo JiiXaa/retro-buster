@@ -1,50 +1,21 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from app.models import Movie, VhsTapeCopy, Customer, VhsRental
 from app import db
-from sqlalchemy import or_
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
+from app.utils.utility_functions import find_movie
+from app.utils.decorators import login_required
 
 bp = Blueprint("movies", __name__, url_prefix="/movies")
-
-##################################################
-# Utility function to search for movies by title, director, or genre.
-# Returns a list of movies that match the search criteria (case insensitive)
-##################################################
-def find_movie(search_queries):
-    if not search_queries:
-        flash("Please provide at least one search term.")
-
-    query = Movie.query
-    for term in search_queries:
-        if term == "title":
-            query = query.filter(Movie.title.ilike("%" + search_queries[term] + "%"))
-        elif term == "director":
-            query = query.filter(Movie.director.ilike("%" + search_queries[term] + "%"))
-        elif term == "genre":
-            query = query.filter(Movie.genre.ilike("%" + search_queries[term] + "%"))
-    query_value = query.all()
-
-    if not query_value:
-        flash("No results found.")
-    else:
-        # I had to find a way to get the key and value from the dictionary and return them as a string in the flash message.
-        # https://stackoverflow.com/questions/26660654/how-do-i-print-the-key-value-pairs-of-a-dictionary-in-python
-        # https://stackoverflow.com/questions/58626415/turning-key-value-pairs-from-a-dictionary-into-strings
-
-        search_strings = [
-            f"{key.replace('_', ' ').title()}: {value}"
-            for key, value in search_queries.items()
-            if value and value.strip()
-        ]
-        if search_strings:
-            search_message = ", ".join(search_strings)
-            flash(f"Search results for: {search_message}.")
-    return query.all()
 
 
 ##################################################
 # Movie routes
+##################################################
+
+### Login required decorator before all requests for movies related routes ###
+@bp.before_request
+@login_required
 ##################################################
 
 

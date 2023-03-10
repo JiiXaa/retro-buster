@@ -2,48 +2,16 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models import Customer
 from app import db
 from sqlalchemy.exc import SQLAlchemyError
+from app.utils.utility_functions import find_customer
+from app.utils.decorators import login_required
 
 
 bp = Blueprint("customers", __name__, url_prefix="/customers")
 
-# Utility function to search for customer by first_name, last_name, or email.
-# Returns a list of customers that match the search criteria (case insensitive)
-def find_customer(search_queries):
-    if not search_queries:
-        flash("Please provide at least one search term.")
-
-    query = Customer.query
-    for term in search_queries:
-        if term == "first_name":
-            query = query.filter(
-                Customer.first_name.ilike("%" + search_queries[term] + "%")
-            )
-        elif term == "last_name":
-            query = query.filter(
-                Customer.last_name.ilike("%" + search_queries[term] + "%")
-            )
-        elif term == "email":
-            query = query.filter(Customer.email.ilike("%" + search_queries[term] + "%"))
-    query_value = query.all()
-
-    if not query_value:
-        flash("No results found.")
-    else:
-        print("search_queries.values()", search_queries.values())
-        print("search_queries.items()", search_queries.items())
-        # I had to find a way to get the key and value from the dictionary and return them as a string in the flash message.
-        # https://stackoverflow.com/questions/26660654/how-do-i-print-the-key-value-pairs-of-a-dictionary-in-python
-        # https://stackoverflow.com/questions/58626415/turning-key-value-pairs-from-a-dictionary-into-strings
-
-        search_strings = [
-            f"{key.replace('_', ' ').title()}: {value}"
-            for key, value in search_queries.items()
-            if value and value.strip()
-        ]
-        if search_strings:
-            search_message = ", ".join(search_strings)
-            flash(f"Search results for: {search_message}.")
-    return query_value
+### Login required decorator before all requests for customers related routes ###
+@bp.before_request
+@login_required
+##############################################
 
 
 @bp.route("/", methods=["GET", "POST"])

@@ -2,8 +2,14 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app import db
 from app.models.rentals import VhsRental
 from datetime import datetime
+from app.utils.decorators import login_required
 
 bp = Blueprint("rentals", __name__, url_prefix="/rentals")
+
+### Login required decorator before all requests for rentals related routes ###
+@bp.before_request
+@login_required
+##############################################
 
 
 @bp.route("/", methods=["GET", "POST"])

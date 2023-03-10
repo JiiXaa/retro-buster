@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from app.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.exc import SQLAlchemyError
+from app.utils.decorators import login_required
 
 bp = Blueprint("users", __name__, url_prefix="/users")
 
@@ -34,7 +35,7 @@ def login():
         session["username"] = user.username
 
         flash(f"Welcome, {user.username.capitalize()}")
-        return redirect(url_for("users.dashboard"))
+        return redirect(url_for("users.dashboard", username=user.username))
 
     return render_template("users/login.html")
 
@@ -48,6 +49,8 @@ def logout():
 
 
 @bp.route("/dashboard/<username>")
+# dashboard route is protected by the login_required decorator
+@login_required
 def dashboard(username):
     # Check if the user is logged in
     if not session.get("logged_in"):
