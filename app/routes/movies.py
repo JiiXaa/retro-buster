@@ -1,4 +1,13 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
+from flask import (
+    Blueprint,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    flash,
+    jsonify,
+    session,
+)
 from app.models import Movie, VhsTapeCopy, Customer, VhsRental
 from app import db
 from sqlalchemy.exc import SQLAlchemyError
@@ -13,13 +22,9 @@ bp = Blueprint("movies", __name__, url_prefix="/movies")
 # Movie routes
 ##################################################
 
-### Login required decorator before all requests for movies related routes ###
-@bp.before_request
-@login_required
-##################################################
-
 
 @bp.route("/", methods=["GET", "POST"])
+@login_required
 def index():
     return render_template("movies/index.html")
 
@@ -39,6 +44,7 @@ def movies_data():
 
 
 @bp.route("/movie_search", methods=["GET", "POST"])
+@login_required
 def movie_search():
     if request.method == "POST":
         search_queries = {
@@ -56,6 +62,7 @@ def movie_search():
 
 
 @bp.route("/movie_add", methods=["GET", "POST"])
+@login_required
 def movie_add():
     if request.method == "POST":
         title = request.form.get("title")
@@ -108,6 +115,7 @@ def movie_add():
 
 
 @bp.route("/movie_edit/<movie_id>", methods=["GET", "POST"])
+@login_required
 def movie_edit(movie_id):
     movie = Movie.query.get(movie_id)
     if request.method == "POST":
@@ -127,6 +135,7 @@ def movie_edit(movie_id):
 
 
 @bp.route("/movie_delete/<movie_id>", methods=["GET", "POST"])
+@login_required
 def movie_delete(movie_id):
     movie = Movie.query.get_or_404(movie_id)
     if request.method == "POST":
@@ -146,6 +155,7 @@ def movie_delete(movie_id):
 
 
 @bp.route("/movie_details/<movie_id>", methods=["GET", "POST"])
+@login_required
 def movie_details(movie_id):
     movie = Movie.query.get_or_404(movie_id)
     return render_template("movies/movie_details.html", movie=movie)
@@ -157,6 +167,7 @@ def movie_details(movie_id):
 
 
 @bp.route("/vhs_add_tape/<movie_id>", methods=["GET", "POST"])
+@login_required
 def vhs_add_tape(movie_id):
     try:
         if request.method == "POST":
@@ -185,6 +196,7 @@ def vhs_add_tape(movie_id):
 
 
 @bp.route("/vhs_remove/<movie_id>/<vhs_tape_copy_id>", methods=["GET", "POST"])
+@login_required
 def vhs_remove(movie_id, vhs_tape_copy_id):
     vhs_tape_copy = VhsTapeCopy.query.get_or_404(vhs_tape_copy_id)
     movie = Movie.query.get_or_404(movie_id)
@@ -215,6 +227,7 @@ def vhs_remove(movie_id, vhs_tape_copy_id):
 
 
 @bp.route("/vhs_rent/<movie_id>/rent_copy/<vhs_tape_copy_id>", methods=["GET", "POST"])
+@login_required
 def vhs_rent(movie_id, vhs_tape_copy_id):
     # Get the vhs copy tape object from the database
     vhs_tape_copy = VhsTapeCopy.query.filter_by(id=vhs_tape_copy_id).first()
@@ -284,6 +297,7 @@ def vhs_rent(movie_id, vhs_tape_copy_id):
 
 
 @bp.route("/vhs_return/<movie_id>/<vhs_tape_copy_id>", methods=["GET", "POST"])
+@login_required
 def vhs_return(movie_id, vhs_tape_copy_id):
     # Get the vhs copy tape object from the database
     vhs_tape_copy = VhsTapeCopy.query.filter_by(
@@ -314,6 +328,7 @@ def vhs_return(movie_id, vhs_tape_copy_id):
 
 
 @bp.route("/vhs_history/<movie_id>/<vhs_tape_copy_id>", methods=["GET", "POST"])
+@login_required
 def vhs_history(movie_id, vhs_tape_copy_id):
     movie = Movie.query.get_or_404(movie_id)
     vhs_history = VhsRental.query.filter_by(vhs_tape_copy_id=vhs_tape_copy_id).all()
