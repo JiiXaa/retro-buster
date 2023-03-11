@@ -173,6 +173,13 @@ def vhs_add_tape(movie_id):
         if request.method == "POST":
             copy_number = request.form.get("copy_number")
 
+            # Check if the copy number is already in database
+            if VhsTapeCopy.query.filter_by(
+                movie_id=movie_id, copy_number=copy_number
+            ).first():
+                flash("Copy number already exists. Cannot add duplicate copy.")
+                return redirect(url_for("movies.vhs_add_tape", movie_id=movie_id))
+
             vhs_tape_copy = VhsTapeCopy(
                 movie_id=movie_id,
                 copy_number=copy_number,
