@@ -13,7 +13,6 @@ from app import db
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
 from app.utils.utility_functions import find_movie
-from app.utils.decorators import login_required
 
 bp = Blueprint("movies", __name__, url_prefix="/movies")
 

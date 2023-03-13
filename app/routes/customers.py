@@ -1,16 +1,21 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models import Customer
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from app.models import Customer, Movie
 from app import db
 from sqlalchemy.exc import SQLAlchemyError
 from app.utils.utility_functions import find_customer
-from app.utils.decorators import login_required
 
 
 bp = Blueprint("customers", __name__, url_prefix="/customers")
 
-### Login required decorator before all requests for customers related routes ###
+
 @bp.before_request
-@login_required
+def before_request():
+    ### ADD LOGIN REQUIRED TO ALL CUSTOMERS ROUTES ###
+    if not session.get("logged_in"):
+        flash("You must be logged in to view this page.")
+        return redirect(url_for("users.login"))
+
+
 ##############################################
 
 
@@ -109,6 +114,11 @@ def customer_profile(customer_id):
     # TODO: Add a form to add a new video rental to the customer's account
     # TODO: Add a form to edit the customer's information
     # TODO: Add a form to delete the customer's account
-    # TODO: Show a list of all videos the customer has rented
+
+    # Fetch the customer object from the database
     customer = Customer.query.get_or_404(customer_id)
-    return render_template("customers/customer_profile.html", customer=customer)
+
+    return render_template(
+        "customers/customer_profile.html",
+        customer=customer,
+    )
