@@ -149,7 +149,9 @@ def customer_vhs_rent(customer_id):
         return redirect(url_for("customers.customer_profile", customer_id=customer_id))
 
     # Check if the customer has already rented out the maximum number of VHS tapes
-    if len(customer.rentals) >= MAX_RENTAL_VHS_TAPES:
+    active_rentals = [rental for rental in customer.rentals if not rental.date_returned]
+
+    if len(active_rentals) >= MAX_RENTAL_VHS_TAPES:
         flash("Customer already rented out the maximum number of VHS tapes.")
         return redirect(url_for("customers.customer_profile", customer_id=customer_id))
 
