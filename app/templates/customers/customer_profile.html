@@ -7,6 +7,18 @@
 <p>Last name: {{ customer.last_name }}</p>
 <p>Email: {{ customer.email }}</p>
 
+<h2>Rent VHS:</h2>
+<form action="{{ url_for('customers.customer_vhs_rent', customer_id=customer.id) }}" method="post">
+  <div class="form-control">
+    <label for="movie_title">Movie Title</label>
+    <input type="text" name="movie_title" id="movie_title" required> <br>
+  </div>
+  <div class="form-control">
+    <label for="vhs_copy_number">VHS copy number</label>
+    <input type="text" name="vhs_copy_number" id="vhs_copy_number" required> <br>
+  </div>
+  <input type="submit" value="Rent VHS tape">
+
 <h2>Rentals</h2>
 {% if not customer.rentals %}
   <p>No rentals found.</p>

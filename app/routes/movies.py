@@ -13,6 +13,7 @@ from app import db
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
 from app.utils.utility_functions import find_movie
+from app.utils.variables import MAX_RENTAL_VHS_COPIES
 
 bp = Blueprint("movies", __name__, url_prefix="/movies")
 
@@ -242,6 +243,7 @@ def vhs_rent(movie_id, vhs_tape_copy_id):
 
     # Find the customer in the database
     if request.method == "POST":
+        # Get the customer email address from the form. This might change to a customer ID in the future.
         customer_query = request.form.get("customer_query")
         if not customer_query:
             flash("Please enter a customer email address.")
@@ -267,6 +269,11 @@ def vhs_rent(movie_id, vhs_tape_copy_id):
             flash("VHS tape is not available.")
             return redirect(url_for("movies.movie_details", movie_id=movie_id))
 
+        # Check if the customer has already rented out the maximum number of VHS tapes
+        if len(customer.rentals) >= MAX_RENTAL_VHS_COPIES:
+            flash("Customer has already rented out the maximum number of VHS tapes.")
+            return redirect(url_for("movies.movie_details", movie_id=movie_id))
+
         # Check if the VHS tape is already rented by the same customer
         existing_rental = VhsRental.query.filter_by(
             vhs_tape_copy=vhs_tape_copy, customer=customer
@@ -275,7 +282,7 @@ def vhs_rent(movie_id, vhs_tape_copy_id):
             flash("This VHS tape is already rented by this customer.")
             return redirect(url_for("movies.movie_details", movie_id=movie_id))
 
-        # If the VHS tape is available and not already rented by the same customer,
+        # If the VHS tape is available and not already rented by the customer,
         # set the is_available field to False
         vhs_tape_copy.is_available = False
 
@@ -292,7 +299,7 @@ def vhs_rent(movie_id, vhs_tape_copy_id):
         db.session.add(rental)
         db.session.commit()
 
-        flash("Rental created successfully.")
+        flash("VHS tape rented successfully.")
         return redirect(url_for("movies.movie_details", movie_id=movie_id))
 
     return render_template(

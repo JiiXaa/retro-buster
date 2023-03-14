@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from app.models import Customer, Movie
+from app.models import Customer, Movie, VhsTapeCopy, VhsRental
 from app import db
 from sqlalchemy.exc import SQLAlchemyError
+from datetime import datetime
 from app.utils.utility_functions import find_customer
+from app.utils.variables import MAX_RENTAL_VHS_COPIES
 
 
 bp = Blueprint("customers", __name__, url_prefix="/customers")
@@ -111,7 +113,6 @@ def customer_delete(customer_id):
 
 @bp.route("/customer_profile/<customer_id>", methods=["GET", "POST"])
 def customer_profile(customer_id):
-    # TODO: Add a form to add a new video rental to the customer's account
     # TODO: Add a form to edit the customer's information
     # TODO: Add a form to delete the customer's account
 
@@ -122,3 +123,52 @@ def customer_profile(customer_id):
         "customers/customer_profile.html",
         customer=customer,
     )
+
+
+@bp.route("/customer_profile/<customer_id>/vhs_rent", methods=["POST"])
+def customer_vhs_rent(customer_id):
+    # Get the movie ID and VHS tape copy ID from the form
+    movie_title = request.form.get("movie_title")
+    vhs_copy_number = request.form.get("vhs_copy_number")
+
+    # Get the VHS tape copy object from the database
+    vhs_tape_copy = VhsTapeCopy.query.filter_by(copy_number=vhs_copy_number).first()
+    if not vhs_tape_copy:
+        flash("VHS tape copy not found.")
+        return redirect(url_for("customers.customer_profile", customer_id=customer_id))
+
+    # Get the customer object from the database
+    customer = Customer.query.get_or_404(customer_id)
+    if not customer:
+        flash("Customer not found.")
+        return redirect(url_for("customers.customer_profile", customer_id=customer_id))
+
+    # Check if the VHS tape copy is already rented out
+    if not vhs_tape_copy.is_available:
+        flash("VHS tape copy is already rented out.")
+        return redirect(url_for("customers.customer_profile", customer_id=customer_id))
+
+    # Check if the customer has already rented out the maximum number of VHS tapes
+    if len(customer.rentals) >= MAX_RENTAL_VHS_COPIES:
+        flash("Customer already rented out the maximum number of VHS tapes.")
+        return redirect(url_for("customers.customer_profile", customer_id=customer_id))
+
+    # If the VHS tape is available and not already rented by the customer,
+    # set the is_available field to False
+    vhs_tape_copy.is_available = False
+
+    # Get the movie object from the database
+    movie = Movie.query.filter_by(title=movie_title).first()
+
+    # Create a new rental object and add it to the database
+    rental = VhsRental(
+        date_rented=datetime.now(),
+        vhs_tape_copy=vhs_tape_copy,
+        customer=customer,
+        movie=movie,
+    )
+    db.session.add(rental)
+    db.session.commit()
+
+    flash("VHS tape rented successfully.")
+    return redirect(url_for("customers.customer_profile", customer_id=customer_id))
