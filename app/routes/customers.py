@@ -4,7 +4,7 @@ from app import db
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
 from app.utils.utility_functions import find_customer
-from app.utils.variables import MAX_RENTAL_VHS_COPIES
+from app.utils.variables import MAX_RENTAL_VHS_TAPES
 
 
 bp = Blueprint("customers", __name__, url_prefix="/customers")
@@ -149,7 +149,7 @@ def customer_vhs_rent(customer_id):
         return redirect(url_for("customers.customer_profile", customer_id=customer_id))
 
     # Check if the customer has already rented out the maximum number of VHS tapes
-    if len(customer.rentals) >= MAX_RENTAL_VHS_COPIES:
+    if len(customer.rentals) >= MAX_RENTAL_VHS_TAPES:
         flash("Customer already rented out the maximum number of VHS tapes.")
         return redirect(url_for("customers.customer_profile", customer_id=customer_id))
 

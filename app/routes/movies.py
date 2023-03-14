@@ -13,7 +13,7 @@ from app import db
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
 from app.utils.utility_functions import find_movie
-from app.utils.variables import MAX_RENTAL_VHS_COPIES
+from app.utils.variables import MAX_RENTAL_VHS_TAPES
 
 bp = Blueprint("movies", __name__, url_prefix="/movies")
 
@@ -270,7 +270,7 @@ def vhs_rent(movie_id, vhs_tape_copy_id):
             return redirect(url_for("movies.movie_details", movie_id=movie_id))
 
         # Check if the customer has already rented out the maximum number of VHS tapes
-        if len(customer.rentals) >= MAX_RENTAL_VHS_COPIES:
+        if len(customer.rentals) >= MAX_RENTAL_VHS_TAPES:
             flash("Customer has already rented out the maximum number of VHS tapes.")
             return redirect(url_for("movies.movie_details", movie_id=movie_id))
 
