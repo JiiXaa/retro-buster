@@ -8,7 +8,7 @@ from flask import (
     jsonify,
     session,
 )
-from app.models import Movie, VhsTapeCopy, Customer, VhsRental
+from app.models import Movie, VhsTapeCopy, Customer, VhsRental, ArchivedRental
 from app import db
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
@@ -207,23 +207,43 @@ def vhs_add_tape(movie_id):
 def vhs_remove(movie_id, vhs_tape_copy_id):
     vhs_tape_copy = VhsTapeCopy.query.get_or_404(vhs_tape_copy_id)
     movie = Movie.query.get_or_404(movie_id)
+
     if request.method == "POST":
+        try:
+            archived_rentals = []
 
-        # Remove all rentals associated with the VhsTapeCopy object
-        rentals = vhs_tape_copy.rentals
-        for rental in rentals:
-            # Set the rental.vhs_tape_copy to None to avoid a foreign key constraint error
-            rental.vhs_tape_copy = None
-            db.session.delete(rental)
+            # Remove all rentals associated with the VhsTapeCopy object
+            for rental in vhs_tape_copy.rentals:
+                # Create a new ArchivedRental object and add it to the database before deleting the Rental object
+                archived_rental = ArchivedRental(
+                    date_rented=rental.date_rented,
+                    date_returned=rental.date_returned,
+                    user_id=session.get("user_id"),
+                    vhs_tape_copy=rental.vhs_tape_copy,
+                    movie=rental.movie,
+                )
+                archived_rentals.append(archived_rental)
+                rental.vhs_tape_copy = None
+                # Set the is_removed flag to True so that the Rental object is not deleted from the database, this is so that the ArchivedRental object can be created and avoid a foreign key constraint error.
+                rental.is_removed = True
+                db.session.add(rental)
 
-        # Delete the VhsTapeCopy object from the database
-        db.session.delete(vhs_tape_copy)
-        db.session.commit()
+            # Set the is_removed flag to True so that the VhsTapeCopy object is not deleted from the database, this is so that the ArchivedRental object can be created and avoid a foreign key constraint error.
+            vhs_tape_copy.is_removed = True
+            db.session.add(vhs_tape_copy)
+            db.session.commit()
 
-        # TODO: Add archived rentals table to store rental history for deleted VHS tapes
+            # Add archived rentals to the database
+            for archived_rental in archived_rentals:
+                db.session.add(archived_rental)
 
-        flash("VHS tape copy deleted successfully.")
-        return redirect(url_for("movies.movie_details", movie_id=movie_id))
+            flash("VHS tape copy deleted successfully.")
+            return redirect(url_for("movies.movie_details", movie_id=movie_id))
+        except Exception as e:
+            db.session.rollback()
+            flash("An error occurred while deleting VHS tape copy: " + str(e), "error")
+            return redirect(url_for("movies.movie_details", movie_id=movie_id))
+
     return render_template(
         "videocassettes/vhs_remove.html",
         vhs_tape_copy=vhs_tape_copy,

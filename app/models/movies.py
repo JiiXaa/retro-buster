@@ -31,6 +31,9 @@ class Movie(db.Model):
         "VhsRental", back_populates="movie", cascade="all, delete-orphan"
     )
 
+    # ArchivedRental relationship with Movie table (one-to-many)
+    archived_rentals = db.relationship("ArchivedRental", back_populates="movie")
+
     def available_count(self):
         return sum(1 for tape in self.vhs_tape_copy if tape.is_available)
 
@@ -65,6 +68,7 @@ class VhsTapeCopy(db.Model):
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
     copy_number = db.Column(db.String(20), nullable=False)
     is_available = db.Column(db.Boolean, default=True)
+    is_removed = db.Column(db.Boolean, default=False)
 
     # Movie relationship with VhsTapeCopy table (one-to-many)
     # ondelete="CASCADE" deletes the VhsTapeCopy record if the Movie record is deleted
@@ -75,6 +79,7 @@ class VhsTapeCopy(db.Model):
         db.ForeignKey("movie.id", ondelete="CASCADE"),
         nullable=False,
     )
+    movie = db.relationship("Movie", back_populates="vhs_tape_copy")
 
     # Movie relationship with VhsTapeCopy table (one-to-many)
     # cascade="all, delete-orphan" deletes the VhsTapeCopy record if the Movie record is deleted. The 'delete-orphan' option deletes the VhsTapeCopy record if the Movie record is deleted
@@ -84,9 +89,10 @@ class VhsTapeCopy(db.Model):
         cascade="all, delete-orphan",
     )
 
-    movie_id = db.Column(UUID(as_uuid=True), db.ForeignKey("movie.id"), nullable=True)
-    movie = db.relationship("Movie", back_populates="vhs_tape_copy")
-    rentals = db.relationship("VhsRental", back_populates="vhs_tape_copy")
+    archived_rentals = db.relationship("ArchivedRental", back_populates="vhs_tape_copy")
+
+    user_id = db.Column(UUID(as_uuid=True), db.ForeignKey("user.id"), nullable=True)
+    user = db.relationship("User", back_populates="vhs_tape_copy")
 
     def __repr__(self):
         return f"<VhsTapeCopy id={self.id}, movie_id={self.movie_id}>"

@@ -13,5 +13,8 @@ class User(db.Model):
     email = db.Column(db.String(50), nullable=False, unique=True)
     password_hash = db.Column(db.String(128), nullable=False)
 
+    vhs_tape_copy = db.relationship("VhsTapeCopy", back_populates="user")
+    archived_rentals = db.relationship("ArchivedRental", back_populates="user")
+
     def __repr__(self):
         return f"<User id={self.id}, last_name={self.last_name}, email={self.email}>"

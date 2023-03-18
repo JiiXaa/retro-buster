@@ -33,6 +33,7 @@ def login():
         # log the user in / set session variables
         session["logged_in"] = True
         session["username"] = user.username
+        session["user_id"] = user.id
 
         flash(f"Welcome, {user.username.capitalize()}")
         return redirect(url_for("users.dashboard", username=user.username))
