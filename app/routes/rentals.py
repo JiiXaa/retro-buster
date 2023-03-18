@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app import db
-from app.models.rentals import VhsRental
+from app.models.rentals import VhsRental, ArchivedRental
 from datetime import datetime
 from app.utils.decorators import login_required
 
@@ -18,6 +18,8 @@ def index():
     rentals_all = VhsRental.query.all()
     today = datetime.utcnow()
 
+    archived_rentals = ArchivedRental.query.all()
+
     rental_data = []
 
     for rental in rentals_all:
@@ -28,6 +30,7 @@ def index():
                 "id": rental.id,
                 "date_rented": rental.date_rented,
                 "date_returned": rental.date_returned,
+                "is_removed": rental.is_removed,
                 "customer_id": rental.customer_id,
                 "customer_name": f"{rental.customer.first_name} {rental.customer.last_name}",
                 "vhs_title": movie.title,
@@ -36,4 +39,9 @@ def index():
                 "vhs_copy_number": vhs_tape_copy.copy_number,
             }
         )
-    return render_template("rentals/index.html", rental_data=rental_data, today=today)
+    return render_template(
+        "rentals/index.html",
+        rental_data=rental_data,
+        today=today,
+        archived_rentals=archived_rentals,
+    )

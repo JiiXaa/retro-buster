@@ -30,4 +30,18 @@
       <p>No rentals in the database</p>
   {% endif %}
 
+
+  <h1>TEST ARCHIVED RENTALS</h1>
+  {% if archived_rentals %}
+      {% for rental in archived_rentals %}
+        <div>
+          <p>Movie: {{ rental.movie.title }}</p>
+         <p>Removed by: {{ rental.user.username }} | {{ rental.user.email }}</p>
+         <p>VHS tape copy: {{ rental.vhs_tape_copy.copy_number }}</p>
+        </div>
+          <hr>
+      {% endfor %}
+    {% else %}
+      <p>No archived rentals in the database</p>
+  {% endif %}
 {% endblock %}

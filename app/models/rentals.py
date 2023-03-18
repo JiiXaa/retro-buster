@@ -36,6 +36,8 @@ class ArchivedRental(db.Model):
     date_rented = db.Column(db.DateTime, nullable=False)
     date_returned = db.Column(db.DateTime, nullable=True)
 
+    # TODO: Add date_archived column
+
     user_id = db.Column(UUID(as_uuid=True), db.ForeignKey("user.id"), nullable=False)
     user = db.relationship("User", back_populates="archived_rentals")
 
