@@ -8,7 +8,7 @@ from flask import (
     jsonify,
     session,
 )
-from app.models import Movie, VhsTapeCopy, Customer, VhsRental, ArchivedRental
+from app.models import Movie, VhsTapeCopy, Customer, VhsRental, ArchivedRental, User
 from app import db
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
@@ -207,6 +207,7 @@ def vhs_add_tape(movie_id):
 def vhs_remove(movie_id, vhs_tape_copy_id):
     vhs_tape_copy = VhsTapeCopy.query.get_or_404(vhs_tape_copy_id)
     movie = Movie.query.get_or_404(movie_id)
+    user = User.query.get_or_404(session.get("user_id"))
 
     if request.method == "POST":
         try:
@@ -218,7 +219,8 @@ def vhs_remove(movie_id, vhs_tape_copy_id):
                 archived_rental = ArchivedRental(
                     date_rented=rental.date_rented,
                     date_returned=rental.date_returned,
-                    user_id=session.get("user_id"),
+                    date_archived=datetime.utcnow(),
+                    user=user,
                     vhs_tape_copy=rental.vhs_tape_copy,
                     movie=rental.movie,
                 )
@@ -226,16 +228,15 @@ def vhs_remove(movie_id, vhs_tape_copy_id):
                 rental.vhs_tape_copy = None
                 # Set the is_removed flag to True so that the Rental object is not deleted from the database, this is so that the ArchivedRental object can be created and avoid a foreign key constraint error.
                 rental.is_removed = True
-                db.session.add(rental)
 
             # Set the is_removed flag to True so that the VhsTapeCopy object is not deleted from the database, this is so that the ArchivedRental object can be created and avoid a foreign key constraint error.
             vhs_tape_copy.is_removed = True
-            db.session.add(vhs_tape_copy)
             db.session.commit()
 
             # Add archived rentals to the database
-            for archived_rental in archived_rentals:
-                db.session.add(archived_rental)
+            # Stumbled upon this solution to add multiple objects to the database at once: https://stackoverflow.com/questions/58517491/sqlalchemy-bulk-save-objects-vs-add-all-underlying-logic-difference
+            # Remember: Keep in mind that using bulk_save_objects will bypass some SQLAlchemy features like automatically populating default values, cascades, and events. Make sure to handle those aspects in your code if needed.
+            db.session.bulk_save_objects(archived_rentals)
 
             flash("VHS tape copy deleted successfully.")
             return redirect(url_for("movies.movie_details", movie_id=movie_id))
