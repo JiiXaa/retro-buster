@@ -225,7 +225,6 @@ def vhs_remove(movie_id, vhs_tape_copy_id):
                     movie=rental.movie,
                 )
                 archived_rentals.append(archived_rental)
-                rental.vhs_tape_copy = None
                 # Set the is_removed flag to True so that the Rental object is not deleted from the database, this is so that the ArchivedRental object can be created and avoid a foreign key constraint error.
                 rental.is_removed = True
 

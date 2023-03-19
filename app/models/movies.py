@@ -32,10 +32,19 @@ class Movie(db.Model):
     )
 
     # ArchivedRental relationship with Movie table (one-to-many)
-    archived_rentals = db.relationship("ArchivedRental", back_populates="movie")
+    archived_rentals = db.relationship(
+        "ArchivedRental", back_populates="movie", cascade="all, delete-orphan"
+    )
 
     def available_count(self):
-        return sum(1 for tape in self.vhs_tape_copy if tape.is_available)
+        return sum(
+            1
+            for tape in self.vhs_tape_copy
+            if tape.is_available and not tape.is_removed
+        )
+
+    def total_count(self):
+        return sum(1 for tape in self.vhs_tape_copy if not tape.is_removed)
 
     def to_dict(self):
         return {
@@ -54,6 +63,7 @@ class Movie(db.Model):
                 {
                     "copy_number": vhs_tape_copy.copy_number,
                     "is_available": vhs_tape_copy.is_available,
+                    "is_removed": vhs_tape_copy.is_removed,
                 }
                 for vhs_tape_copy in self.vhs_tape_copy
             ],

@@ -4,44 +4,52 @@
 <h1>Show all Rentals in the database</h1>
 
 {% if rental_data %}
-      {% for rental in rental_data %}
-        <div>
-          <p>Title: {{ rental.vhs_title }}</p>
-          <p>Copy number: {{ rental.vhs_copy_number }}</p>
-          <p>Director: {{ rental.vhs_director }}</p>
-          <p>Genre: {{ rental.vhs_genre }}</p>
-          <p>Customer: {{ rental.customer_name }}</p>
-          <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%y (%H:%M)') }}</p>
+  {% set rental_count = 0 %}
+  {% for rental in rental_data %}
+    {% if rental.is_removed == False %}
+      {% set rental_count = rental_count + 1 %}
+      <div>
+        <p>Title: {{ rental.vhs_title }}</p>
+        <p>Copy number: {{ rental.vhs_copy_number }}</p>
+        <p>Director: {{ rental.vhs_director }}</p>
+        <p>Genre: {{ rental.vhs_genre }}</p>
+        <p>Customer: {{ rental.customer_name }}</p>
+        <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%y (%H:%M)') }}</p>
+        {% if rental.date_returned %}
+          <p>Return date: {{ rental.date_returned.strftime('%d-%m-%y (%H:%M)') }}</p>
+        {% else %}
+          <p>Return date: not returned </p>
+        {% endif %}
+        <p>Rent days
           {% if rental.date_returned %}
-            <p>Return date: {{ rental.date_returned.strftime('%d-%m-%y (%H:%M)') }}</p>
+            {{ (rental.date_returned - rental.date_rented).days }}
           {% else %}
-            <p>Return date: not returned </p>
+            {{ (today - rental.date_rented).days }}
           {% endif %}
-          <p>Rent days
-            {% if rental.date_returned %}
-              {{ (rental.date_returned - rental.date_rented).days }}
-            {% else %}
-              {{ (today - rental.date_rented).days }}
-            {% endif %}
-        </div>
-          <hr>
-      {% endfor %}
-    {% else %}
-      <p>No rentals in the database</p>
+      </div>
+      <hr>
+    {% endif %}
+  {% endfor %}
+  {% if rental_count == 0 %}
+    <p>No rentals in the database</p>
   {% endif %}
+{% else %}
+  <p>No rentals in the database</p>
+{% endif %}
 
 
-  <h1>TEST ARCHIVED RENTALS</h1>
+<h1>TEST ARCHIVED RENTALS</h1>
   {% if archived_rentals %}
-      {% for rental in archived_rentals %}
-        <div>
-          <p>Movie: {{ rental.movie.title }}</p>
-         <p>Removed by: {{ rental.user.username }} | {{ rental.user.email }}</p>
-         <p>VHS tape copy: {{ rental.vhs_tape_copy.copy_number }}</p>
-        </div>
-          <hr>
-      {% endfor %}
-    {% else %}
+    {% for rental in archived_rentals %}
+      <div>
+        <p>Movie: {{ rental.movie.title }}</p>
+        <p>VHS tape copy: {{ rental.vhs_tape_copy.copy_number }}</p>
+        <p>Removed by: {{ rental.user.username }} | {{ rental.user.email }}</p>
+        <p>Removed at: {{ rental.date_archived.strftime('%d-%m-%y (%H:%M)') }}</p>
+      </div>
+        <hr>
+    {% endfor %}
+  {% else %}
       <p>No archived rentals in the database</p>
   {% endif %}
 {% endblock %}

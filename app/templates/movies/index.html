@@ -104,12 +104,12 @@
           <a href="{{ url_for('movies.movie_details', movie_id="") }}${movie.id}">Details</a>
         </section>
         <article class="vhs-copy__details">
-          <p>${movie.vhs_copies.length} copies of this VHS are in the database.</p>
+          <p>${movie.vhs_copies.filter(copy => !copy.is_removed).length} copies of this VHS are in the database.</p>
           <ul>
             ${movie.vhs_copies.map(function(copy) {
-              return `
-                <li>${copy.copy_number} - ${copy.is_available ? '<span>This VHS copy is available.</span>' : '<span style="text-decoration:line-through;">This VHS copy is not available.</span>'}</li>
-              `;
+              if (!copy.is_removed) return `
+                  <li>${copy.copy_number} - ${copy.is_available ? '<span>This VHS copy is available.</span>' : '<span style="text-decoration:line-through;">This VHS copy is not available.</span>'}</li>
+                    `;
             }).join('')}
           </ul>
         </article>
