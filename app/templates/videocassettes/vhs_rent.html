@@ -2,7 +2,7 @@
 {% block content %}
 
 <p>Id: {{ vhs_tape_copy.id }}</p>
-<p>Added to database: {{ vhs_tape_copy.date_added.strftime("%d-%m-%y") }}</p>
+<p>Added to database: {{ vhs_tape_copy.date_added.strftime("%d-%m-%y (%H:%M)") }}</p>
 <p>Copy number: {{ vhs_tape_copy.copy_number }}</p>
 <p>
   {% if vhs_tape_copy.is_available %}
@@ -23,5 +23,6 @@
 
 </form>
 
+<a href="{{ url_for('movies.movie_details', movie_id=vhs_tape_copy.movie.id) }}" id="{{ vhs_tape_copy.movie.id }}">Go Back</a>
 
 {% endblock %}
