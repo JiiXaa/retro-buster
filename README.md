@@ -17,22 +17,22 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
   - [x] Movie add (Add movie title to database),
   - [] tape add (Add copy tapes of the movie),
   - [x] VHS search/filter,
-  - [] login,
-  - [] registration,
+  - [x] login,
+  - [x] registration,
   - [] contact,
 
-- [] Registration/Login logic
+- [x] Registration/Login logic
 
-  - [] Registration: need to figure out how will registration work in the project as it will be only limited registered people/users (mainly the employees of the retroBuster shop).
-    - [] Initial idea: When registering a user there will be input field (token) needed to be successfully registered. In that scenario the token would be provided to the potential employee by the owner or manager.
-    - [] Password needs to be hashed during registration (can use: werkzeug.security: generate_password_hash or bcrypt)
-    - [] Repeat password (to ensure the password is correct)
-    - [] Inputs need to be validated (for: fields are required, password length, password special characters)
-  - [] - Login:
-    - [] Input validations
-    - [] compare a password with the hash stored in the database
+  - [x] Registration: need to figure out how will registration work in the project as it will be only limited registered people/users (mainly the employees of the retroBuster shop).
+    - [x] Initial idea: When registering a user there will be input field (token) needed to be successfully registered. In that scenario the token would be provided to the potential employee by the owner or manager.
+    - [x] Password needs to be hashed during registration (can use: werkzeug.security: generate_password_hash or bcrypt)
+    - [x] Repeat password (to ensure the password is correct)
+    - [x] Inputs need to be validated (for: fields are required, password length, password special characters)
+  - [x] - Login:
+    - [x] Input validations
+    - [x] compare a password with the hash stored in the database
 
-- [] Show 'flash' messages to provide feedback about the status of the user's actions, or to guide the user through the app.
+- [x] Show 'flash' messages to provide feedback about the status of the user's actions, or to guide the user through the app.
 
 - [x] Create VHS db model, and display all available video cassettes in the template. Route '/videocassettes'
 - [x] Add view for adding a videocassette (VHS). Route 'videocassettes/add_vhs'
@@ -40,7 +40,14 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
 - [x] Add view for removing a videocassette (VHS) (delete button located next to the title)
   - [x] When user clicks the delete button, show confirmation page including a form. When form is submitted the corresponding videocassette (VHS) entry is removed from database.
 - [x] Add view for editing a VHS (edit button located next to the title)
+- [x] Add sort movies functionality by: date, title, director, genre and rating.
+
   - [x] When a user clicks the edit button, a form is displayed with inputs pre-filled with the corresponding videocassette (VHS) data. Upon submitting the form, the entry for that videocassette is updated in the database.
+
+- [] Rental history - active/archived
+  - [x] Deleting a VHS tape copy will not delete it from the database but set the is_removed flag to True. That is to avoid the constraint errors and keep relations between removed VHS tape copies, active rentals and archived rentals.
+  - [x] Show active rentals on the rentals page.
+  - [] Archived rentals link located in the rentals page to be able to see archived rentals for deleted VHS tape copy.
 
 ### Database relationship model prototyping:
 
