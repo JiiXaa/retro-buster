@@ -12,11 +12,10 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
   - [x] Customers,
   - [x] Customers search/filter,
   - [x] Customer add,
-  - [x] videocassettes (VHS),
-  - [x] VHS main page (show all available VHS list, this would be good idea to incorporate pagination to help improve loading time of the page by requesting 10-20 records or so)
+  - [x] Movies main page, show all available movies with necessary details (this would be good idea to incorporate pagination to help improve loading time of the page by requesting 10-20 records or so)
+  - [x] Movies search/sort by date, title, director, genre and rating,
   - [x] Movie add (Add movie title to database),
-  - [] tape add (Add copy tapes of the movie),
-  - [x] VHS search/filter,
+    - [x] VHS tape copy add (Add copy tapes of the movie),
   - [x] login,
   - [x] registration,
   - [] contact,
@@ -35,10 +34,11 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
 - [x] Show 'flash' messages to provide feedback about the status of the user's actions, or to guide the user through the app.
 
 - [x] Create VHS db model, and display all available video cassettes in the template. Route '/videocassettes'
-- [x] Add view for adding a videocassette (VHS). Route 'videocassettes/add_vhs'
+- [x] Add view for adding a videocassette (VHS). Route 'movies/vhs_add_tape'
   - [x] Add form which adds a videocassette (VHS) on submit
 - [x] Add view for removing a videocassette (VHS) (delete button located next to the title)
-  - [x] When user clicks the delete button, show confirmation page including a form. When form is submitted the corresponding videocassette (VHS) entry is removed from database.
+  - [x] When user clicks the delete button, show confirmation page including a form. When form is submitted the corresponding videocassette (VHS) entry is marked as removed (is_removed flag).
+  - [x] When videocassette (VHS) is 'deleted' by the user, all rental history associated with that tape copy is moved to archived rentals page.
 - [x] Add view for editing a VHS (edit button located next to the title)
 - [x] Add sort movies functionality by: date, title, director, genre and rating.
 
@@ -49,13 +49,22 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
   - [x] Show active rentals on the rentals page.
   - [] Archived rentals link located in the rentals page to be able to see archived rentals for deleted VHS tape copy.
 
+### Database features:
+
+- App using ElephantSQL hosting platform for storing Postgres database,
+- Used soft delete technique to mark records as deleted without actually removing them from the database, it helps with:
+  - Data recovery, accidentally removed data or recover historical data (Rentals vs. ArchivedRentals)
+  - Data integrity, foreign key constraints, and complex relationships between tables.
+
 ### Database relationship model prototyping:
 
 Database prototyping/building uses the SQLite library and the final version is stored on the ElephantSQL (PostgreSQL database hosting service)
 
-- [x] 'Videocassette' class needs to have a one-to-many relationship with the 'VhsDetails' class. 'VhsDetails' instance will hold all important information about the all instances (vhs copies) connected to it (copy number/id, date added, is available).
-- [x] 'VhsDetails' (tape copy) class needs to have many-to-one relationship with the 'VhsRental' model to be able to track rental information such as which customer has rented that particular copy, when was borrowed, due to bring back.
+- [x] 'Movie' class needs to have a one-to-many relationship with the 'VhsTapeCopy' class. 'VhsTapeCopy' instance will hold all important information about the all instances (vhs copies) connected to it (copy number/id, date added, is available, is removed).
+- [x] 'VhsTapeCopy' (tape copy) class needs to have many-to-one relationship with the 'VhsRental' model to be able to track rental information such as which customer has rented that particular copy, when was borrowed, due to bring back.
 - [x] 'VhsRental' class needs to have many-to-one relationship with 'Customer' as one customer can have multiple rental transaction/movies rented at the same time.
+- [x] 'ArchivedRental' class needs to have many-to-one relationship with 'Movie' meaning that one movie can have multiple archived rentals.
+- [x] 'VhsTapeCopy' needs to have many-to-one relationship with 'ArchivedRental' and 'VhsRental' meaning that one VHS tape copy can have multiple rentals or archived rentals.
 
 ## TEST/BUGS:
 
