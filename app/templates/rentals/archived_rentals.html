@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Archived Rentals</h1>
+
+    {% if vhs_tape_copies %}
+        {% for vhs_tape_copy in vhs_tape_copies %}
+            <div>
+                <p>Movie: {{ vhs_tape_copy.movie.title }}</p>
+                <p>VHS tape copy: {{ vhs_tape_copy.copy_number }}</p>
+                <p>Removed by: {{ vhs_tape_copy.archived_rentals[0].user.username }} | {{ vhs_tape_copy.archived_rentals[0].user.email }}</p>
+                <p>Removed at: {{ vhs_tape_copy.archived_rentals[0].date_archived.strftime('%d-%m-%y (%H:%M)') }}</p>
+
+                <p>Associated rentals:</p>
+                <ul>
+                {% for rental in vhs_tape_copy.archived_rentals %}
+                    <li>
+                        Rented by:
+                        {% if rental.customer %}
+                            {{ rental.customer.first_name }} {{ rental.customer.last_name }} | {{ rental.customer.email }}
+                        {% else %}
+                            No customer
+                        {% endif %}
+                        | Rent date: {{ rental.date_rented.strftime('%d-%m-%y (%H:%M)') }}
+                        {% if rental.date_returned %}
+                            | Return date: {{ rental.date_returned.strftime('%d-%m-%y (%H:%M)') }}
+                        {% else %}
+                            | Return date: Not returned
+                        {% endif %}
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No archived rentals in the database</p>
+    {% endif %}
+{% endblock %}
+

@@ -1,21 +1,29 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from app import db
 from app.models.rentals import VhsRental, ArchivedRental
+from app.models.movies import VhsTapeCopy
 from datetime import datetime
-from app.utils.decorators import login_required
 
 bp = Blueprint("rentals", __name__, url_prefix="/rentals")
 
 ### Login required decorator before all requests for rentals related routes ###
 @bp.before_request
-@login_required
+def before_request():
+    ### ADD LOGIN REQUIRED TO ALL MOVIE ROUTES ###
+    if not session.get("logged_in"):
+        flash("You must be logged in to view this page.")
+        return redirect(url_for("users.login"))
+
+
 ##############################################
 
 
 @bp.route("/", methods=["GET", "POST"])
 def index():
     # TODO: Pagination would be nice here to avoid loading all rentals at once
-    rentals_all = VhsRental.query.all()
+
+    # Rentals are ordered by date_rented descending
+    rentals_all = VhsRental.query.order_by(VhsRental.date_rented.desc()).all()
     today = datetime.utcnow()
 
     archived_rentals = ArchivedRental.query.all()
@@ -46,4 +54,15 @@ def index():
         rental_data=rental_data,
         today=today,
         archived_rentals=archived_rentals,
+    )
+
+
+@bp.route("/archived_rentals", methods=["GET"])
+def archived_rentals():
+    vhs_tape_copies = VhsTapeCopy.query.filter(VhsTapeCopy.is_removed == True).all()
+    print(vhs_tape_copies)
+    print("archived_rentals")
+
+    return render_template(
+        "rentals/archived_rentals.html", vhs_tape_copies=vhs_tape_copies
     )
