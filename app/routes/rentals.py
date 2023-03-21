@@ -32,7 +32,9 @@ def index():
                 "date_returned": rental.date_returned,
                 "is_removed": rental.is_removed,
                 "customer_id": rental.customer_id,
-                "customer_name": f"{rental.customer.first_name} {rental.customer.last_name}",
+                "customer_name": f"{rental.customer.first_name} {rental.customer.last_name}"
+                if rental.customer
+                else "Customer not found",
                 "vhs_title": movie.title,
                 "vhs_director": movie.director,
                 "vhs_genre": movie.genre,

@@ -221,6 +221,7 @@ def vhs_remove(movie_id, vhs_tape_copy_id):
                     date_returned=rental.date_returned,
                     date_archived=datetime.utcnow(),
                     user=user,
+                    customer_id=rental.customer_id,
                     vhs_tape_copy=rental.vhs_tape_copy,
                     movie=rental.movie,
                 )

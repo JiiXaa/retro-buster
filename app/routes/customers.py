@@ -105,10 +105,16 @@ def customer_edit(customer_id):
 def customer_delete(customer_id):
     customer = Customer.query.get_or_404(customer_id)
     if request.method == "POST":
+        # Set customer_id to None for all VHS rentals associated with the customer
+        for rental in customer.rentals:
+            rental.customer_id = None
+
         db.session.delete(customer)
         db.session.commit()
+
         flash("Customer deleted successfully.")
         return redirect(url_for("customers.index"))
+
     return render_template("customers/customer_delete.html", customer=customer)
 
 

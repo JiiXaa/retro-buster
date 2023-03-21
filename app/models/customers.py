@@ -18,5 +18,8 @@ class Customer(db.Model):
     # VhsRental relationship with Customer table (one-to-many)
     rentals = db.relationship("VhsRental", back_populates="customer")
 
+    # ArchivedRental relationship with Customer table (one-to-many)
+    archived_rentals = db.relationship("ArchivedRental", back_populates="customer")
+
     def __repr__(self):
         return f"<Customer id={self.id}, first_name={self.first_name}, last_name={self.last_name}>"

@@ -55,6 +55,7 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
 - Used soft delete technique to mark records as deleted without actually removing them from the database, it helps with:
   - Data recovery, accidentally removed data or recover historical data (Rentals vs. ArchivedRentals)
   - Data integrity, foreign key constraints, and complex relationships between tables.
+    More information about soft delete can be found here: https://blog.miguelgrinberg.com/post/implementing-the-soft-delete-pattern-with-flask-and-sqlalchemy
 
 ### Database relationship model prototyping:
 

@@ -12,7 +12,9 @@ class VhsRental(db.Model):
 
     # Customer relationship with VhsRental table (one-to-many)
     customer_id = db.Column(
-        UUID(as_uuid=True), db.ForeignKey("customer.id"), nullable=False
+        UUID(as_uuid=True),
+        db.ForeignKey("customer.id"),
+        nullable=True,
     )
     customer = db.relationship("Customer", back_populates="rentals")
 
@@ -43,6 +45,14 @@ class ArchivedRental(db.Model):
 
     user_id = db.Column(UUID(as_uuid=True), db.ForeignKey("user.id"), nullable=False)
     user = db.relationship("User", back_populates="archived_rentals")
+
+    customer_id = db.Column(
+        UUID(as_uuid=True),
+        db.ForeignKey("customer.id"),
+        nullable=True,
+    )
+
+    customer = db.relationship("Customer", back_populates="archived_rentals")
 
     movie_id = db.Column(UUID(as_uuid=True), db.ForeignKey("movie.id"), nullable=False)
     movie = db.relationship("Movie", back_populates="archived_rentals")

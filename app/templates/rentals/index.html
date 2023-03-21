@@ -46,6 +46,13 @@
         <p>VHS tape copy: {{ rental.vhs_tape_copy.copy_number }}</p>
         <p>Removed by: {{ rental.user.username }} | {{ rental.user.email }}</p>
         <p>Removed at: {{ rental.date_archived.strftime('%d-%m-%y (%H:%M)') }}</p>
+        <p>Rented by:
+          {% if rental.customer %}
+            {{rental.customer.first_name}} | {{ rental.customer.last_name }} | {{ rental.customer.email }}
+          {% else %}
+            No customer
+          {% endif %}
+        </p>
       </div>
         <hr>
     {% endfor %}
