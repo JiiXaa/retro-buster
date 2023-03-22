@@ -50,6 +50,27 @@ def movies_data():
     return jsonify(movies=movies)
 
 
+@bp.route("/featured_movies", methods=["GET"])
+def featured_movies():
+    # Find the 10 movies with is_featured set to True
+    get_featured_movies = Movie.query.filter(Movie.is_featured == True).limit(10).all()
+
+    # If there are less than 10 movies with is_featured set to True, find the most rented movies
+    if len(get_featured_movies) < 10:
+        limit = 10 - len(get_featured_movies)
+        most_rented_movies = (
+            Movie.query.order_by(Movie.rental_count.desc()).limit(limit).all()
+        )
+
+        # Add the most rented movies to the list of featured movies
+        get_featured_movies.extend(most_rented_movies)
+
+        # Convert the movie objects to dictionaries and pass them to the JavaScript in JSON format
+        featured_movies = [movie.to_dict() for movie in get_featured_movies]
+
+    return jsonify(featured_movies=featured_movies)
+
+
 @bp.route("/movie_search", methods=["GET", "POST"])
 def movie_search():
     if request.method == "POST":
@@ -77,6 +98,7 @@ def movie_add():
         year = request.form.get("year")
         rating = request.form.get("rating")
         description = request.form.get("description")
+        is_featured = bool(request.form.get("is_featured"))
 
         ### ADD IMAGE UPLOAD FUNCTIONALITY ###
         image = request.form.get("image")
@@ -106,6 +128,7 @@ def movie_add():
             rating=rating,
             description=description,
             image=image,
+            is_featured=is_featured,
         )
 
         # Add the movie tape object to the database
@@ -132,6 +155,7 @@ def movie_edit(movie_id):
         movie.rating = request.form.get("rating")
         movie.description = request.form.get("description")
         movie.image = request.form.get("image")
+        movie.is_featured = bool(request.form.get("is_featured"))
 
         db.session.commit()
         return redirect(url_for("movies.index"))

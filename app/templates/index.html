@@ -3,4 +3,35 @@
 
 <p>This is main page</p>
 
+<div id="featured-movies"></div>
+
+    <script>
+        async function fetchFeaturedMovies() {
+            try {
+                const response = await fetch("/movies/featured_movies");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch featured movies");
+                }
+
+                const movies = await response.json();
+
+                const movieList = document.getElementById("featured-movies");
+                movies.forEach(movie => {
+                    const movieDiv = document.createElement("div");
+                    movieDiv.innerHTML = `
+                        <h3>${movie.title}</h3>
+                        <p>${movie.director}</p>
+                        <p>${movie.genre}</p>
+                        <p>${movie.description}</p>
+                    `;
+                    movieList.appendChild(movieDiv);
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        fetchFeaturedMovies();
+    </script>
+
 {% endblock %}

@@ -65,6 +65,15 @@
     <input type="text" name="image" id="image" value="{{ movie.image }}"> <br>
   </div>
 
+  <div class="form-control">
+    <label for="is_featured">Featured?</label>
+    <input type="checkbox" name="is_featured" id="is_featured"
+      {% if movie.is_featured %}
+        checked
+      {% endif %}>
+    <br>
+  </div>
+
   <button type="submit">Update</button>
   <button type="button"><a href="{{ url_for('movies.index') }}">Cancel</a></button>
 
