@@ -11,9 +11,9 @@ from flask import (
 from app.models import Movie, VhsTapeCopy, Customer, VhsRental, ArchivedRental, User
 from app import db
 from sqlalchemy.exc import SQLAlchemyError
-from datetime import datetime
+from datetime import datetime, timedelta
 from app.utils.utility_functions import find_movie
-from app.utils.variables import MAX_RENTAL_VHS_TAPES
+from app.utils.variables import MAX_RENTAL_VHS_TAPES, MAX_RENTAL_DAYS
 
 bp = Blueprint("movies", __name__, url_prefix="/movies")
 
@@ -341,6 +341,7 @@ def vhs_rent(movie_id, vhs_tape_copy_id):
         # Create a new rental object and set the movie_id attribute
         rental = VhsRental(
             date_rented=datetime.utcnow(),
+            due_date=datetime.utcnow() + timedelta(days=MAX_RENTAL_DAYS),
             vhs_tape_copy=vhs_tape_copy,
             customer=customer,
             movie=movie,
@@ -380,6 +381,14 @@ def vhs_return(movie_id, vhs_tape_copy_id):
 
     # Update the VhsRental and VhsTapeCopy objects
     rental.date_returned = datetime.utcnow()
+
+    if rental.due_date < datetime.utcnow():
+        rental.is_late = True
+        flash("VHS tape returned late.")
+    else:
+        rental.is_late = False
+        flash("VHS tape returned on time.")
+
     vhs_tape_copy.is_available = True
     db.session.commit()
 

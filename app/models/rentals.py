@@ -7,7 +7,9 @@ import uuid
 class VhsRental(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     date_rented = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    due_date = db.Column(db.DateTime, nullable=False)
     date_returned = db.Column(db.DateTime, default=None, nullable=True)
+    is_late = db.Column(db.Boolean, default=False, nullable=False)
     is_removed = db.Column(db.Boolean, default=False, nullable=False)
 
     # Customer relationship with VhsRental table (one-to-many)
