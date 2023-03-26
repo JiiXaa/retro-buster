@@ -2,9 +2,9 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from app.models import Customer, Movie, VhsTapeCopy, VhsRental
 from app import db
 from sqlalchemy.exc import SQLAlchemyError
-from datetime import datetime
+from datetime import datetime, timedelta
 from app.utils.utility_functions import find_customer
-from app.utils.variables import MAX_RENTAL_VHS_TAPES
+from app.utils.variables import MAX_RENTAL_VHS_TAPES, MAX_RENTAL_DAYS
 
 
 bp = Blueprint("customers", __name__, url_prefix="/customers")
@@ -32,9 +32,9 @@ def index():
 def customer_search():
     if request.method == "POST":
         search_queries = {
-            "first_name": request.form.get("first_name"),
-            "last_name": request.form.get("last_name"),
-            "email": request.form.get("email"),
+            "first_name": request.form.get("first_name").strip().title(),
+            "last_name": request.form.get("last_name").strip().title(),
+            "email": request.form.get("email").strip().lower(),
         }
         customer_query = find_customer(search_queries)
 
@@ -51,9 +51,9 @@ def customer_search():
 def customer_add():
     # If the user is submitting a form, add the customer to the database
     if request.method == "POST":
-        first_name = request.form.get("first_name")
-        last_name = request.form.get("last_name")
-        email = request.form.get("email")
+        first_name = request.form.get("first_name").strip().title()
+        last_name = request.form.get("last_name").strip().title()
+        email = request.form.get("email").strip().lower()
 
         # Check that all fields are filled out
         if not all([first_name, last_name, email]):
@@ -85,9 +85,9 @@ def customer_add():
 def customer_edit(customer_id):
     customer = Customer.query.get_or_404(customer_id)
     if request.method == "POST":
-        customer.first_name = request.form.get("first_name")
-        customer.last_name = request.form.get("last_name")
-        customer.email = request.form.get("email")
+        customer.first_name = request.form.get("first_name").strip().title()
+        customer.last_name = request.form.get("last_name").strip().title()
+        customer.email = request.form.get("email").strip().lower()
 
         # Check that all fields are filled out
         if not all([customer.first_name, customer.last_name, customer.email]):
@@ -135,8 +135,8 @@ def customer_profile(customer_id):
 @bp.route("/customer_profile/<customer_id>/vhs_rent", methods=["POST"])
 def customer_vhs_rent(customer_id):
     # Get the movie ID and VHS tape copy ID from the form
-    movie_title = request.form.get("movie_title")
-    vhs_copy_number = request.form.get("vhs_copy_number")
+    movie_title = request.form.get("movie_title").strip().lower()
+    vhs_copy_number = request.form.get("vhs_copy_number").strip().lower()
 
     # Get the VHS tape copy object from the database
     vhs_tape_copy = VhsTapeCopy.query.filter_by(copy_number=vhs_copy_number).first()
@@ -168,10 +168,14 @@ def customer_vhs_rent(customer_id):
 
     # Get the movie object from the database
     movie = Movie.query.filter_by(title=movie_title).first()
+    if not movie:
+        flash("Movie not found.")
+        return redirect(url_for("customers.customer_profile", customer_id=customer_id))
 
     # Create a new rental object and add it to the database
     rental = VhsRental(
         date_rented=datetime.now(),
+        due_date=datetime.utcnow() + timedelta(days=MAX_RENTAL_DAYS),
         vhs_tape_copy=vhs_tape_copy,
         customer=customer,
         movie=movie,

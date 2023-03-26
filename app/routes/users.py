@@ -8,71 +8,16 @@ from app.utils.decorators import login_required
 bp = Blueprint("users", __name__, url_prefix="/users")
 
 
-@bp.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        # Verify the user's credentials
-        username = request.form.get("username")
-        password = request.form.get("password")
-
-        # Check if all fields are filled out
-        if not username or not password:
-            flash("Please fill out all fields.")
-            return redirect(url_for("users.login"))
-
-        # Check if the user exists or password is correct
-        user = User.query.filter_by(username=username).first()
-        if user is None:
-            flash("Invalid username or password.")
-            return redirect(url_for("users.login"))
-        password_hashed = check_password_hash(user.password_hash, password)
-        if not user or not password_hashed:
-            flash("Invalid username or password.")
-            return redirect(url_for("users.login"))
-
-        # log the user in / set session variables
-        session["logged_in"] = True
-        session["username"] = user.username
-        session["user_id"] = user.id
-
-        flash(f"Welcome, {user.username.capitalize()}")
-        return redirect(url_for("users.dashboard", username=user.username))
-
-    return render_template("users/login.html")
-
-
-@bp.route("/logout")
-def logout():
-    # Clear session variables
-    session.clear()
-    flash("You have been logged out.")
-    return redirect(url_for("users.login"))
-
-
-@bp.route("/dashboard/<username>")
-# dashboard route is protected by the login_required decorator
-@login_required
-def dashboard(username):
-    # Check if the user is logged in
-    if not session.get("logged_in"):
-        flash("Please log in to view the dashboard.")
-        return redirect(url_for("users.login"))
-    else:
-        username = session.get("username")
-        user = User.query.filter_by(username=username).first()
-        return render_template("users/dashboard.html", user=user)
-
-
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        username = request.form.get("username")
-        first_name = request.form.get("first_name")
-        last_name = request.form.get("last_name")
-        email = request.form.get("email")
-        password = request.form.get("password")
-        password_confirm = request.form.get("password_confirm")
-        token = request.form.get("token")
+        username = request.form.get("username").strip().lower()
+        first_name = request.form.get("first_name").strip().title()
+        last_name = request.form.get("last_name").strip().title()
+        email = request.form.get("email").strip().lower()
+        password = request.form.get("password").strip()
+        password_confirm = request.form.get("password_confirm").strip()
+        token = request.form.get("token").strip().lower()
 
         # Check if all fields are filled out
         if (
@@ -141,3 +86,58 @@ def register():
     # TODO: remove this after testing
     users = User.query.all()
     return render_template("users/register.html", users=users)
+
+
+@bp.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        # Verify the user's credentials
+        username = request.form.get("username").strip().lower()
+        password = request.form.get("password").strip()
+
+        # Check if all fields are filled out
+        if not username or not password:
+            flash("Please fill out all fields.")
+            return redirect(url_for("users.login"))
+
+        # Check if the user exists or password is correct
+        user = User.query.filter_by(username=username).first()
+        if user is None:
+            flash("Invalid username or password.")
+            return redirect(url_for("users.login"))
+        password_hashed = check_password_hash(user.password_hash, password)
+        if not user or not password_hashed:
+            flash("Invalid username or password.")
+            return redirect(url_for("users.login"))
+
+        # log the user in / set session variables
+        session["logged_in"] = True
+        session["username"] = user.username
+        session["user_id"] = user.id
+
+        flash(f"Welcome, {user.username.capitalize()}")
+        return redirect(url_for("users.dashboard", username=user.username))
+
+    return render_template("users/login.html")
+
+
+@bp.route("/logout")
+def logout():
+    # Clear session variables
+    session.clear()
+    flash("You have been logged out.")
+    return redirect(url_for("users.login"))
+
+
+@bp.route("/dashboard/<username>")
+# dashboard route is protected by the login_required decorator
+@login_required
+def dashboard(username):
+    # Check if the user is logged in
+    if not session.get("logged_in"):
+        flash("Please log in to view the dashboard.")
+        return redirect(url_for("users.login"))
+    else:
+        username = session.get("username")
+        user = User.query.filter_by(username=username).first()
+        return render_template("users/dashboard.html", user=user)

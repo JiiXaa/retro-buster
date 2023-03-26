@@ -91,17 +91,17 @@ def movie_search():
 @bp.route("/movie_add", methods=["GET", "POST"])
 def movie_add():
     if request.method == "POST":
-        title = request.form.get("title")
-        director = request.form.get("director")
-        genre = request.form.get("genre")
-        length = request.form.get("length")
-        year = request.form.get("year")
-        rating = request.form.get("rating")
-        description = request.form.get("description")
+        title = request.form.get("title").strip().lower()
+        director = request.form.get("director").strip().lower()
+        genre = request.form.get("genre").strip().lower()
+        length = request.form.get("length").strip()
+        year = request.form.get("year").strip()
+        rating = request.form.get("rating").strip()
+        description = request.form.get("description").strip()
         is_featured = bool(request.form.get("is_featured"))
 
         ### ADD IMAGE UPLOAD FUNCTIONALITY ###
-        image = request.form.get("image")
+        image = request.form.get("image").strip()
 
         # Check that all fields are filled out
         if not all(
@@ -147,14 +147,14 @@ def movie_edit(movie_id):
     movie = Movie.query.get(movie_id)
     if request.method == "POST":
         # Get the movie and tape copy objects from the database and update them with the new data provided by the user
-        movie.title = request.form.get("title")
-        movie.director = request.form.get("director")
-        movie.genre = request.form.get("genre")
-        movie.length = request.form.get("length")
-        movie.year = request.form.get("year")
-        movie.rating = request.form.get("rating")
-        movie.description = request.form.get("description")
-        movie.image = request.form.get("image")
+        movie.title = request.form.get("title").strip().lower()
+        movie.director = request.form.get("director").strip().lower()
+        movie.genre = request.form.get("genre").strip().lower()
+        movie.length = request.form.get("length").strip()
+        movie.year = request.form.get("year").strip()
+        movie.rating = request.form.get("rating").strip()
+        movie.description = request.form.get("description").strip()
+        movie.image = request.form.get("image").strip()
         movie.is_featured = bool(request.form.get("is_featured"))
 
         db.session.commit()
@@ -196,7 +196,7 @@ def movie_details(movie_id):
 def vhs_add_tape(movie_id):
     try:
         if request.method == "POST":
-            copy_number = request.form.get("copy_number")
+            copy_number = request.form.get("copy_number").strip().lower()
 
             # Check if the copy number is already in database
             if VhsTapeCopy.query.filter_by(
@@ -289,7 +289,7 @@ def vhs_rent(movie_id, vhs_tape_copy_id):
     # Find the customer in the database
     if request.method == "POST":
         # Get the customer email address from the form. This might change to a customer ID in the future.
-        customer_query = request.form.get("customer_query")
+        customer_query = request.form.get("customer_query").strip().lower()
         if not customer_query:
             flash("Please enter a customer email address.")
             return redirect(
