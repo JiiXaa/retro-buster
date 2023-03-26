@@ -3,6 +3,7 @@
 
 <p>This is main page</p>
 
+<div class="loadingSpinner">Loading...</div>
 <div id="featured-movies"></div>
 
     <script>
@@ -16,7 +17,9 @@
                 const movies = await response.json();
                 console.log(movies);
 
-                const movieList = document.getElementById("featured-movies");
+                document.querySelector(".loadingSpinner").style.display = "none";
+
+                const featuredMoviesList = document.getElementById("featured-movies");
                 movies.featured_movies.forEach(movie => {
                     const movieDiv = document.createElement("div");
                     movieDiv.innerHTML = `
@@ -26,11 +29,13 @@
                         <p>${movie.description}</p>
                         <p>${movie.rating}</p>
                         <p>${movie.available_count} available to rent</p>
+                        <a href="{{ url_for('movies.movie_details', movie_id="") }}${movie.id}">Details</a>
                     `;
-                    movieList.appendChild(movieDiv);
+                    featuredMoviesList.appendChild(movieDiv);
                 });
             } catch (error) {
                 console.error(error);
+                featuredMoviesList.innerHTML = `<p>There was an error loading the movies, Please contact developer. Error: ${error}</p>`;
             }
         }
 

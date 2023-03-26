@@ -85,7 +85,7 @@
   function displayMovies() {
     const moviesList = document.getElementById('moviesList');
     moviesList.innerHTML = '';
-    console.log(movies);
+    console.log('all movies: ', movies);
     if (movies.length === 0 || movies === undefined) {
       moviesList.innerHTML = '<p>No movies in the database.</p>';
       return;
@@ -118,23 +118,21 @@
     });
   }
 
-  function getMovies() {
-    fetch('/movies/movies-data')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        movies = data.movies;
-        document.querySelector('.loadingSpinner').style.display = 'none';
-        displayMovies();
-      })
-      .catch(error => {
-        console.error(error);
-        moviesList.innerHTML = '<p>There was an error loading the movies, Please contact developer.</p>';
-      });
+  // Fetch movies from server and display them on page
+  async function getMovies() {
+    try {
+      const response = await fetch('/movies/movies-data');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      movies = data.movies;
+      document.querySelector('.loadingSpinner').style.display = 'none';
+      displayMovies();
+    } catch (error) {
+      console.error(error);
+      moviesList.innerHTML = `<p>There was an error loading the movies, Please contact developer. Error: ${error}</p>`;
+    }
   }
 
   // Sort movies functionality

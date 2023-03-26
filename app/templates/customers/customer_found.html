@@ -1,20 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>CUSTOMER FOUND</h1>
+<h3>CUSTOMER search result</h1>
 
 <table>
   <tr>
     <th>First Name</th>
     <th>Last Name</th>
     <th>Email</th>
+    <th>Actions</th>
   </tr>
+  {% if customer_query %}
   {% for customer in customer_query %}
   <tr>
     <td>{{ customer.first_name }}</td>
     <td>{{ customer.last_name }}</td>
     <td>{{ customer.email }}</td>
+    <td>
+      <a href="{{ url_for('customers.customer_profile', customer_id=customer.id) }}" id="{{ customer.id }}">Details</a>
   </tr>
   {% endfor %}
+  {% else %}
+  <tr>
+    <td colspan="3">No customers in the database.</td>
+    <td colspan="1"><a href="{{ url_for('customers.customer_search') }}">Customer search</a></td>
+  </tr>
+  {% endif %}
 </table>
 {% endblock %}
