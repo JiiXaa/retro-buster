@@ -48,7 +48,10 @@
     </form>
 </div>
 
+<div class="due-today__container" id="due-today"></div>
+
     <script>
+        // TODO: add loading spinner to all fetches
         async function fetchFeaturedMovies() {
             try {
                 const response = await fetch("/movies/featured_movies");
@@ -60,7 +63,7 @@
                 console.log(movies);
 
                 document.querySelector(".loadingSpinner").style.display = "none";
-                <!-- Show container after data fetched -->
+                // Show container after data fetched
                 document.querySelector(".featured-movies__container").style.display = "flex";
 
                 const featuredMoviesList = document.getElementById("featured-movies");
@@ -85,7 +88,46 @@
             }
         }
 
-        fetchFeaturedMovies();
+        async function fetchMoviesDueToday() {
+            try {
+                const response = await fetch("/movies/movies_due_today");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch movies due today");
+                }
+
+                const movies = await response.json();
+                console.log('Movies due today: ', movies);
+
+                document.querySelector(".loadingSpinner").style.display = "none";
+                // Show container after data fetched
+                document.querySelector(".due-today__container").style.display = "flex";
+
+                const moviesDueTodayList = document.getElementById("due-today");
+                movies.movies_due_today.forEach(movie => {
+                    const movieDiv = document.createElement("div");
+                    movieDiv.innerHTML = `
+                        <section class="movie-due-today__container">
+                            <h3>${movie.title}</h3>
+                            <p>${movie.director}</p>
+                            <p>${movie.genre}</p>
+                            <p>${movie.description}</p>
+                            <p>${movie.rating}</p>
+                            <p>${movie.available_count} available to rent</p>
+                            <a href="{{ url_for('movies.movie_details', movie_id="") }}${movie.id}">Details</a>
+                        </section>
+                    `;
+                    moviesDueTodayList.appendChild(movieDiv);
+                });
+            } catch (error) {
+                console.error(error);
+                moviesDueTodayList.innerHTML = `<p>There was an error loading the movies, Please contact developer. Error: ${error}</p>`;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchFeaturedMovies();
+            fetchMoviesDueToday();
+        });
     </script>
 
 {% endblock %}

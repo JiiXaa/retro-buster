@@ -11,6 +11,7 @@ from flask import (
 from app.models import Movie, VhsTapeCopy, Customer, VhsRental, ArchivedRental, User
 from app import db
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.sql import func
 from datetime import datetime, timedelta
 from app.utils.utility_functions import find_movie
 from app.utils.variables import (
@@ -98,6 +99,22 @@ def movie_search():
         movie_query = find_movie(search_queries)
         return render_template("movies/movie_found.html", movie_query=movie_query)
     return render_template("movies/movie_search.html")
+
+
+@bp.route("/movies_due_today", methods=["GET"])
+def movies_due_today():
+    today = datetime.utcnow().date()
+    # TODO: Remove the test_today line and replace it with today when testing is done
+    test_today = today + timedelta(days=3)  # Add 3 days for testing purposes
+
+    # Get all movies that are due today. Used func.date() to convert the due_date column to a date object
+    due_today = VhsRental.query.filter(
+        func.date(VhsRental.due_date) == test_today
+    ).all()
+
+    due_today_movies = [movie.movie.to_dict() for movie in due_today]
+
+    return jsonify(movies_due_today=due_today_movies)
 
 
 @bp.route("/movie_add", methods=["GET", "POST"])
