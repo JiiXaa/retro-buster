@@ -14,15 +14,18 @@
                 }
 
                 const movies = await response.json();
+                console.log(movies);
 
                 const movieList = document.getElementById("featured-movies");
-                movies.forEach(movie => {
+                movies.featured_movies.forEach(movie => {
                     const movieDiv = document.createElement("div");
                     movieDiv.innerHTML = `
                         <h3>${movie.title}</h3>
                         <p>${movie.director}</p>
                         <p>${movie.genre}</p>
                         <p>${movie.description}</p>
+                        <p>${movie.rating}</p>
+                        <p>${movie.available_count} available to rent</p>
                     `;
                     movieList.appendChild(movieDiv);
                 });

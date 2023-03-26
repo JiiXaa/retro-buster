@@ -48,7 +48,7 @@ class Movie(db.Model):
         return sum(1 for tape in self.vhs_tape_copy if not tape.is_removed)
 
     def rental_count(self):
-        return len(self.rentals)
+        return len(self.rentals) + len(self.archived_rentals)
 
     def to_dict(self):
         return {

@@ -13,7 +13,11 @@ from app import db
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime, timedelta
 from app.utils.utility_functions import find_movie
-from app.utils.variables import MAX_RENTAL_VHS_TAPES, MAX_RENTAL_DAYS
+from app.utils.variables import (
+    MAX_RENTAL_VHS_TAPES,
+    MAX_RENTAL_DAYS,
+    FEATURED_MOVIES_COUNT,
+)
 
 bp = Blueprint("movies", __name__, url_prefix="/movies")
 
@@ -55,18 +59,26 @@ def featured_movies():
     # Find the 10 movies with is_featured set to True
     get_featured_movies = Movie.query.filter(Movie.is_featured == True).limit(10).all()
 
+    # Create a set of movie IDs to keep track of the movies already added
+    added_movie_ids = {movie.id for movie in get_featured_movies}
+
     # If there are less than 10 movies with is_featured set to True, find the most rented movies
-    if len(get_featured_movies) < 10:
-        limit = 10 - len(get_featured_movies)
-        most_rented_movies = (
-            Movie.query.order_by(Movie.rental_count.desc()).limit(limit).all()
+    if len(get_featured_movies) < FEATURED_MOVIES_COUNT:
+        all_movies = Movie.query.all()
+        most_rented_movies = sorted(
+            all_movies, key=lambda movie: movie.rental_count(), reverse=True
         )
 
-        # Add the most rented movies to the list of featured movies
-        get_featured_movies.extend(most_rented_movies)
+        # Add the most rented movies to the list of featured movies, only if they are not already added
+        for movie in most_rented_movies:
+            if len(get_featured_movies) >= FEATURED_MOVIES_COUNT:
+                break
+            if movie.id not in added_movie_ids:
+                get_featured_movies.append(movie)
+                added_movie_ids.add(movie.id)
 
-        # Convert the movie objects to dictionaries and pass them to the JavaScript in JSON format
-        featured_movies = [movie.to_dict() for movie in get_featured_movies]
+    # Convert the movie objects to dictionaries and pass them to the JavaScript in JSON format
+    featured_movies = [movie.to_dict() for movie in get_featured_movies]
 
     return jsonify(featured_movies=featured_movies)
 
