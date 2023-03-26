@@ -4,7 +4,49 @@
 <p>This is main page</p>
 
 <div class="loadingSpinner">Loading...</div>
-<div id="featured-movies"></div>
+<div class="featured-movies__container" id="featured-movies"></div>
+
+<div class="forms__container">
+    <form action="{{ url_for('movies.movie_search') }}" method="post">
+        <p>Search movies</p>
+        <div class="form-control">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title"> <br>
+        </div>
+
+        <div class="form-control">
+        <label for="director">Director</label>
+        <input type="text" name="director" id="director"> <br>
+        </div>
+
+        <div class="form-control">
+        <label for="genre">Genre</label>
+        <input type="text" name="genre" id="genre"> <br>
+        </div>
+
+        <input type="submit" value="Movie Search">
+    </form>
+
+    <form action="{{ url_for('customers.customer_search') }}" method="post">
+        <p>Search customers</p>
+        <div class="form-control">
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name" id="first_name"> <br>
+        </div>
+
+        <div class="form-control">
+        <label for="last_name">Last Name</label>
+        <input type="text" name="last_name" id="last_name"> <br>
+        </div>
+
+        <div class="form-control">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email"> <br>
+        </div>
+
+        <input type="submit" value="Customer Search">
+    </form>
+</div>
 
     <script>
         async function fetchFeaturedMovies() {
@@ -18,18 +60,22 @@
                 console.log(movies);
 
                 document.querySelector(".loadingSpinner").style.display = "none";
+                <!-- Show container after data fetched -->
+                document.querySelector(".featured-movies__container").style.display = "flex";
 
                 const featuredMoviesList = document.getElementById("featured-movies");
                 movies.featured_movies.forEach(movie => {
                     const movieDiv = document.createElement("div");
                     movieDiv.innerHTML = `
-                        <h3>${movie.title}</h3>
-                        <p>${movie.director}</p>
-                        <p>${movie.genre}</p>
-                        <p>${movie.description}</p>
-                        <p>${movie.rating}</p>
-                        <p>${movie.available_count} available to rent</p>
-                        <a href="{{ url_for('movies.movie_details', movie_id="") }}${movie.id}">Details</a>
+                        <section class="featured-movie__container">
+                            <h3>${movie.title}</h3>
+                            <p>${movie.director}</p>
+                            <p>${movie.genre}</p>
+                            <p>${movie.description}</p>
+                            <p>${movie.rating}</p>
+                            <p>${movie.available_count} available to rent</p>
+                            <a href="{{ url_for('movies.movie_details', movie_id="") }}${movie.id}">Details</a>
+                        </section>
                     `;
                     featuredMoviesList.appendChild(movieDiv);
                 });
