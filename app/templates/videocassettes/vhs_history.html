@@ -5,13 +5,16 @@
 <h3>{{ vhs.title }} <span>(tape - {{ vhs_detail.copy_number }}</span>)</h3>
 
 {% if vhs_history %}
-  {% for tape_history in vhs_history %}
+  {% for tape_history in vhs_history|reverse %}
       <p>Customer: {{ tape_history.customer.first_name }} {{ tape_history.customer.last_name }} - {{ tape_history.customer.email }}</p>
       <p>Rent date: {{ tape_history.date_rented.strftime('%d-%m-%y (%H:%M)') }}</p>
       {% if tape_history.date_returned %}
         <p>Return date: {{ tape_history.date_returned.strftime('%d-%m-%y (%H:%M)') }}</p>
       {% else %}
         <p>Return date: not returned </p>
+      {% endif %}
+      {% if not tape_history.date_returned %}
+        <p>Due date: {{ tape_history.due_date.strftime('%d-%m-%y') }}</p>
       {% endif %}
       <p>Rent days
         {% if tape_history.date_returned %}

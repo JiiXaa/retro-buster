@@ -55,6 +55,23 @@ def movies_data():
     return jsonify(movies=movies)
 
 
+@bp.route("/movie_search", methods=["GET", "POST"])
+def movie_search():
+    if request.method == "POST":
+        search_queries = {
+            "title": request.form.get("title"),
+            "director": request.form.get("director"),
+            "genre": request.form.get("genre"),
+        }
+
+        if all(value == "" for value in search_queries.values()):
+            flash("Please provide at least one search term.")
+            return redirect(url_for("movies.movie_search"))
+        movie_query = find_movie(search_queries)
+        return render_template("movies/movie_found.html", movie_query=movie_query)
+    return render_template("movies/movie_search.html")
+
+
 @bp.route("/featured_movies", methods=["GET"])
 def featured_movies():
     # Find the 10 movies with is_featured set to True
@@ -84,23 +101,6 @@ def featured_movies():
     return jsonify(featured_movies=featured_movies)
 
 
-@bp.route("/movie_search", methods=["GET", "POST"])
-def movie_search():
-    if request.method == "POST":
-        search_queries = {
-            "title": request.form.get("title"),
-            "director": request.form.get("director"),
-            "genre": request.form.get("genre"),
-        }
-
-        if all(value == "" for value in search_queries.values()):
-            flash("Please provide at least one search term.")
-            return redirect(url_for("movies.movie_search"))
-        movie_query = find_movie(search_queries)
-        return render_template("movies/movie_found.html", movie_query=movie_query)
-    return render_template("movies/movie_search.html")
-
-
 @bp.route("/movies_due_today", methods=["GET"])
 def movies_due_today():
     today = datetime.utcnow().date()
@@ -112,9 +112,9 @@ def movies_due_today():
         func.date(VhsRental.due_date) == test_today
     ).all()
 
-    due_today_movies = [movie.movie.to_dict() for movie in due_today]
+    movies_due_today = [movie.movie.to_dict() for movie in due_today]
 
-    return jsonify(movies_due_today=due_today_movies)
+    return jsonify(movies_due_today=movies_due_today)
 
 
 @bp.route("/movie_add", methods=["GET", "POST"])

@@ -47,6 +47,7 @@ def index():
                 "vhs_director": movie.director,
                 "vhs_genre": movie.genre,
                 "vhs_copy_number": vhs_tape_copy.copy_number,
+                "due_date": rental.due_date,
             }
         )
     return render_template(

@@ -16,9 +16,23 @@ body {
   margin: 1rem auto;
   padding: 1rem;
   display: none;
-  flex-direction: row;
-  gap: 2rem;
+  flex-direction: column;
   border: 1px solid black;
+}
+
+.featured-movies--list {
+  display: flex;
+  flex-direction: row;
+}
+
+.featured-movies--list-item {
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+  padding: 1rem;
 }
 
 .forms__container {
@@ -33,10 +47,24 @@ body {
 }
 
 .due-today__container {
-  margin: 1rem auto;
+  margin: 0 auto;
   padding: 1rem;
   display: none;
-  flex-direction: row;
-  gap: 2rem;
+  flex-direction: column;
   border: 1px solid black;
+}
+
+.due-today--list {
+  display: flex;
+  flex-direction: row;
+}
+
+.due-today--list-item {
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+  padding: 1rem;
 }

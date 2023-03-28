@@ -6,10 +6,7 @@
 <button><a href="{{ url_for('rentals.archived_rentals') }}">Archived Rentals</a></button>
 
 {% if rental_data %}
-  {% set rental_count = 0 %}
   {% for rental in rental_data %}
-    {% if rental.is_removed == False %}
-      {% set rental_count = rental_count + 1 %}
       <div>
         <p>Title: {{ rental.vhs_title }}</p>
         <p>Copy number: {{ rental.vhs_copy_number }}</p>
@@ -20,7 +17,7 @@
         {% if rental.date_returned %}
           <p>Return date: {{ rental.date_returned.strftime('%d-%m-%y (%H:%M)') }}</p>
         {% else %}
-          <p>Return date: not returned </p>
+          <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
         {% endif %}
         <p>Rent days
           {% if rental.date_returned %}
@@ -30,35 +27,9 @@
           {% endif %}
       </div>
       <hr>
-    {% endif %}
   {% endfor %}
-  {% if rental_count == 0 %}
-    <p>No rentals in the database</p>
-  {% endif %}
 {% else %}
   <p>No rentals in the database</p>
 {% endif %}
 
-
-<h1>TEST ARCHIVED RENTALS</h1>
-  {% if archived_rentals %}
-    {% for rental in archived_rentals %}
-      <div>
-        <p>Movie: {{ rental.movie.title }}</p>
-        <p>VHS tape copy: {{ rental.vhs_tape_copy.copy_number }}</p>
-        <p>Removed by: {{ rental.user.username }} | {{ rental.user.email }}</p>
-        <p>Removed at: {{ rental.date_archived.strftime('%d-%m-%y (%H:%M)') }}</p>
-        <p>Rented by:
-          {% if rental.customer %}
-            {{rental.customer.first_name}} | {{ rental.customer.last_name }} | {{ rental.customer.email }}
-          {% else %}
-            No customer
-          {% endif %}
-        </p>
-      </div>
-        <hr>
-    {% endfor %}
-  {% else %}
-      <p>No archived rentals in the database</p>
-  {% endif %}
 {% endblock %}
