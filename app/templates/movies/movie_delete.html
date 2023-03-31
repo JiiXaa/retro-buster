@@ -7,6 +7,8 @@
   <div class="movie-delete__info">
     <p>Are you sure you want to delete "{{ movie.title }}" by {{ movie.director }}?</p>
     <p>This action cannot be undone. All vhs tape and rental history associated with them will be lost.</p>
+    <p>Please type: <span>{{ movie.title }}</span> </p>
+    <input type="text" name="title_confirm" required>
   </div>
   <button type="submit">Confirm</button>
   <a href="{{ url_for('movies.index') }}">Cancel</a></>

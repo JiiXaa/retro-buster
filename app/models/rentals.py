@@ -41,10 +41,6 @@ class ArchivedRental(db.Model):
     date_returned = db.Column(db.DateTime, nullable=False)
     date_archived = db.Column(db.DateTime, nullable=False)
 
-    # TODO: Add date_archived column
-    # need to fix rest of the code: views, forms, etc.
-    # when vhs_tape_copy is removed, it should be archived and not be available for renting/deleting/returning
-
     user_id = db.Column(UUID(as_uuid=True), db.ForeignKey("user.id"), nullable=False)
     user = db.relationship("User", back_populates="archived_rentals")
 

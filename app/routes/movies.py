@@ -195,6 +195,10 @@ def movie_edit(movie_id):
 def movie_delete(movie_id):
     movie = Movie.query.get_or_404(movie_id)
     if request.method == "POST":
+        title_confirm = request.form.get("title_confirm").strip().lower()
+        if title_confirm != movie.title:
+            flash("Movie title does not match.")
+            return redirect(url_for("movies.movie_delete", movie_id=movie_id))
         vhs_tapes = VhsTapeCopy.query.filter_by(movie_id=movie_id).all()
         for vhs_tape in vhs_tapes:
             if vhs_tape.is_available == False:

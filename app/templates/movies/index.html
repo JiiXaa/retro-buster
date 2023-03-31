@@ -33,49 +33,6 @@
 
 <div class="loadingSpinner">Loading...</div>
 <div id="moviesList"></div>
-<!-- <table>
-  <tr>
-    <th>Id</th>
-    <th>Title</th>
-    <th>Director</th>
-    <th>Genre</th>
-    <th>Actions</th>
-    <th>Details</th>
-  </tr>
-
-  {% if movies_all %}
-  {% for movie in movies_all %}
-  <tr>
-    <td>{{ movie.id }}</td>
-    <td>{{ movie.title }}</td>
-    <td>{{ movie.director }}</td>
-    <td>{{ movie.genre }}</td>
-    <td>
-      <a href="{{ url_for('movies.movie_edit', movie_id=movie.id) }}" id="{{ movie.id }}">Edit</a>
-      <a href="{{ url_for('movies.movie_delete', movie_id=movie.id) }}" id="{{ movie.id }}">Delete</a>
-      <a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}" id="{{ movie.id }}">Details</a>
-    </td>
-    <td>
-      <p>{{ movie.vhs_tape_copy|length }} copies of this VHS are in the database.</p>
-      {% for vhs_detail in movie.vhs_tape_copy %}
-      <p>{{ vhs_detail.copy_number }} - {% if vhs_detail.is_available %}
-          <span>This VHS copy is available.</span>
-      {% else %}
-          <span style="text-decoration:line-through;">This VHS copy is not available.</span>
-      {% endif %}
-      </p>
-      {% endfor %}</td>
-  </tr>
-  {% endfor %}
-  {% else %}
-  <tr>
-    <td colspan="7">No movies in the database.</td>
-  </tr>
-</table>
-
-
-
-{% endif %} -->
 
 <script type="module">
   // found option to import (up-to-date) date-fns from CDN here: https://www.skypack.dev/view/date-fns
