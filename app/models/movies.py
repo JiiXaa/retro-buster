@@ -109,4 +109,4 @@ class VhsTapeCopy(db.Model):
     user = db.relationship("User", back_populates="vhs_tape_copy")
 
     def __repr__(self):
-        return f"<VhsTapeCopy id={self.id}, movie_id={self.movie_id}>"
+        return f"<VhsTapeCopy id={self.id}, movie_id={self.movie_id}, user_id={self.user_id}>"

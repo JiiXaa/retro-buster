@@ -61,8 +61,7 @@ def index():
 @bp.route("/archived_rentals", methods=["GET"])
 def archived_rentals():
     vhs_tape_copies = VhsTapeCopy.query.filter(VhsTapeCopy.is_removed == True).all()
-    print(vhs_tape_copies)
-    print("archived_rentals")
+    print("archived_rentals", vhs_tape_copies)
 
     return render_template(
         "rentals/archived_rentals.html", vhs_tape_copies=vhs_tape_copies

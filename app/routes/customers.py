@@ -126,9 +126,45 @@ def customer_profile(customer_id):
     # Fetch the customer object from the database
     customer = Customer.query.get_or_404(customer_id)
 
+    rentals_data = []
+    for rental in customer.rentals:
+        vhs_tape_copy = rental.vhs_tape_copy
+        movie = vhs_tape_copy.movie
+        rentals_data.append(
+            {
+                "id": rental.id,
+                "date_rented": rental.date_rented,
+                "date_returned": rental.date_returned,
+                "is_removed": rental.is_removed,
+                "vhs_title": movie.title,
+                "vhs_director": movie.director,
+                "vhs_genre": movie.genre,
+                "vhs_copy_number": vhs_tape_copy.copy_number,
+                "due_date": rental.due_date,
+            }
+        )
+
+    archived_rentals_data = []
+    for archived_rental in customer.archived_rentals:
+        movie = vhs_tape_copy.movie
+        archived_rentals_data.append(
+            {
+                "id": archived_rental.id,
+                "date_rented": archived_rental.date_rented,
+                "date_returned": archived_rental.date_returned,
+                "date_archived": archived_rental.date_archived,
+                "vhs_title": movie.title,
+                "vhs_director": movie.director,
+                "vhs_genre": movie.genre,
+                "vhs_copy_number": archived_rental.vhs_tape_copy.copy_number,
+            }
+        )
+
     return render_template(
         "customers/customer_profile.html",
         customer=customer,
+        rentals_data=rentals_data,
+        archived_rentals_data=archived_rentals_data,
     )
 
 

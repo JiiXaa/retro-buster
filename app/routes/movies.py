@@ -242,10 +242,12 @@ def vhs_add_tape(movie_id):
                 movie_id=movie_id,
                 copy_number=copy_number,
                 is_available=True,
+                user_id=session["user_id"],
             )
 
             db.session.add(vhs_tape_copy)
             db.session.commit()
+            print("tape copy: ", vhs_tape_copy)
 
             flash("VHS tape copy added successfully.")
             return redirect(url_for("movies.vhs_add_tape", movie_id=movie_id))
@@ -272,17 +274,21 @@ def vhs_remove(movie_id, vhs_tape_copy_id):
 
             # Remove all rentals associated with the VhsTapeCopy object
             for rental in vhs_tape_copy.rentals:
+
+                print("proccessing rental: ", rental)
+
                 # Create a new ArchivedRental object and add it to the database before deleting the Rental object
                 archived_rental = ArchivedRental(
                     date_rented=rental.date_rented,
                     date_returned=rental.date_returned,
                     date_archived=datetime.utcnow(),
-                    user=user,
+                    user_id=user.id,
                     customer_id=rental.customer_id,
-                    vhs_tape_copy=rental.vhs_tape_copy,
-                    movie=rental.movie,
+                    vhs_tape_copy_id=rental.vhs_tape_copy_id,
+                    movie_id=rental.movie_id,
                 )
                 archived_rentals.append(archived_rental)
+                print("Current archived_rentals:", archived_rentals)
                 # Set the is_removed flag to True so that the Rental object is not deleted from the database, this is so that the ArchivedRental object can be created and avoid a foreign key constraint error.
                 rental.is_removed = True
 
@@ -294,6 +300,17 @@ def vhs_remove(movie_id, vhs_tape_copy_id):
             # Stumbled upon this solution to add multiple objects to the database at once: https://stackoverflow.com/questions/58517491/sqlalchemy-bulk-save-objects-vs-add-all-underlying-logic-difference
             # Remember: Keep in mind that using bulk_save_objects will bypass some SQLAlchemy features like automatically populating default values, cascades, and events. Make sure to handle those aspects in your code if needed.
             db.session.bulk_save_objects(archived_rentals)
+            db.session.commit()
+
+            # Query the ArchivedRental objects from the database after committing
+            archived_rentals_db = ArchivedRental.query.filter(
+                ArchivedRental.vhs_tape_copy_id == vhs_tape_copy_id
+            ).all()
+
+            print("archived_rentals_db: ", archived_rentals_db)
+
+            print("user_id: ", user.id)
+            print("user: ", user)
 
             flash("VHS tape copy deleted successfully.")
             return redirect(url_for("movies.movie_details", movie_id=movie_id))
@@ -432,18 +449,39 @@ def vhs_return(movie_id, vhs_tape_copy_id):
 @bp.route("/vhs_history/<movie_id>/<vhs_tape_copy_id>", methods=["GET", "POST"])
 def vhs_history(movie_id, vhs_tape_copy_id):
     movie = Movie.query.get_or_404(movie_id)
-    vhs_history = VhsRental.query.filter_by(vhs_tape_copy_id=vhs_tape_copy_id).all()
+    vhs_rentals = VhsRental.query.filter_by(vhs_tape_copy_id=vhs_tape_copy_id).all()
     vhs_detail = VhsTapeCopy.query.filter_by(
         id=vhs_tape_copy_id, movie_id=movie_id
     ).first()
     vhs = Movie.query.filter_by(id=movie_id).first()
     today = datetime.utcnow()
+
+    vhs_history_data = []
+
+    for rental in vhs_rentals:
+        vhs_history_data.append(
+            {
+                "id": rental.id,
+                "date_rented": rental.date_rented,
+                "date_returned": rental.date_returned,
+                "is_removed": rental.is_removed,
+                "customer_id": rental.customer_id,
+                "customer_name": f"{rental.customer.first_name} {rental.customer.last_name}"
+                if rental.customer
+                else "Customer not found",
+                "vhs_title": movie.title,
+                "vhs_director": movie.director,
+                "vhs_genre": movie.genre,
+                "vhs_copy_number": vhs_detail.copy_number,
+                "due_date": rental.due_date,
+            }
+        )
+
     return render_template(
         "videocassettes/vhs_history.html",
         movie=movie,
         vhs=vhs,
         vhs_detail=vhs_detail,
-        vhs_tape_copy_id=vhs_tape_copy_id,
-        vhs_history=vhs_history,
+        vhs_history_data=vhs_history_data,
         today=today,
     )
