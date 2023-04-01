@@ -13,56 +13,60 @@
     <div class="rental_data__active">
       <h2>Active Rentals</h2>
       {% for rental in active_rentals %}
-        <div class="rental_data__item rental_data__item--active">
-          <p>Title: {{ rental.vhs_title|title }}</p>
-          <p>Copy number: {{ rental.vhs_copy_number }}</p>
-          <p>Director: {{ rental.vhs_director|title }}</p>
-          <p>Genre: {{ rental.vhs_genre|title }}</p>
-          <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
-          <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%y (%H:%M)') }}</p>
-          {% if rental.date_returned %}
-            <p>Return date: {{ rental.date_returned.strftime('%d-%m-%y (%H:%M)') }}</p>
-          {% else %}
-            <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
-          {% endif %}
-          <p>Rent days
+        {% if rental.is_removed is none %}
+          <div class="rental_data__item rental_data__item--active">
+            <p>Title: {{ rental.vhs_title|title }}</p>
+            <p>Copy number: {{ rental.vhs_copy_number }}</p>
+            <p>Director: {{ rental.vhs_director|title }}</p>
+            <p>Genre: {{ rental.vhs_genre|title }}</p>
+            <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
+            <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%y (%H:%M)') }}</p>
             {% if rental.date_returned %}
-              {{ (rental.date_returned - rental.date_rented).days }}
+              <p>Return date: {{ rental.date_returned.strftime('%d-%m-%y (%H:%M)') }}</p>
             {% else %}
-              {{ (today - rental.date_rented).days }}
+              <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
             {% endif %}
-        </div>
-        <hr>
-      {% else %}
-        <p>No active rentals in the database</p>
+            <p>Rent days
+              {% if rental.date_returned %}
+                {{ (rental.date_returned - rental.date_rented).days }}
+              {% else %}
+                {{ (today - rental.date_rented).days }}
+              {% endif %}
+          </div>
+          <hr>
+        {% else %}
+          <p>No active rentals in the database</p>
+        {% endif %}
       {% endfor %}
     </div>
 
     <div class="rental_data__returned">
       <h2>Returned Rentals</h2>
       {% for rental in returned_rentals %}
-        <div class="rental_data__item rental_data__item--returned">
-          <p>Title: {{ rental.vhs_title|title }}</p>
-          <p>Copy number: {{ rental.vhs_copy_number }}</p>
-          <p>Director: {{ rental.vhs_director|title }}</p>
-          <p>Genre: {{ rental.vhs_genre|title }}</p>
-          <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
-          <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%y (%H:%M)') }}</p>
-          {% if rental.date_returned %}
-            <p>Return date: {{ rental.date_returned.strftime('%d-%m-%y (%H:%M)') }}</p>
-          {% else %}
-            <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
-          {% endif %}
-          <p>Rent days
+        {% if rental.is_removed is none %}
+          <div class="rental_data__item rental_data__item--returned">
+            <p>Title: {{ rental.vhs_title|title }}</p>
+            <p>Copy number: {{ rental.vhs_copy_number }}</p>
+            <p>Director: {{ rental.vhs_director|title }}</p>
+            <p>Genre: {{ rental.vhs_genre|title }}</p>
+            <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
+            <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%y (%H:%M)') }}</p>
             {% if rental.date_returned %}
-              {{ (rental.date_returned - rental.date_rented).days }}
+              <p>Return date: {{ rental.date_returned.strftime('%d-%m-%y (%H:%M)') }}</p>
             {% else %}
-              {{ (today - rental.date_rented).days }}
+              <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
             {% endif %}
-        </div>
-        <hr>
-        {% else %}
-          <p>No returned rentals in the database</p>
+            <p>Rent days
+              {% if rental.date_returned %}
+                {{ (rental.date_returned - rental.date_rented).days }}
+              {% else %}
+                {{ (today - rental.date_rented).days }}
+              {% endif %}
+          </div>
+          <hr>
+          {% else %}
+            <p>No returned rentals in the database</p>
+        {% endif %}
         {% endfor %}
     </div>
 

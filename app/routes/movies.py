@@ -273,24 +273,22 @@ def vhs_remove(movie_id, vhs_tape_copy_id):
             archived_rentals = []
 
             # Remove all rentals associated with the VhsTapeCopy object
-            for rental in vhs_tape_copy.rentals:
+            if vhs_tape_copy.rentals:
+                for rental in vhs_tape_copy.rentals:
 
-                print("proccessing rental: ", rental)
-
-                # Create a new ArchivedRental object and add it to the database before deleting the Rental object
-                archived_rental = ArchivedRental(
-                    date_rented=rental.date_rented,
-                    date_returned=rental.date_returned,
-                    date_archived=datetime.utcnow(),
-                    user_id=user.id,
-                    customer_id=rental.customer_id,
-                    vhs_tape_copy_id=rental.vhs_tape_copy_id,
-                    movie_id=rental.movie_id,
-                )
-                archived_rentals.append(archived_rental)
-                print("Current archived_rentals:", archived_rentals)
-                # Set the is_removed flag to True so that the Rental object is not deleted from the database, this is so that the ArchivedRental object can be created and avoid a foreign key constraint error.
-                rental.is_removed = True
+                    # Create a new ArchivedRental object and add it to the database before deleting the Rental object
+                    archived_rental = ArchivedRental(
+                        date_rented=rental.date_rented,
+                        date_returned=rental.date_returned,
+                        date_archived=datetime.utcnow(),
+                        user_id=user.id,
+                        customer_id=rental.customer_id,
+                        vhs_tape_copy_id=rental.vhs_tape_copy_id,
+                        movie_id=rental.movie_id,
+                    )
+                    archived_rentals.append(archived_rental)
+                    # Set the is_removed flag to True so that the Rental object is not deleted from the database, this is so that the ArchivedRental object can be created and avoid a foreign key constraint error.
+                    rental.is_removed = True
 
             # Set the is_removed flag to True so that the VhsTapeCopy object is not deleted from the database, this is so that the ArchivedRental object can be created and avoid a foreign key constraint error.
             vhs_tape_copy.is_removed = True
@@ -301,16 +299,6 @@ def vhs_remove(movie_id, vhs_tape_copy_id):
             # Remember: Keep in mind that using bulk_save_objects will bypass some SQLAlchemy features like automatically populating default values, cascades, and events. Make sure to handle those aspects in your code if needed.
             db.session.bulk_save_objects(archived_rentals)
             db.session.commit()
-
-            # Query the ArchivedRental objects from the database after committing
-            archived_rentals_db = ArchivedRental.query.filter(
-                ArchivedRental.vhs_tape_copy_id == vhs_tape_copy_id
-            ).all()
-
-            print("archived_rentals_db: ", archived_rentals_db)
-
-            print("user_id: ", user.id)
-            print("user: ", user)
 
             flash("VHS tape copy deleted successfully.")
             return redirect(url_for("movies.movie_details", movie_id=movie_id))
