@@ -269,6 +269,16 @@ def vhs_remove(movie_id, vhs_tape_copy_id):
     user = User.query.get_or_404(session.get("user_id"))
 
     if request.method == "POST":
+        vhs_confirm = request.form.get("vhs_title_confirm").strip().lower()
+        if vhs_confirm != movie.title:
+            flash("Movie title does not match.")
+            return redirect(
+                url_for(
+                    "movies.vhs_remove",
+                    movie_id=movie.id,
+                    vhs_tape_copy_id=vhs_tape_copy.id,
+                )
+            )
         try:
             archived_rentals = []
 
