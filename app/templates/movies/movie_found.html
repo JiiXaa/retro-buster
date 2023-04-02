@@ -13,9 +13,9 @@
   {% if movie_query %}
   {% for movie in movie_query %}
   <tr>
-    <td>{{ movie.title }}</td>
-    <td>{{ movie.director }}</td>
-    <td>{{ movie.genre }}</td>
+    <td>{{ movie.title|title }}</td>
+    <td>{{ movie.director|title }}</td>
+    <td>{{ movie.genre|title }}</td>
     <td>
       <a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}">Details</a>
   </tr>

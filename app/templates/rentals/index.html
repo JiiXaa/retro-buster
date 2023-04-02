@@ -12,10 +12,11 @@
   <div class="rental_data__container">
     <div class="rental_data__active">
       <h2>Active Rentals</h2>
-      {% set active_rentals_found = False %}
+      {# I had an issue with updating active_rental_found attribute within the loop, found solution here: https://serverascode.com/2018/03/15/jinja2-namespaces.html #}
+      {% set ns = namespace(active_rentals_found=False) %}
       {% for rental in active_rentals %}
-        {% if rental.is_removed is none %}
-          {% set active_rentals_found = True %}
+        {% if not rental.is_removed %}
+          {% set ns.active_rentals_found=True %}
           <div class="rental_data__item rental_data__item--active">
             <p>Title: {{ rental.vhs_title|title }}</p>
             <p>Copy number: {{ rental.vhs_copy_number }}</p>
@@ -39,17 +40,17 @@
           {% endif %}
         {% endfor %}
 
-        {% if not active_rentals_found %}
+        {% if not ns.active_rentals_found %}
           <p>No active rentals in the database</p>
         {% endif %}
     </div>
 
     <div class="rental_data__returned">
       <h2>Returned Rentals</h2>
-      {% set returned_rentals_found = False %}
+      {% set ns = namespace(returned_rentals_found=False) %}
       {% for rental in returned_rentals %}
-        {% if rental.is_removed is none %}
-          {% set returned_rentals_found = True %}
+        {% if not rental.is_removed %}
+          {% set ns.returned_rentals_found = True %}
           <div class="rental_data__item rental_data__item--returned">
             <p>Title: {{ rental.vhs_title|title }}</p>
             <p>Copy number: {{ rental.vhs_copy_number }}</p>
@@ -73,7 +74,7 @@
         {% endif %}
         {% endfor %}
 
-        {% if not returned_rentals_found %}
+        {% if not ns.returned_rentals_found %}
           <p>No returned rentals in the database</p>
         {% endif %}
     </div>

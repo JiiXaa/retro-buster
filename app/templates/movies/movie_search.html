@@ -34,9 +34,9 @@
   </tr>
   {% for movie in movie_query %}
   <tr>
-    <td>{{ movie.title }}</td>
-    <td>{{ movie.director }}</td>
-    <td>{{ movie.genre }}</td>
+    <td>{{ movie.title|title }}</td>
+    <td>{{ movie.director|title }}</td>
+    <td>{{ movie.genre|title }}</td>
   </tr>
   {% endfor %}
 </table>
