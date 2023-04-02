@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>{{ movie.title }} Details</h1>
+<h1>{{ movie.title|title }} Details</h1>
 
 
-<p>Director: {{ movie.director }}</p>
-<p>Genre: {{ movie.genre }}</p>
+<p>Director: {{ movie.director|title }}</p>
+<p>Genre: {{ movie.genre|title }}</p>
 <p>Total copies: {{ movie.total_count() }}</p>
 <p>Available copies: {{ movie.available_count() }}</p>
 
@@ -20,6 +20,7 @@
   </tr>
 
   {% for vhs_tape in movie.vhs_tape_copy %}
+    <!-- Display only VHS tapes that have not been deleted. -->
     {% if vhs_tape.is_removed == False %}
       <tr>
         <td>{{ vhs_tape.copy_number }}</td>
@@ -44,11 +45,13 @@
         </td>
       </tr>
     {% endif %}
-  {% else %}
-  <tr>
-    <td colspan="5">No VHS copies in the database.</td>
-  </tr>
-  {% endfor %}
+    {% endfor %}
+
+    {% if movie.available_count() == 0 %}
+      <tr>
+        <td colspan="5">No VHS copies available.</td>
+      </tr>
+    {% endif %}
 </table>
 
 <a href="{{ url_for('movies.vhs_add_tape', movie_id=movie.id) }}">Add VHS copy</a>

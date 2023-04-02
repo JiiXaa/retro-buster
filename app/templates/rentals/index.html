@@ -12,8 +12,10 @@
   <div class="rental_data__container">
     <div class="rental_data__active">
       <h2>Active Rentals</h2>
+      {% set active_rentals_found = False %}
       {% for rental in active_rentals %}
         {% if rental.is_removed is none %}
+          {% set active_rentals_found = True %}
           <div class="rental_data__item rental_data__item--active">
             <p>Title: {{ rental.vhs_title|title }}</p>
             <p>Copy number: {{ rental.vhs_copy_number }}</p>
@@ -34,16 +36,20 @@
               {% endif %}
           </div>
           <hr>
-        {% else %}
+          {% endif %}
+        {% endfor %}
+
+        {% if not active_rentals_found %}
           <p>No active rentals in the database</p>
         {% endif %}
-      {% endfor %}
     </div>
 
     <div class="rental_data__returned">
       <h2>Returned Rentals</h2>
+      {% set returned_rentals_found = False %}
       {% for rental in returned_rentals %}
         {% if rental.is_removed is none %}
+          {% set returned_rentals_found = True %}
           <div class="rental_data__item rental_data__item--returned">
             <p>Title: {{ rental.vhs_title|title }}</p>
             <p>Copy number: {{ rental.vhs_copy_number }}</p>
@@ -64,10 +70,12 @@
               {% endif %}
           </div>
           <hr>
-          {% else %}
-            <p>No returned rentals in the database</p>
         {% endif %}
         {% endfor %}
+
+        {% if not returned_rentals_found %}
+          <p>No returned rentals in the database</p>
+        {% endif %}
     </div>
 
     {% else %}
