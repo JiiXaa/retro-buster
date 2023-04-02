@@ -4,8 +4,12 @@
 <h1>Customer DELETE</h1>
 
 <form action="{{ url_for('customers.customer_delete', customer_id=customer.id) }}" method="post">
-  <p>Are you sure you want to delete {{ customer.first_name }} {{ customer.last_name }} {{ customer.email }}?</p>
+  <div class="customer-delete__info">
+    <p>Are you sure you want to delete {{ customer.first_name }} {{ customer.last_name }} {{ customer.email }}?</p>
+    <p>Please type: <span>{{ customer.email }}</span></p>
+    <input type="text" name="email_confirm" required>
+  </div>
   <button type="submit">Confirm</button>
-  <button type="button"><a href="{{ url_for('customers.index') }}">Cancel</a></button>
+  <a href="{{ url_for('customers.index') }}">Cancel</a>
 </form>
 {% endblock %}

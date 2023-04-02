@@ -105,6 +105,12 @@ def customer_edit(customer_id):
 def customer_delete(customer_id):
     customer = Customer.query.get_or_404(customer_id)
     if request.method == "POST":
+        email_confirm = request.form.get("email_confirm").strip().lower()
+        if email_confirm != customer.email:
+            flash("Email confirmation does not match customer email.")
+            return redirect(
+                url_for("customers.customer_delete", customer_id=customer.id)
+            )
         # Set customer_id to None for all VHS rentals associated with the customer
         for rental in customer.rentals:
             rental.customer_id = None
