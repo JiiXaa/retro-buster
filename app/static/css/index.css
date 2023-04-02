@@ -68,3 +68,17 @@ body {
   margin: 1rem;
   padding: 1rem;
 }
+
+/* Utility Classes */
+
+/* This class visually hide the content while still making it accessible to screen readers. The 'aria-label' attribute on '<a>' elements are still present to provide additional context. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

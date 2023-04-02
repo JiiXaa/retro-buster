@@ -3,7 +3,16 @@
 
 <h1>{{ movie.title|title }} Details</h1>
 
-
+<div class="movie-actions__wrapper">
+  <a href="{{ url_for('movies.movie_edit', movie_id=movie.id) }}" aria-label="Edit movie">
+    <i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
+    <span class="visually-hidden">Edit</span>
+  </a>
+  <a href="{{ url_for('movies.movie_delete', movie_id=movie.id) }}" aria-label="Delete movie">
+    <i class="fa-solid fa-trash" aria-hidden="true"></i>
+    <span class="visually-hidden">Delete</span>
+  </a>
+</div>
 <p>Director: {{ movie.director|title }}</p>
 <p>Genre: {{ movie.genre|title }}</p>
 <p>Total copies: {{ movie.total_count() }}</p>

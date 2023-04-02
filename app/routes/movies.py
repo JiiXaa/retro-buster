@@ -187,7 +187,7 @@ def movie_edit(movie_id):
         movie.is_featured = bool(request.form.get("is_featured"))
 
         db.session.commit()
-        return redirect(url_for("movies.index"))
+        return redirect(url_for("movies.movie_details", movie_id=movie_id))
     return render_template("movies/movie_edit.html", movie=movie)
 
 

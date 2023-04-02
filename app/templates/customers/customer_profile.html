@@ -3,6 +3,17 @@
 
 <h1>Customer Profile</h1>
 
+<div class="customer-actions__wrapper">
+  <a href="{{ url_for('customers.customer_edit', customer_id=customer.id) }}" aria-label="Edit customer">
+    <i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
+    <span class="visually-hidden">Edit</span>
+  </a>
+  <a href="{{ url_for('customers.customer_delete', customer_id=customer.id) }}" aria-label="Delete customer">
+    <i class="fa-solid fa-trash" aria-hidden="true"></i>
+    <span class="visually-hidden">Delete</span>
+  </a>
+</div>
+
 <p>First name: {{ customer.first_name }}</p>
 <p>Last name: {{ customer.last_name }}</p>
 <p>Email: {{ customer.email }}</p>

@@ -96,7 +96,7 @@ def customer_edit(customer_id):
 
         db.session.commit()
         flash("Customer updated successfully.")
-        return redirect(url_for("customers.index"))
+        return redirect(url_for("customers.customer_profile", customer_id=customer.id))
     return render_template("customers/customer_edit.html", customer=customer)
 
 
