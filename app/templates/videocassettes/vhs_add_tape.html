@@ -36,9 +36,11 @@
   <p>Copy Number:</p>
   <ul>
     {% for vhs_tape in movie.vhs_tape_copy %}
-      <li>
-        {{ vhs_tape.copy_number }}
-      </li>
+      {% if vhs_tape.is_removed %}
+        <li class="item-crossed">{{ vhs_tape.copy_number }}</li>
+      {% else %}
+        <li>{{ vhs_tape.copy_number }}</li>
+      {% endif %}
     {% endfor %}
   </ul>
 </div>

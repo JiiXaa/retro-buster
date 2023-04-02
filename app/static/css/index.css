@@ -82,3 +82,7 @@ body {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+
+.item-crossed {
+  text-decoration: line-through;
+}
