@@ -12,6 +12,7 @@ from app.models import Movie, VhsTapeCopy, Customer, VhsRental, ArchivedRental, 
 from app import db
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql import func
+import math
 from datetime import datetime, timedelta
 from app.utils.utility_functions import find_movie
 from app.utils.variables import (
@@ -41,18 +42,36 @@ def index():
     return render_template("movies/index.html")
 
 
-# endpoint to get all movies from the database and pass them to the JavaScript in JSON format
+# endpoint to get all movies from the database and pass them to the JavaScript in JSON format (for pagination)
+MOVIES_PER_PAGE = 1
+
+
 @bp.route("/movies-data", methods=["GET", "POST"])
 def movies_data():
-    ### Passing a JSON object to JavaScript ###
-    # https://stackoverflow.com/questions/42499535/passing-a-json-object-from-flask-to-javascript
+    # Get the current page from query parameters (default to 1 if not provided)
+    page = int(request.args.get("page", 1))
 
-    # Get all movies from the database
-    movies_all = Movie.query.all()
+    # Calculate the offset for the query
+    offset = (page - 1) * MOVIES_PER_PAGE
+
+    # Get the total number of movies in the database
+    total_movies = Movie.query.count()
+
+    # Calculate the total number of pages
+    total_pages = math.ceil(total_movies / MOVIES_PER_PAGE)
+
+    # Get the movies for the current page using limit and offset
+    movies_page = Movie.query.limit(MOVIES_PER_PAGE).offset(offset).all()
+
     # Convert the movie objects to dictionaries
-    movies = [movie.to_dict() for movie in movies_all]
+    movies = [movie.to_dict() for movie in movies_page]
 
-    return jsonify(movies=movies)
+    print("movies", movies)
+    print("page", page)
+    print("total_pages", total_pages)
+
+    # Return the movies, current page, and total pages as a JSON object
+    return jsonify(movies=movies, current_page=page, total_pages=total_pages)
 
 
 @bp.route("/movie_search", methods=["GET", "POST"])

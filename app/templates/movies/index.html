@@ -32,6 +32,7 @@
 <button class="btn-sort" data-sortby="rating">Sort by Rating</button>
 
 <div class="loadingSpinner">Loading...</div>
+<div class="pagination__container" id="pagination"></div>
 <div id="moviesList"></div>
 
 <script type="module">
@@ -76,21 +77,94 @@
   }
 
   // Fetch movies from server and display them on page
-  async function getMovies() {
+  async function getMovies(page = 1) {
     try {
-      const response = await fetch('/movies/movies-data');
+      // Fetch movies from server, starting from the page specified.
+      const response = await fetch(`/movies/movies-data?page=${page}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
       movies = data.movies;
       document.querySelector('.loadingSpinner').style.display = 'none';
+      // Display the movies on the page
       displayMovies();
+
+      // Generate pagination buttons
+      createPagination(data.current_page, data.total_pages)
     } catch (error) {
       console.error(error);
       moviesList.innerHTML = `<p>There was an error loading the movies, Please contact developer. Error: ${error}</p>`;
     }
   }
+
+  // Create pagination buttons
+  function createPagination(currentPage, totalPages) {
+    console.log(totalPages);
+    const paginationContainer = document.getElementById('pagination');
+    paginationContainer.innerHTML = '';
+
+    // Add a "previous" button if the current page is not the first page
+    const prevBtn = document.createElement('button');
+    prevBtn.textContent = 'Previous';
+    prevBtn.classList.add('pagination__btn');
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.addEventListener('click', () => getMovies(currentPage - 1));
+    paginationContainer.appendChild(prevBtn);
+
+    // Calculate the range of pages to display
+    let startPage = Math.max(1, currentPage - 3);
+    let endPage = Math.min(totalPages, currentPage + 3);
+    if (currentPage <= 4) {
+      endPage = Math.min(totalPages, 7);
+    }
+    if (currentPage >= totalPages - 3) {
+      startPage = Math.max(1, totalPages - 6);
+    }
+
+    // Add ellipsis (...) if the range of pages is not all the pages
+    if (startPage > 1) {
+      const ellipsis = document.createElement('span');
+      ellipsis.textContent = '...';
+      paginationContainer.appendChild(ellipsis);
+    }
+
+    // Display page buttons for the range of pages
+    for (let page = startPage; page <= endPage; page++) {
+      const pageBtn = document.createElement('button');
+      pageBtn.textContent = page;
+      pageBtn.classList.add('pagination__btn');
+
+      if(page === currentPage) pageBtn.classList.add('pagination__btn--active');
+
+      pageBtn.addEventListener('click', () => getMovies(page));
+      paginationContainer.appendChild(pageBtn);
+    }
+
+    // Add ellipsis (...) after the current page if the range of pages is not all the pages
+    if (endPage < totalPages) {
+      const ellipsis = document.createElement('span');
+      ellipsis.textContent = '...';
+      paginationContainer.appendChild(ellipsis);
+    }
+
+    // Add next button
+    const nextBtn = document.createElement('button');
+    nextBtn.textContent = 'Next';
+    nextBtn.classList.add('pagination__btn');
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.addEventListener('click', () => getMovies(currentPage + 1));
+    paginationContainer.appendChild(nextBtn);
+
+    // Display total page count
+    const totalPagesCount = document.createElement('span')
+    totalPagesCount.textContent = `Total pages: ${totalPages}`;
+    paginationContainer.appendChild(totalPagesCount);
+}
+
+
+
+
 
   // Sort movies functionality
   let sortAscending = false;
