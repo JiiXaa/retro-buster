@@ -16,7 +16,7 @@ COPY . .
 # Set the environment variables
 ENV FLASK_APP=run.py
 ENV FLASK_ENV=production
-ENV DATABASE_URI=postgres://zlpxkbai:CLDWp-H_C8CKssEmZ0pPnj197EabSlUn@trumpet.db.elephantsql.com/zlpxkbai
+ENV DATABASE_URI={{env.DATABASE_URI}}
 
 # Expose the port on which the Flask app will run
 EXPOSE 5000
