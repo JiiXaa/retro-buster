@@ -1,5 +1,5 @@
 <nav>
-  <a href="{{ url_for('main.index') }}">retroBuster</a>
+  <a href="{{ url_for('main.index') }}" class="main-logo">retroBuster</a>
   <ul>
     <li><a href="{{ url_for('main.index') }}">Home</a></li>
     {% if session.logged_in %}

@@ -2,8 +2,10 @@ import os
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from dotenv import load_dotenv
 
 db = SQLAlchemy()
+load_dotenv()
 
 
 def create_app():
