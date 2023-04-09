@@ -1,7 +1,7 @@
 <nav>
   <a href="{{ url_for('main.index') }}" class="main-logo">retroBuster</a>
   <ul>
-    <li><a href="{{ url_for('main.index') }}">Home</a></li>
+    <li><a href="{{ url_for('main.index') }}" class="link-active">HOME</a></li>
     {% if session.logged_in %}
     <li><a href="{{ url_for('customers.index') }}">Customers</a></li>
     <li><a href="{{ url_for('customers.customer_search') }}">Customer search</a></li>
@@ -16,8 +16,8 @@
     <li><a href="{{ url_for('users.dashboard', username=session.username) }}">{{ session.username|capitalize }}</a></li>
     <li><a href="{{ url_for('users.logout') }}">Logout</a></li>
     {% else %}
-    <li><a href="{{ url_for('users.login') }}">Login</a></li>
-    <li><a href="{{ url_for('users.register') }}">Register</a></li>
+    <li><a href="{{ url_for('users.login') }}">LOGIN</a></li>
+    <li><a href="{{ url_for('users.register') }}">REGISTER</a></li>
     {% endif %}
   </ul>
 </nav>

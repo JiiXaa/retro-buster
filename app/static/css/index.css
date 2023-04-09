@@ -1,10 +1,10 @@
 :root {
   /* Colors */
 
-  --primary-color: #ff5c5c;
-  --secondary-color: #4e7bff;
-  --tertiary-color: #053daa;
-  --quaternary-color: #ffaa00;
+  --primary-color: #ffaa00;
+  --secondary-color: #053daa;
+  --tertiary-color: #4e7bff;
+  --quaternary-color: #ff5c5c;
   --black-color: #000000;
   --white-color: #ffffff;
 
@@ -98,32 +98,40 @@ body {
   font-family: var(--font-main);
 }
 
+/* MAIN CONTAINER */
 .main__wrapper {
   color: var(--white-color);
   border: 4px solid var(--black-color);
   display: flex;
   height: 90vh;
-  width: 95vw;
+  width: 90vw;
   flex-direction: column;
   justify-content: space-between;
+
+  box-shadow: rgba(240, 46, 170, 0.4) 3px 3px, rgba(240, 46, 170, 0.3) 6px 6px,
+    rgba(240, 46, 170, 0.2) 9px 9px, rgba(240, 46, 170, 0.1) 12px 12px,
+    rgba(240, 46, 170, 0.05) 15px 15px;
 }
 
 .main__wrapper main {
-  border: 1px solid black;
-  background-color: var(--tertiary-color);
+  background-color: var(--secondary-color);
   height: 100%;
 }
+
+/* HEADER - NAVBAR */
 
 .main__wrapper header nav {
   background-color: var(--black-color);
   display: flex;
   align-items: center;
-  padding-left: 2rem;
+  padding-left: 1.2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .main__wrapper header nav .main-logo {
   color: var(--white-color);
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 600;
   text-decoration: none;
 }
@@ -143,12 +151,43 @@ body {
 .main__wrapper header nav ul li a {
   color: var(--white-color);
   text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 400;
 }
 
-.main__wrapper footer {
-  border: 1px solid black;
-  background-color: var(--tertiary-color);
+.main__wrapper header nav ul li {
+  padding-left: 0.8rem;
 }
+
+.main__wrapper header nav ul li:first-child {
+  padding-left: 0;
+}
+
+/* FOOTER */
+
+footer {
+  border-top: 1px solid var(--black-color);
+  background-color: var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+footer a {
+  color: var(--white-color);
+  padding: 1.5rem;
+  text-decoration: none;
+  font-size: 1.6rem;
+}
+
+footer p {
+  padding-top: 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* MOVIES */
 
 .movie__container {
   margin: 1rem auto;
@@ -233,4 +272,10 @@ body {
 
 .item-crossed {
   text-decoration: line-through;
+}
+
+/* Active menu link */
+.main__wrapper header nav ul li .link-active {
+  color: var(--primary-color);
+  text-decoration: underline;
 }
