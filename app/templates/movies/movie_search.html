@@ -25,7 +25,7 @@
 
 </form>
 
-
+{% if movie_query %}
 <table>
   <tr>
     <th>Title</th>
@@ -40,4 +40,5 @@
   </tr>
   {% endfor %}
 </table>
+{% endif %}
 {% endblock %}

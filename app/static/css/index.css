@@ -8,9 +8,6 @@
   --black-color: #000000;
   --white-color: #ffffff;
 
-  --yellow: #feceab;
-  --white-color: #fff;
-
   /* Font */
   --font-main: 'Rajdhani', sans-serif;
 }
@@ -237,9 +234,16 @@ footer {
 
 footer a {
   color: var(--white-color);
-  padding: 1.5rem;
+  padding: 0 1.5rem;
   text-decoration: none;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.5s cubic-bezier(0.5, 0, 0, 1);
+}
+
+footer a:hover {
+  color: var(--black-color);
 }
 
 footer p {
