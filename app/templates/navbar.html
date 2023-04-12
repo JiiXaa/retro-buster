@@ -1,5 +1,58 @@
 
+<!-- // Mobile navigation -->
+  <nav class="menu-mobile">
+    <a href="{{ url_for('main.index') }}" class="main-logo">retroBuster</a>
+    <ul class="nav-links">
+      <li class="menu-item link-active"><a href="{{ url_for('main.index') }}">HOME</a></li>
+      {% if session.logged_in %}
+      <li class="menu-item">
+        <a href="{{ url_for('customers.index') }}">CUSTOMERS</a>
+      </li>
+      <li class="menu-item">
+        <a href="{{ url_for('customers.customer_search') }}">SEARCH CUSTOMERS</a>
+      </li>
+      <li class="menu-item">
+        <a href="{{ url_for('customers.customer_add') }}">ADD CUSTOMERS</a>
+      </li>
+      <li class="menu-item">
+        <a href="{{ url_for('movies.index') }}">MOVIES</a>
+      </li>
+      <li class="menu-item">
+        <a href="{{ url_for('movies.movie_search') }}">SEARCH MOVIES</a>
+      </li>
+      <li class="menu-item">
+        <a href="{{ url_for('movies.movie_add') }}">ADD MOVIES</a>
+      </li>
+      <li class="menu-item">
+        <a href="{{ url_for('rentals.index') }}">RENTALS</a>
+      </li>
+      <li class="menu-item">
+        <a href="#0">CONTACT</a>
+      </li>
+      <li class="menu-item">
+        <a href="{{ url_for('users.dashboard', username=session.username) }}">DASHBOARD</a>
+      </li>
+      <li class="menu-item">
+        <a href="{{ url_for('users.logout') }}">LOGOUT</a>
+      </li>
+      {% else %}
+      <li class="menu-item">
+        <a href="{{ url_for('users.login') }}">LOGIN</a>
+      </li>
+      <li class="menu-item">
+        <a href="{{ url_for('users.register') }}">REGISTER</a>
+      </li>
+      {% endif %}
+    </ul>
+    <div class="burger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
 
+
+<!-- // Desktop navigation -->
 <nav class="menu">
   <a href="{{ url_for('main.index') }}" class="main-logo">retroBuster</a>
   <ol>

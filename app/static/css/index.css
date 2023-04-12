@@ -92,8 +92,10 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+
   align-items: center;
+  /* menu is off-screen that is why need to hide horizontal overflow */
+  overflow-x: hidden;
 
   font-family: var(--font-main);
 }
@@ -103,8 +105,8 @@ body {
   color: var(--white-color);
   border: 4px solid var(--black-color);
   display: flex;
-  height: 90vh;
-  width: 90vw;
+  /* width: 90%;
+  height: 90vh; */
   flex-direction: column;
   justify-content: space-between;
 
@@ -118,106 +120,95 @@ body {
   height: 100%;
 }
 
-/* HEADER - NAVBAR */
-
 .menu {
-  background-color: var(--black-color);
-  display: flex;
-  align-items: center;
-  padding-left: 1.2rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  display: none;
 }
 
-.menu > ol > .menu-item > a {
-  position: relative;
-}
+/* MOBILE HAMBUGER MENU */
 
-.menu > ol > .menu-item > a::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
+.full-screen-menu {
+  position: fixed;
+  top: 0;
   left: 0;
-  background: var(--primary-color);
-  transform: scaleX(0);
+  width: 100%;
+  height: 100%;
+  background-color: var(--black-color);
+  z-index: 999;
+  opacity: 1;
+  transform: translateX(0%);
+  transition: all 0.5s ease-in-out;
 }
 
-.menu > ol > .menu-item:hover > a::after {
-  transform: scaleX(1);
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--black-color);
+  width: 100%;
+  transition: all 300ms ease-in-out;
+  padding: 1rem 0;
 }
-.main__wrapper header nav .main-logo {
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--black-color);
+  width: 100%;
+  transition: all 300ms ease-in-out;
+}
+
+.main-logo {
   color: var(--white-color);
   font-size: 1.5rem;
   font-weight: 600;
   text-decoration: none;
 }
 
-.main__wrapper header nav ol {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  list-style: none;
-  margin: 0 auto;
-  padding: 0;
-}
-
-.main__wrapper header nav ol li a {
-  color: var(--white-color);
-  text-decoration: none;
-  font-size: 1.3rem;
-  font-weight: 500;
-  line-height: normal;
-}
-
-.main__wrapper header nav ol li {
-  padding-left: 1.2rem;
-  position: relative;
-}
-
-.menu-item {
-  position: relative;
-}
-
-.menu-item i {
-  color: var(--black-color);
-  font-size: 1rem;
-  background-color: var(--white-color);
-  padding: 0.3rem;
-  border-radius: 50%;
-}
-
-.menu-item .sub-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
+.nav-links {
+  position: fixed;
+  right: 0px;
+  top: 0;
   left: 0;
-  background-color: var(--black-color);
-  list-style: none;
-  padding-top: 0.8rem;
+  bottom: 0;
+  display: flex;
+  height: 100vh;
+  background-color: rgba(34, 34, 34, 1);
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  opacity: 0.5;
+  transition: all 400ms ease-in-out;
+  margin: 0;
+  overflow-y: auto;
+  visibility: hidden;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.menu-item .sub-menu li {
-  padding: 0.5rem 1rem;
-  padding-right: 1.5rem;
-  transition: background-color 0.3s ease;
+.nav-links li {
+  opacity: 0;
 }
 
-.menu-item .sub-menu li a {
-  color: var(--white-color);
-  text-decoration: none;
-  display: block;
+.nav-active {
+  display: flex;
+  opacity: 1;
+  visibility: visible;
 }
 
-.menu-item:hover .sub-menu {
-  display: block;
+.burger {
+  cursor: pointer;
+  z-index: 999;
 }
 
-.menu-item .sub-menu li:hover {
-  background-color: var(--primary-color);
+.burger div {
+  width: 28px;
+  height: 4px;
+  background-color: #ddd;
+  margin: 5px;
+  transition: all 300ms ease-in;
 }
 
 /* FOOTER */
@@ -251,73 +242,224 @@ footer p {
   font-size: 0.8rem;
 }
 
-/* MOVIES */
-
-.movie__container {
-  margin: 1rem auto;
-  padding: 1rem;
-  max-width: 800px;
-  display: flex;
-  border: 2px solid black;
-  align-items: center;
-  justify-content: center;
+@keyframes navLinkFade {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
 }
 
-.featured-movies__container {
-  margin: 1rem auto;
-  padding: 1rem;
-  display: none;
-  flex-direction: column;
-  border: 1px solid black;
+.toggle .line1 {
+  transform: rotate(-45deg) translate(-5px, 8px);
 }
 
-.featured-movies--list {
-  display: flex;
-  flex-direction: row;
+.toggle .line2 {
+  opacity: 0;
 }
 
-.featured-movies--list-item {
-  border: 1px solid blue;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 1rem;
-  padding: 1rem;
+.toggle .line3 {
+  transform: rotate(45deg) translate(-5px, -8px);
 }
 
-.forms__container {
-  margin: 1rem auto;
-  padding: 3rem;
-  display: flex;
-  max-width: 30%;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid black;
-}
+@media screen and (min-width: 1440px) {
+  .menu-mobile {
+    display: none;
+  }
 
-.due-today__container {
-  margin: 0 auto;
-  padding: 1rem;
-  display: none;
-  flex-direction: column;
-  border: 1px solid black;
-}
+  /* MAIN CONTAINER */
+  .main__wrapper {
+    color: var(--white-color);
+    border: 4px solid var(--black-color);
+    display: flex;
+    height: 90vh;
+    width: 90vw;
+    flex-direction: column;
+    justify-content: space-between;
 
-.due-today--list {
-  display: flex;
-  flex-direction: row;
-}
+    box-shadow: rgba(240, 46, 170, 0.4) 3px 3px, rgba(240, 46, 170, 0.3) 6px 6px,
+      rgba(240, 46, 170, 0.2) 9px 9px, rgba(240, 46, 170, 0.1) 12px 12px,
+      rgba(240, 46, 170, 0.05) 15px 15px;
+  }
 
-.due-today--list-item {
-  border: 1px solid blue;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 1rem;
-  padding: 1rem;
+  .main__wrapper main {
+    background-color: var(--secondary-color);
+    height: 100%;
+  }
+
+  /* HEADER - NAVBAR */
+
+  .menu {
+    background-color: var(--black-color);
+    display: flex;
+    align-items: center;
+    padding-left: 1.2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .menu > ol > .menu-item > a {
+    position: relative;
+  }
+
+  .menu > ol > .menu-item > a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background: var(--primary-color);
+    transform: scaleX(0);
+  }
+
+  .menu > ol > .menu-item:hover > a::after {
+    transform: scaleX(1);
+  }
+  .main__wrapper header nav .main-logo {
+    color: var(--white-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .main__wrapper header nav ol {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .main__wrapper header nav ol li a {
+    color: var(--white-color);
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: normal;
+  }
+
+  .main__wrapper header nav ol li {
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .menu-item {
+    position: relative;
+  }
+
+  .menu-item i {
+    color: var(--black-color);
+    font-size: 1rem;
+    background-color: var(--white-color);
+    padding: 0.3rem;
+    border-radius: 50%;
+  }
+
+  .menu-item .sub-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--black-color);
+    list-style: none;
+    padding-top: 0.8rem;
+  }
+
+  .menu-item .sub-menu li {
+    padding: 0.5rem 1rem;
+    padding-right: 1.5rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .menu-item .sub-menu li a {
+    color: var(--white-color);
+    text-decoration: none;
+    display: block;
+  }
+
+  .menu-item:hover .sub-menu {
+    display: block;
+  }
+
+  .menu-item .sub-menu li:hover {
+    background-color: var(--primary-color);
+  }
+
+  /* MOVIES */
+
+  .movie__container {
+    margin: 1rem auto;
+    padding: 1rem;
+    max-width: 800px;
+    display: flex;
+    border: 2px solid black;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .featured-movies__container {
+    margin: 1rem auto;
+    padding: 1rem;
+    display: none;
+    flex-direction: column;
+    border: 1px solid black;
+  }
+
+  .featured-movies--list {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .featured-movies--list-item {
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .forms__container {
+    margin: 1rem auto;
+    padding: 3rem;
+    display: flex;
+    max-width: 30%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid black;
+  }
+
+  .due-today__container {
+    margin: 0 auto;
+    padding: 1rem;
+    display: none;
+    flex-direction: column;
+    border: 1px solid black;
+  }
+
+  .due-today--list {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .due-today--list-item {
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+    padding: 1rem;
+  }
 }
 
 /* Utility Classes */
@@ -346,4 +488,9 @@ footer p {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100%;
 }
