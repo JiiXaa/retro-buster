@@ -151,7 +151,7 @@ body {
   display: none;
 }
 
-/* MOBILE HAMBUGER MENU */
+/* MOBILE HAMBURGER MENU */
 
 header {
   display: flex;
@@ -264,7 +264,64 @@ footer p {
   font-size: 0.8rem;
 }
 
+/* Users */
+
+/* Login */
+
+.login__wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login__wrapper h1 {
+  position: relative;
+  color: var(--grey-text-color);
+  font-family: var(--font-secondary);
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
+  letter-spacing: 3px;
+  z-index: 0;
+}
+
+.login__wrapper h1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 29%;
+  width: 73%;
+  height: 3rem;
+  background-color: var(--quaternary-color);
+  transform: skewX(-20deg);
+  z-index: -1;
+}
+
+.login__wrapper form input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.login__wrapper form input[type='submit'] {
+  background-color: var(--quaternary-color);
+  color: var(--white-color);
+  border: none;
+  cursor: pointer;
+}
+
 /* Customers */
+
+/* Add Customer */
 
 .customer-add__wrapper {
   height: 100%;
@@ -280,7 +337,7 @@ footer p {
   font-family: var(--font-secondary);
   font-size: 2rem;
   font-weight: 900;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   letter-spacing: 3px;
   z-index: 0;
 }
@@ -333,7 +390,7 @@ footer p {
 
 .customer-add__wrapper form input[type='submit'] {
   padding: 0.8rem 1.2rem;
-  margin-top: 0.8rem;
+  margin-top: 0.4rem;
 }
 
 @keyframes navLinkFade {

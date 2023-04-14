@@ -1,26 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Login</h1>
+<div class="login__wrapper">
+  <h1>Login</h1>
 
-<form action="{{ url_for('users.login') }}" method="post">
-  <div class="form-control">
-    <label for="username">Username</label>
-    <input type="text" name="username" id="username" required> <br>
-  </div>
+  <form action="{{ url_for('users.login') }}" method="post">
+    <div class="form-control">
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username" required> <br>
+    </div>
 
-  <div class="form-control">
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required> <br>
-  </div>
+    <div class="form-control">
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required> <br>
+    </div>
 
-  <br>
+    <br>
 
-  <button type="submit">Login</button>
-</form>
-
-{% for user in users %}
-  <p>{{ user.username }} {{ user.email }}</p>
-{% endfor %}
+    <input type="submit" value="Login">
+  </form>
+</div>
 
 {% endblock %}
