@@ -53,6 +53,8 @@
       movieDiv.classList.add('movie__container');
       movieDiv.innerHTML = `
         <section class="movie__details">
+          ${movie.image ? `<img src="${movie.image}" alt="${movie.title}">` : `<img src="/static/img/movie-default.jpg" alt="fallback image">`}
+          <h2>${movie.title}</h2>
           <h2>${movie.title}</h2>
           <p>${movie.director}</p>
           <p>${movie.genre}</p>

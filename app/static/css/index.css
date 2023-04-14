@@ -2,17 +2,21 @@
   /* Colors */
 
   --primary-color: #ffaa00;
-  --secondary-color: #053daa;
+  --secondary-color: #219ebc;
+  --dark-blue-color: #1d3557;
   --tertiary-color: #4e7bff;
   --quaternary-color: #ff5c5c;
   --black-color: #000000;
+  --black-text-color: #212529;
+  --grey-text-color: #333533;
   --white-color: #ffffff;
 
   /* Font */
   --font-main: 'Rajdhani', sans-serif;
+  --font-secondary: 'Lato', sans-serif;
 }
 
-/* Box sizing rules */
+/* Box sizing rules by Picallily */
 *,
 *::before,
 *::after {
@@ -87,12 +91,39 @@ select {
   }
 }
 
+/* Default selectors */
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--black-text-color);
+}
+
+input,
+label {
+  color: var(--black-text-color);
+}
+
+input[type='submit'] {
+  background-color: var(--quaternary-color);
+  color: var(--white-color);
+  border: 1px solid var(--black-text-color);
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
 body {
-  background-color: var(--white-color);
-  min-height: 100vh;
+  background-color: var(--secondary-color);
   display: flex;
   flex-direction: column;
-
   align-items: center;
   /* menu is off-screen that is why need to hide horizontal overflow */
   overflow-x: hidden;
@@ -100,19 +131,35 @@ body {
   font-family: var(--font-main);
 }
 
+/* .form-control {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-control label {
+  text-align: left;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.form-control input {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--black-text-color);
+  border-radius: 0.3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+} */
+
 /* MAIN CONTAINER */
 .main__wrapper {
   color: var(--white-color);
   border: 4px solid var(--black-color);
   display: flex;
-  /* width: 90%;
-  height: 90vh; */
+  min-height: 100vh;
+  width: 100%;
   flex-direction: column;
   justify-content: space-between;
-
-  box-shadow: rgba(240, 46, 170, 0.4) 3px 3px, rgba(240, 46, 170, 0.3) 6px 6px,
-    rgba(240, 46, 170, 0.2) 9px 9px, rgba(240, 46, 170, 0.1) 12px 12px,
-    rgba(240, 46, 170, 0.05) 15px 15px;
 }
 
 .main__wrapper main {
@@ -125,19 +172,6 @@ body {
 }
 
 /* MOBILE HAMBUGER MENU */
-
-.full-screen-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--black-color);
-  z-index: 999;
-  opacity: 1;
-  transform: translateX(0%);
-  transition: all 0.5s ease-in-out;
-}
 
 header {
   display: flex;
@@ -160,7 +194,7 @@ nav {
 
 .main-logo {
   color: var(--white-color);
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 600;
   text-decoration: none;
 }
@@ -240,6 +274,78 @@ footer a:hover {
 footer p {
   padding-top: 0.5rem;
   font-size: 0.8rem;
+}
+
+/* Customers */
+
+.customer-add__wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.customer-add__wrapper h1 {
+  position: relative;
+  color: var(--grey-text-color);
+  font-family: var(--font-secondary);
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
+  letter-spacing: 3px;
+  z-index: 0;
+}
+
+.customer-add__wrapper h1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 29%;
+  width: 73%;
+  height: 3rem;
+  background-color: var(--quaternary-color);
+  z-index: -1;
+  opacity: 0.8;
+  transform: skewX(-20deg);
+}
+
+.customer-add__wrapper form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.customer-add__wrapper form .form-control {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.customer-add__wrapper form .form-control label {
+  align-self: start;
+  margin-left: 15%;
+  margin-bottom: -0.2rem;
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.customer-add__wrapper form .form-control input {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--black-text-color);
+  border-radius: 0.2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 80%;
+}
+
+.customer-add__wrapper form input[type='submit'] {
+  padding: 0.8rem 1.2rem;
+  margin-top: 0.8rem;
 }
 
 @keyframes navLinkFade {
@@ -493,4 +599,8 @@ footer p {
 .no-scroll {
   overflow: hidden;
   height: 100%;
+}
+
+.text-center {
+  text-align: center;
 }

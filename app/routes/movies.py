@@ -43,7 +43,7 @@ def index():
 
 
 # endpoint to get all movies from the database and pass them to the JavaScript in JSON format (for pagination)
-MOVIES_PER_PAGE = 1
+MOVIES_PER_PAGE = 8
 
 
 @bp.route("/movies-data", methods=["GET", "POST"])
@@ -304,7 +304,6 @@ def vhs_remove(movie_id, vhs_tape_copy_id):
             # Remove all rentals associated with the VhsTapeCopy object
             if vhs_tape_copy.rentals:
                 for rental in vhs_tape_copy.rentals:
-
                     # Create a new ArchivedRental object and add it to the database before deleting the Rental object
                     archived_rental = ArchivedRental(
                         date_rented=rental.date_rented,
