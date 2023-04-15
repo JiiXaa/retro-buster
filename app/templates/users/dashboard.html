@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Dashboard</h1>
+<div class="user-dashboard__wrapper">
+  <h1>Dashboard</h1>
 
-<p>Welcome, {{ user.username|capitalize }}!</p>
-<p>{{ user.first_name }} {{ user.last_name }}</p>
-<p>{{ user.email }}</p>
+  <h2>Welcome, {{ user.username|capitalize }}!</h2>
+  <div class="user-info__wrapper">
+    <p>{{ user.first_name }} {{ user.last_name }}</p>
+    <p>{{ user.email }}</p>
+  </div>
+</div>
 
 {% endblock %}
