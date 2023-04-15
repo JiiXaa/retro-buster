@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p>This is for unlogged user.</p>
+<div class="unlogged__wrapper">
+  <h1>Welcome to the Movie Database</h1>
+  <p>Manage movie rentals effortlessly. Log in and get started!</p>
+  <div class="unlogged__hero">
+    <a href="{{ url_for('users.login') }}">LOGIN</a>
+    <img src="/static/img/clapper2-optimized.png" alt="Movie Clapper">
+  </div>
+</div>
+
 
 {% endblock %}
