@@ -1,44 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Movie SEARCH</h1>
+<div class="movie-search__wrapper">
+  <h1>Movie SEARCH</h1>
+  <form action="{{ url_for('movies.movie_search') }}" method="post">
 
-<h3>Quick search:</h3>
-<form action="{{ url_for('movies.movie_search') }}" method="post">
+    <div class="form-control">
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title"> <br>
+    </div>
 
-  <div class="form-control">
-    <label for="title">Title</label>
-    <input type="text" name="title" id="title"> <br>
-  </div>
+    <div class="form-control">
+      <label for="director">Director</label>
+      <input type="text" name="director" id="director"> <br>
+    </div>
 
-  <div class="form-control">
-    <label for="director">Director</label>
-    <input type="text" name="director" id="director"> <br>
-  </div>
+    <div class="form-control">
+      <label for="genre">Genre</label>
+      <input type="text" name="genre" id="genre"> <br>
+    </div>
 
-  <div class="form-control">
-    <label for="genre">Genre</label>
-    <input type="text" name="genre" id="genre"> <br>
-  </div>
+    <input type="submit" value="Search">
 
-  <input type="submit" value="Search">
-
-</form>
-
-{% if movie_query %}
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Director</th>
-    <th>Genre</th>
-  </tr>
-  {% for movie in movie_query %}
-  <tr>
-    <td>{{ movie.title|title }}</td>
-    <td>{{ movie.director|title }}</td>
-    <td>{{ movie.genre|title }}</td>
-  </tr>
-  {% endfor %}
-</table>
-{% endif %}
+  </form>
+</div>
 {% endblock %}
