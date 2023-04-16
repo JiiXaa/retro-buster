@@ -609,6 +609,110 @@ footer p {
   border: 1px solid var(--white-color);
 }
 
+/* Customer Search */
+
+.customer-found__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.customer-found__wrapper .customer__description > h3 {
+  color: var(--white-color);
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 2px solid var(--quaternary-color);
+  margin-bottom: 0;
+}
+
+.customer-found__wrapper .customer__description > p {
+  text-align: center;
+  font-style: italic;
+  color: var(--black-text-color);
+  margin-bottom: 1rem;
+}
+
+.customer-found__wrapper .customer-list__details {
+  margin-bottom: 0;
+}
+
+.customer-found__wrapper a {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black-text-color);
+  background-color: var(--white-color);
+}
+
+.customer-found__wrapper .customer-list__item {
+  border: 2px solid var(--quaternary-color);
+}
+
+.customer-found__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  border-bottom: 1px solid var(--grey-text-color);
+  margin-bottom: 0.6rem;
+}
+
+.customer-found__item:last-child {
+  border-bottom: none;
+}
+
+.customer-found__details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.8rem;
+}
+
+.customer-found__actions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.customer-found__actions a {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black-text-color);
+  background-color: var(--white-color);
+}
+
+.customer-found__actions a:last-child {
+  background-color: var(--quaternary-color);
+  color: var(--white-color);
+  border: 1px solid var(--white-color);
+}
+
 /* Add Customer */
 
 .customer-add__wrapper {

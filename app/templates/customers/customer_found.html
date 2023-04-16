@@ -1,30 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3>CUSTOMER search result</h1>
 
-<table>
-  <tr>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Email</th>
-    <th>Actions</th>
-  </tr>
-  {% if customer_query %}
-  {% for customer in customer_query %}
-  <tr>
-    <td>{{ customer.first_name }}</td>
-    <td>{{ customer.last_name }}</td>
-    <td>{{ customer.email }}</td>
-    <td>
-      <a href="{{ url_for('customers.customer_profile', customer_id=customer.id) }}" id="{{ customer.id }}">Details</a>
-  </tr>
-  {% endfor %}
-  {% else %}
-  <tr>
-    <td colspan="3">No customers in the database.</td>
-    <td colspan="1"><a href="{{ url_for('customers.customer_search') }}">Customer search</a></td>
-  </tr>
-  {% endif %}
-</table>
+<div class="customer-found__wrapper">
+  <div class="customer__description">
+    <h3>Customer search result</h3>
+    <p>(Found {{ customer_query|length }} customers.)</p>
+  </div>
+    {% if customer_query %}
+    {% for customer in customer_query %}
+    <div class="customer-found__item">
+      <div class="customer-found__details">
+        <div class="customer-found__name">
+          <h3>{{ customer.first_name }} {{ customer.last_name }}</h3>
+        </div>
+        <div class="customer-found__email">
+          <p>{{ customer.email }}</p>
+        </div>
+      </div>
+      <div class="customer-found__actions">
+        <a href="{{ url_for('customers.customer_profile', customer_id=customer.id) }}" id="{{ customer.id }}">Details</a>
+        <a href="{{ url_for('customers.customer_edit', customer_id=customer.id) }}" id="{{ customer.id }}">Edit</a>
+        <a href="{{ url_for('customers.customer_delete', customer_id=customer.id) }}" id="{{ customer.id }}">Delete</a>
+      </div>
+</div>
+    {% endfor %}
+    {% else %}
+    <div>
+      <p class="text-center">No customers found.</p>
+    </div>
+    {% endif %}
+
+
 {% endblock %}
