@@ -300,6 +300,7 @@ footer p {
   background-color: var(--quaternary-color);
   transform: skewX(-20deg);
   z-index: -1;
+  opacity: 0.8;
 }
 
 .unlogged__wrapper p {
@@ -357,6 +358,7 @@ footer p {
   background-color: var(--quaternary-color);
   transform: skewX(-20deg);
   z-index: -1;
+  opacity: 0.8;
 }
 
 .user-dashboard__wrapper h2 {
@@ -418,6 +420,7 @@ footer p {
   background-color: var(--quaternary-color);
   transform: skewX(-20deg);
   z-index: -1;
+  opacity: 0.8;
 }
 
 .login__wrapper form input {
@@ -472,6 +475,7 @@ footer p {
   background-color: var(--quaternary-color);
   transform: skewX(-20deg);
   z-index: -1;
+  opacity: 0.8;
 }
 
 .customers-main__wrapper form {
@@ -527,16 +531,11 @@ footer p {
   margin-top: 1rem;
   font-weight: 600;
   margin: 0 auto;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1.5rem;
   border: 1px solid var(--black-text-color);
   border-radius: 0.2rem;
   font-size: 1.2rem;
   font-weight: 600;
-}
-
-.customer-add__wrapper form input[type='submit'] {
-  padding: 0.8rem 1.2rem;
-  margin-top: 0.4rem;
 }
 
 /* Customers list */
@@ -620,11 +619,12 @@ footer p {
 
 .customer-search__wrapper h1 {
   position: relative;
-  color: var(--white-color);
-  font-size: 2rem;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 1.5rem;
+  color: var(--grey-text-color);
+  font-family: var(--font-secondary);
+  font-size: 1.6rem;
+  font-weight: 900;
+  margin-bottom: 1.8rem;
+  letter-spacing: 3px;
   z-index: 0;
 }
 
@@ -634,10 +634,11 @@ footer p {
   top: 0;
   left: 57%;
   width: 46%;
-  height: 3rem;
+  height: 2.4rem;
   background-color: var(--quaternary-color);
   transform: skewX(-20deg);
   z-index: -1;
+  opacity: 0.8;
 }
 
 .customer-search__wrapper form {
@@ -683,7 +684,7 @@ footer p {
   font-weight: 600;
   margin: 0 auto;
   margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1.5rem;
   border: 1px solid var(--black-text-color);
   border-radius: 0.2rem;
   font-size: 1.2rem;
@@ -808,9 +809,9 @@ footer p {
   position: relative;
   color: var(--grey-text-color);
   font-family: var(--font-secondary);
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 900;
-  margin-bottom: 1rem;
+  margin-bottom: 1.6rem;
   letter-spacing: 3px;
   z-index: 0;
 }
@@ -831,39 +832,51 @@ footer p {
 .customer-add__wrapper form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
 }
 
 .customer-add__wrapper form .form-control {
-  width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 .customer-add__wrapper form .form-control label {
-  align-self: start;
-  margin-left: 15%;
-  margin-bottom: -0.2rem;
-  font-size: 1.3rem;
-  font-weight: 400;
+  text-align: right;
+  margin-right: 1rem;
+  width: 30%;
 }
 
 .customer-add__wrapper form .form-control input {
-  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.customer-add__wrapper form input[type='submit'] {
+  width: 60%;
+  background-color: var(--quaternary-color);
+  color: var(--white-color);
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0 auto;
+  margin-top: 1rem;
+  padding: 1rem 1.5rem;
   border: 1px solid var(--black-text-color);
   border-radius: 0.2rem;
   font-size: 1.2rem;
   font-weight: 600;
-  width: 80%;
-}
-
-.customer-add__wrapper form input[type='submit'] {
-  padding: 0.8rem 1.2rem;
-  margin-top: 0.4rem;
 }
 
 /* Movies */
@@ -877,11 +890,12 @@ footer p {
 
 .movie-search__wrapper h1 {
   position: relative;
-  color: var(--white-color);
-  font-size: 2rem;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 1.5rem;
+  color: var(--grey-text-color);
+  font-family: var(--font-secondary);
+  font-size: 1.6rem;
+  font-weight: 900;
+  margin-bottom: 1.6rem;
+  letter-spacing: 3px;
   z-index: 0;
 }
 
@@ -889,12 +903,13 @@ footer p {
   content: '';
   position: absolute;
   top: 0;
-  left: 57%;
-  width: 46%;
-  height: 3rem;
+  left: 61%;
+  width: 41%;
+  height: 2.5rem;
   background-color: var(--quaternary-color);
   transform: skewX(-20deg);
   z-index: -1;
+  opacity: 0.8;
 }
 
 .movie-search__wrapper form {
@@ -940,7 +955,7 @@ footer p {
   font-weight: 600;
   margin: 0 auto;
   margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1.5rem;
   border: 1px solid var(--black-text-color);
   border-radius: 0.2rem;
   font-size: 1.2rem;
