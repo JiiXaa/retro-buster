@@ -1,56 +1,59 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Show all Customers in the database</h1>
+<div class="customers-main__wrapper">
+  <h1>Display all customers</h1>
 
-<h3>Quick search:</h3>
-<form action="{{ url_for('customers.customer_search') }}" method="post">
+  <form action="{{ url_for('customers.customer_search') }}" method="post">
+    <h3>Quick search:</h3>
 
-  <div class="form-control">
-    <label for="first_name">First Name</label>
-    <input type="text" name="first_name" id="first_name"> <br>
+    <div class="form-control">
+      <label for="first_name">First Name</label>
+      <input type="text" name="first_name" id="first_name"> <br>
+    </div>
+
+    <div class="form-control">
+      <label for="last_name">Last Name</label>
+      <input type="text" name="last_name" id="last_name"> <br>
+    </div>
+
+    <div class="form-control">
+      <label for="email">Email</label>
+      <input type="text" name="email" id="email"> <br>
+    </div>
+
+    <input type="submit" value="Search">
+
+  </form>
+
+  <div class="customers-list__wrapper">
+      {% if customers_all %}
+      {% for customer in customers_all %}
+
+      <div class="customer-list__item">
+        <div class="customer-list__details">
+          <div class="customer-list__name">
+            <h3>{{ customer.first_name }} {{ customer.last_name }}</h3>
+          </div>
+          <div class="customer-list__email">
+            <p>{{ customer.email }}</p>
+          </div>
+        </div>
+        <div class="customer-list__actions">
+          <a href="{{ url_for('customers.customer_profile', customer_id=customer.id) }}" id="{{ customer.id }}">Details</a>
+          <a href="{{ url_for('customers.customer_edit', customer_id=customer.id) }}" id="{{ customer.id }}">Edit</a>
+          <a href="{{ url_for('customers.customer_delete', customer_id=customer.id) }}" id="{{ customer.id }}">Delete</a>
+        </div>
+      </div>
+      {% endfor %}
+
+      {% else %}
+      <div>
+        <p class="text-center">No customers in the database.</p>
+      </div>
+      {% endif %}
+    </table>
   </div>
-
-  <div class="form-control">
-    <label for="last_name">Last Name</label>
-    <input type="text" name="last_name" id="last_name"> <br>
-  </div>
-
-  <div class="form-control">
-    <label for="email">Email</label>
-    <input type="text" name="email" id="email"> <br>
-  </div>
-
-  <input type="submit" value="Search">
-
-</form>
-
-<table>
-  <tr>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Email</th>
-    <th>Actions</th>
-  </tr>
-
-  {% if customers_all %}
-  {% for customer in customers_all %}
-  <tr>
-    <td>{{ customer.first_name }}</td>
-    <td>{{ customer.last_name }}</td>
-    <td>{{ customer.email }}</td>
-    <td>
-      <a href="{{ url_for('customers.customer_edit', customer_id=customer.id) }}" id="{{ customer.id }}">Edit</a>
-      <a href="{{ url_for('customers.customer_delete', customer_id=customer.id) }}" id="{{ customer.id }}">Delete</a>
-      <a href="{{ url_for('customers.customer_profile', customer_id=customer.id) }}" id="{{ customer.id }}">Details</a>
-  </tr>
-  {% endfor %}
-
-  {% else %}
-  <tr>
-    <td colspan="7">No customers in the database.</td>
-  </tr>
-  {% endif %}
-</table>
+</div>
 
 {% endblock %}

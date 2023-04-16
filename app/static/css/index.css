@@ -136,7 +136,7 @@ body {
   color: var(--white-color);
   border: 4px solid var(--black-color);
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
@@ -147,8 +147,8 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  margin-top: 2rem;
 }
 
 .menu {
@@ -442,6 +442,173 @@ footer p {
 
 /* Customers */
 
+/* Customers main */
+
+.customers-main__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.customers-main__wrapper h1 {
+  position: relative;
+  color: var(--grey-text-color);
+  font-family: var(--font-secondary);
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
+  letter-spacing: 3px;
+  z-index: 0;
+}
+
+.customers-main__wrapper h1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 51%;
+  width: 51%;
+  height: 3rem;
+  background-color: var(--quaternary-color);
+  transform: skewX(-20deg);
+  z-index: -1;
+}
+
+.customers-main__wrapper form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.customers-main__wrapper form h3 {
+  color: var(--white-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.customers-main__wrapper form .form-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.customers-main__wrapper form label {
+  text-align: right;
+  margin-right: 1rem;
+  width: 30%;
+}
+
+.customers-main__wrapper form input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.customers-main__wrapper form input[type='submit'] {
+  width: 60%;
+  background-color: var(--quaternary-color);
+  color: var(--white-color);
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-weight: 600;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--black-text-color);
+  border-radius: 0.2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.customer-add__wrapper form input[type='submit'] {
+  padding: 0.8rem 1.2rem;
+  margin-top: 0.4rem;
+}
+
+/* Customers list */
+.customers-list__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.customer-list__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  border-bottom: 1px solid var(--grey-text-color);
+  margin-bottom: 1rem;
+}
+
+.customer-list__item:last-child {
+  border-bottom: none;
+}
+
+.customer-list__details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.customer-list__details h3 {
+  color: var(--white-color);
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.customer-list__actions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.customer-list__actions a {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black-text-color);
+  background-color: var(--white-color);
+}
+
+.customer-list__actions a:last-child {
+  background-color: var(--quaternary-color);
+  color: var(--white-color);
+  border: 1px solid var(--white-color);
+}
+
 /* Add Customer */
 
 .customer-add__wrapper {
@@ -571,6 +738,7 @@ footer p {
     padding-left: 1.2rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    z-index: 99;
   }
 
   .menu > ol > .menu-item > a {
