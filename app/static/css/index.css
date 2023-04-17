@@ -553,7 +553,7 @@ footer p {
   top: 0;
   left: 51%;
   width: 51%;
-  height: 3rem;
+  height: 2.5rem;
   background-color: var(--quaternary-color);
   transform: skewX(-20deg);
   z-index: -1;
@@ -605,15 +605,14 @@ footer p {
 }
 
 .customers-main__wrapper form input[type='submit'] {
-  width: 60%;
   background-color: var(--quaternary-color);
   color: var(--white-color);
-  border: none;
   cursor: pointer;
+  width: auto;
   margin-top: 1rem;
   font-weight: 600;
   margin: 0 auto;
-  padding: 1rem 1.5rem;
+  padding: 0.6rem 1.8rem;
   border: 1px solid var(--black-text-color);
   border-radius: 0.2rem;
   font-size: 1.2rem;
@@ -963,6 +962,119 @@ footer p {
 
 /* Movies */
 
+/* Movie add */
+
+.movie-add__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.movie-add__wrapper h1 {
+  position: relative;
+  color: var(--grey-text-color);
+  font-family: var(--font-secondary);
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin-bottom: 1.6rem;
+  letter-spacing: 3px;
+  z-index: 0;
+}
+
+.movie-add__wrapper h1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 29%;
+  width: 73%;
+  height: 3rem;
+  background-color: var(--quaternary-color);
+  z-index: -1;
+  opacity: 0.8;
+  transform: skewX(-20deg);
+}
+
+.movie-add__wrapper form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.movie-add__wrapper form .form-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.movie-add__wrapper form .form-control label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 20%;
+}
+
+.movie-add__wrapper form .form-control input,
+.movie-add__wrapper form .form-control select,
+.movie-add__wrapper form .form-control textarea {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.movie-add__wrapper form .form-control select {
+  padding-left: 1rem;
+}
+
+.movie-add__wrapper form .form-control-checkbox {
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.movie-add__wrapper form .form-control-checkbox label {
+  margin-left: 1rem;
+}
+
+.movie-add__wrapper form .form-control-checkbox input {
+  position: relative;
+  top: 2px;
+  margin-left: 1.2rem;
+  width: 20px;
+  height: 20px;
+}
+
+.movie-add__wrapper form input[type='submit'] {
+  width: 60%;
+  background-color: var(--quaternary-color);
+  color: var(--white-color);
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0 auto;
+  margin-top: 1rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--black-text-color);
+  border-radius: 0.2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Movie search */
+
 .movie-search__wrapper {
   display: flex;
   flex-direction: column;
@@ -1277,6 +1389,12 @@ footer p {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .item-crossed {
