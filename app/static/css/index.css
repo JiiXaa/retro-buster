@@ -125,8 +125,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* menu is off-screen that is why need to hide horizontal overflow */
-  overflow-x: hidden;
 
   font-family: var(--font-main);
 }
@@ -283,7 +281,7 @@ footer p {
   position: relative;
   color: var(--grey-text-color);
   font-family: inherit;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 900;
   margin-bottom: 1.5rem;
   letter-spacing: 2px;
@@ -294,9 +292,9 @@ footer p {
   content: '';
   position: absolute;
   top: 0;
-  left: 29%;
-  width: 72%;
-  height: 3rem;
+  left: 27%;
+  width: 75%;
+  height: 2.5rem;
   background-color: var(--quaternary-color);
   transform: skewX(-20deg);
   z-index: -1;
@@ -304,10 +302,14 @@ footer p {
 }
 
 .unlogged__wrapper p {
+  padding: 0 1rem;
   color: var(--white-color);
   font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .unlogged__hero {
@@ -317,7 +319,7 @@ footer p {
 .unlogged__hero a {
   position: absolute;
   top: 30%;
-  left: 25%;
+  left: 18%;
   color: var(--quaternary-color);
   background-color: var(--white-color);
   font-size: 1.2rem;
@@ -325,7 +327,7 @@ footer p {
   text-decoration: none;
   margin-bottom: 1.5rem;
   border: 3px solid var(--quaternary-color);
-  padding: 0.8rem 2.5rem;
+  padding: 0.6rem 2rem;
   border-radius: 5px;
 }
 
