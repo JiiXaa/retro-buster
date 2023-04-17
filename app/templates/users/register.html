@@ -1,55 +1,52 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Register</h1>
+<div class="register-user__wrapper">
+  <h1>Register a cashier</h1>
 
+  <form action="{{ url_for('users.register') }}" method="post">
+    <div class="form-control">
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username" required> <br>
+    </div>
 
-<form action="{{ url_for('users.register') }}" method="post">
-  <div class="form-control">
-    <label for="username">Username</label>
-    <input type="text" name="username" id="username" required> <br>
-  </div>
+    <div class="form-control">
+      <label for="first_name">First Name</label>
+      <input type="text" name="first_name" id="first_name" autofocus required> <br>
+    </div>
 
-  <div class="form-control">
-    <label for="first_name">First Name</label>
-    <input type="text" name="first_name" id="first_name" autofocus required> <br>
-  </div>
+    <div class="form-control">
+      <label for="last_name">Last Name</label>
+      <input type="text" name="last_name" id="last_name" required> <br>
+    </div>
 
-  <div class="form-control">
-    <label for="last_name">Last Name</label>
-    <input type="text" name="last_name" id="last_name" required> <br>
-  </div>
+    <div class="form-control">
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" required> <br>
+    </div>
 
-  <div class="form-control">
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" required> <br>
-  </div>
+    <div class="form-control">
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required> <br>
+    </div>
 
-  <div class="form-control">
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required> <br>
-  </div>
+    <div class="form-control">
+      <label for="password_confirm">Confirm Password</label>
+      <input type="password" name="password_confirm" id="password_confirm" required> <br>
+    </div>
 
-  <div class="form-control">
-    <label for="password_confirm">Confirm Password</label>
-    <input type="password" name="password_confirm" id="password_confirm" required> <br>
-  </div>
-
-  <div class="form-control">
-    <label for="token">Token</label>
-    <input type="password" name="token" id="token" required> <br>
+    <div class="form-control">
+      <label for="token">Token</label>
+      <input type="password" name="token" id="token" required> <br>
+      <br>
+    </div>
     <small>Please enter the token provided by your supervisor. (token=token)</small>
+
     <br>
-  </div>
 
-  <br>
+    <input type="submit" value="Register">
 
-  <button type="submit">Register</button>
-
-</form>
-
-{% for user in users %}
-  <p>{{ user.username }} {{ user.email }}</p>
-{% endfor %}
+  </form>
+</div>
 
 {% endblock %}
