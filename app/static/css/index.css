@@ -1242,6 +1242,122 @@ footer p {
   margin-right: 0.5rem;
 }
 
+/* Edit customer profile */
+.edit-customer__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.edit-customer__wrapper h1 {
+  position: relative;
+  color: var(--grey-text-color);
+  font-family: inherit;
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  z-index: 0;
+}
+
+.edit-customer__wrapper h1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 36%;
+  width: 69%;
+  height: 3rem;
+  background-color: var(--quaternary-color);
+  transform: skewX(-20deg);
+  z-index: -1;
+  opacity: 0.8;
+}
+
+.edit-customer__wrapper .form-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.edit-customer__wrapper .form-control label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 30%;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-right: 1rem;
+}
+
+.edit-customer__wrapper .form-control input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 60%;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--black-text-color);
+}
+
+.edit-customer__wrapper .delete-user-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 2rem;
+}
+
+.edit-customer__wrapper button[type='submit'] {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black-text-color);
+  background-color: var(--white-color);
+}
+
+.edit-customer__wrapper button[type='button'] {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--white-color);
+  background-color: var(--quaternary-color);
+}
+
+.edit-customer__wrapper button[type='button'] a {
+  color: var(--white-color);
+  text-decoration: none;
+}
+
 /* Movies */
 
 /* Movie add */
