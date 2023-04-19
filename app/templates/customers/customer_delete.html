@@ -1,15 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Customer DELETE</h1>
+<div class="delete-customer__wrapper">
+  <h1>Delete Customer</h1>
 
-<form action="{{ url_for('customers.customer_delete', customer_id=customer.id) }}" method="post">
-  <div class="customer-delete__info">
-    <p>Are you sure you want to delete {{ customer.first_name }} {{ customer.last_name }} {{ customer.email }}?</p>
-    <p>Please type: <span>{{ customer.email }}</span></p>
-    <input type="text" name="email_confirm" required>
-  </div>
-  <button type="submit">Confirm</button>
-  <a href="{{ url_for('customers.index') }}">Cancel</a>
-</form>
+  <form action="{{ url_for('customers.customer_delete', customer_id=customer.id) }}" method="post">
+    <div class="customer-delete__info">
+      <p>Are you sure you want to delete <span>{{ customer.first_name }} {{ customer.last_name }}</span>'s profile?</p>
+      <div class="form-control">
+        <p>Please type: <span>{{ customer.email }}</span></p>
+        <input type="text" name="email_confirm" required>
+      </div>
+    </div>
+    <div class="delete-user-actions">
+      <button type="submit">Confirm</button>
+      <button type="button"><a href="{{ url_for('customers.index') }}">Cancel</a></button>
+    </div>
+  </form>
+</div>
 {% endblock %}
