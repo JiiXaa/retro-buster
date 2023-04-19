@@ -10,6 +10,7 @@
   --black-text-color: #212529;
   --grey-text-color: #333533;
   --white-color: #ffffff;
+  --transparent-white: rgba(255, 255, 255, 0.5);
 
   /* Font */
   --font-main: 'Rajdhani', sans-serif;
@@ -958,6 +959,287 @@ footer p {
   border-radius: 0.2rem;
   font-size: 1.2rem;
   font-weight: 600;
+}
+
+/* Customer profile */
+
+.customer-profile__wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.customer-profile__wrapper h1 {
+  position: relative;
+  color: var(--grey-text-color);
+  font-family: var(--font-secondary);
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin-bottom: 1.6rem;
+  letter-spacing: 3px;
+  z-index: 0;
+}
+
+.customer-profile__wrapper h1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 29%;
+  width: 73%;
+  height: 3rem;
+  background-color: var(--quaternary-color);
+  z-index: -1;
+  opacity: 0.8;
+  transform: skewX(-20deg);
+}
+
+.customer-profile__wrapper h2 {
+  margin-bottom: 0.6rem;
+}
+
+.customer-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  padding-top: 1.2rem;
+  border-bottom: 1px solid var(--grey-text-color);
+  border-top: 1px solid var(--grey-text-color);
+  margin-bottom: 0.6rem;
+  background-color: var(--transparent-white);
+  color: var(--black-text-color);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.customer-info__wrapper {
+  margin-bottom: 0.6rem;
+}
+
+.customer-info__wrapper p {
+  font-style: italic;
+}
+
+.customer-info__wrapper p span {
+  font-weight: 900;
+  font-style: normal;
+  margin-right: 0.5rem;
+}
+
+.customer-actions__wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 60%;
+  padding: 0.4rem 0.5rem;
+}
+
+.customer-actions__wrapper a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black-text-color);
+  background-color: var(--white-color);
+}
+
+.customer-profile__wrapper form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--grey-text-color);
+  margin-bottom: 0.6rem;
+}
+
+.customer-profile__wrapper form .form-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.customer-profile__wrapper form .form-control label {
+  text-align: right;
+  margin-right: 1rem;
+  width: 30%;
+}
+
+.customer-profile__wrapper form .form-control input {
+  width: 50%;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  color: var(--grey-text-color);
+}
+
+.customer-profile__wrapper form input[type='submit'] {
+  width: 45%;
+  background-color: var(--quaternary-color);
+  color: var(--white-color);
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0 auto;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--black-text-color);
+  border-radius: 0.2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Customer rental history */
+
+.rental {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Active rentals */
+
+.rentals-active__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  border-bottom: 1px solid var(--grey-text-color);
+  border-top: 1px solid var(--grey-text-color);
+  margin-bottom: 0.6rem;
+  background-color: var(--transparent-white);
+  color: var(--black-text-color);
+  font-weight: 500;
+}
+
+.rentals-active__container h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-secondary);
+  text-decoration: underline;
+}
+
+.rentals-active__container .rental-active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 85%;
+  padding: 0.8rem 1.2rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+}
+
+.rentals-active__container .rental-active .movie-info {
+  padding: 0.5rem;
+}
+
+.rentals-active__container .rental-active .movie-info p {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.rentals-active__container .rental-active .movie-info p span {
+  font-weight: 900;
+  font-style: normal;
+  margin-right: 0.5rem;
+}
+
+.rentals-active__container .rental-actions {
+  align-self: self-start;
+  margin-left: 2rem;
+}
+
+.rentals-active__container .rental-actions a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black-text-color);
+  background-color: var(--white-color);
+}
+
+/* Rental history */
+
+.rentals-history__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  font-weight: 500;
+}
+
+.rentals-history__container h3 {
+  color: var(--grey-text-color);
+  font-size: 1rem;
+  font-family: var(--font-secondary);
+  text-decoration: underline;
+  margin-bottom: 0.5rem;
+}
+
+.rentals-history__container .rental-history {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 85%;
+  padding: 0.8rem 1.2rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--white-color);
+  border-radius: 0.3rem;
+  color: var(--grey-text-color);
+}
+
+.rentals-history__container .rental-history .movie-info {
+  padding: 0.5rem;
+}
+
+.rentals-history__container .rental-history .movie-info p {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.rentals-history__container .rental-history .movie-info p span {
+  font-weight: 900;
+  font-style: normal;
+  margin-right: 0.5rem;
 }
 
 /* Movies */

@@ -1,128 +1,118 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Customer Profile</h1>
+<div class="customer-profile__wrapper">
+  <h1>Customer Profile</h1>
 
-<div class="customer-actions__wrapper">
-  <a href="{{ url_for('customers.customer_edit', customer_id=customer.id) }}" aria-label="Edit customer">
-    <i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
-    <span class="visually-hidden">Edit</span>
-  </a>
-  <a href="{{ url_for('customers.customer_delete', customer_id=customer.id) }}" aria-label="Delete customer">
-    <i class="fa-solid fa-trash" aria-hidden="true"></i>
-    <span class="visually-hidden">Delete</span>
-  </a>
-</div>
-
-<p>First name: {{ customer.first_name }}</p>
-<p>Last name: {{ customer.last_name }}</p>
-<p>Email: {{ customer.email }}</p>
-
-<h2>Rent VHS:</h2>
-<form action="{{ url_for('customers.customer_vhs_rent', customer_id=customer.id) }}" method="post">
-  <div class="form-control">
-    <label for="movie_title">Movie Title</label>
-    <input type="text" name="movie_title" id="movie_title" required> <br>
+  <div class="customer-info">
+    <div class="customer-info__wrapper">
+      <p><span>First name:</span> {{ customer.first_name }}</p>
+      <p><span>Last name:</span> {{ customer.last_name }}</p>
+      <p><span>Email:</span> {{ customer.email }}</p>
+    </div>
+    <div class="customer-actions__wrapper">
+      <a href="{{ url_for('customers.customer_edit', customer_id=customer.id) }}" aria-label="Edit customer">
+        <i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
+        <span class="visually-hidden">Edit</span>
+      </a>
+      <a href="{{ url_for('customers.customer_delete', customer_id=customer.id) }}" aria-label="Delete customer">
+        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+        <span class="visually-hidden">Delete</span>
+      </a>
+    </div>
   </div>
-  <div class="form-control">
-    <label for="vhs_copy_number">VHS copy number</label>
-    <input type="text" name="vhs_copy_number" id="vhs_copy_number" required> <br>
-  </div>
-  <input type="submit" value="Rent VHS tape">
-</form>
+
+  <h2>Rent VHS:</h2>
+  <form action="{{ url_for('customers.customer_vhs_rent', customer_id=customer.id) }}" method="post">
+    <div class="form-control">
+      <label for="movie_title">Movie Title</label>
+      <input type="text" name="movie_title" id="movie_title" required> <br>
+    </div>
+    <div class="form-control">
+      <label for="vhs_copy_number">Copy number</label>
+      <input type="text" name="vhs_copy_number" id="vhs_copy_number" required> <br>
+    </div>
+    <input type="submit" value="Rent VHS tape">
+  </form>
 
 
-<h2>Rentals</h2>
+  <h2>Rentals</h2>
 
-{% set active_rentals = [] %}
-{% set rental_history = [] %}
+  {% set active_rentals = [] %}
+  {% set rental_history = [] %}
 
-{% for rental in customer.rentals %}
-  {% if not rental.date_returned %}
-    {% set active_rentals = active_rentals.append(rental) %}
+  {% for rental in customer.rentals %}
+    {% if not rental.date_returned %}
+      {% set active_rentals = active_rentals.append(rental) %}
+    {% else %}
+      {% set rental_history = rental_history.append(rental) %}
+    {% endif %}
+  {% endfor %}
+
+  {% if not customer.rentals %}
+    <p>No rentals found.</p>
   {% else %}
-    {% set rental_history = rental_history.append(rental) %}
-  {% endif %}
-{% endfor %}
+    <div class="rental">
+      <div class="rentals-active__container">
+        <h3>Active Rentals</h3>
+        {% if not active_rentals %}
+          <p>No active rentals found.</p>
+        {% else %}
+          {% for rental in active_rentals %}
+            <div class="rental-active">
+              <div class="movie-info">
+                <p>Movie title: <span>{{ rental.movie.title|title }}</span></p>
+                <p>Rental date: <span>{{ rental.date_rented.strftime('%Y-%m-%d (%H:%M)') }}</span></p>
+                <p>Due date: <span>{{ rental.due_date.strftime('%Y-%m-%d') }}</span></p>
+                <p>Return date:
+                  {% if rental.date_returned %}
+                    <span>{{ rental.date_returned.strftime('%Y-%m-%d (%H:%M)') }}</span>
+                  {% else %}
+                    <span>Not returned yet</span>
+                  {% endif %}
+                </p>
+                <p>VHS tape copy number: <span>{{ rental.vhs_tape_copy.copy_number }}</span></p>
+              </div>
+              {% if not rental.date_returned %}
+              <div class="rental-actions">
+                  <a href="{{ url_for('movies.vhs_return', movie_id=rental.movie.id, vhs_tape_copy_id=rental.vhs_tape_copy.id) }}" id="{{ rental.id }}">Return</a>
+              </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
 
-{% if not customer.rentals %}
-  <p>No rentals found.</p>
-{% else %}
-  <div class="rental">
-    <div class="rentals-active__container">
-      <h3>Active Rentals</h3>
-      {% if not active_rentals %}
-        <p>No active rentals found.</p>
-      {% else %}
-        {% for rental in active_rentals %}
-          <div class="rental-active">
-            <div class="movie-info">
-              <p>Movie title: {{ rental.movie.title }}</p>
-              <p>Movie ID: {{ rental.movie.id }}</p>
-            </div>
-            <div class="rental-info">
-              <p>Rental ID: {{ rental.id }}</p>
-              <p>Rental date: {{ rental.date_rented.strftime('%Y-%m-%d (%H:%M)') }}</p>
-              <p>Return date:
-                {% if rental.date_returned %}
-                  {{ rental.date_returned.strftime('%Y-%m-%d (%H:%M)') }}
-                {% else %}
-                  Not returned yet
-                {% endif %}
-              </p>
-            </div>
-            <div class="vhs-info">
-              <p>VHS tape copy ID: {{ rental.vhs_tape_copy.id }}</p>
-              <p>VHS tape copy number: {{ rental.vhs_tape_copy.copy_number }}</p>
-            </div>
-            {% if not rental.date_returned %}
-            <div class="rental-actions">
+      <div class="rentals-history__container">
+        <h3>Rental History</h3>
+        {% if not rental_history %}
+          <p>No rental history found.</p>
+        {% else %}
+          {% for rental in rental_history %}
+            <div class="rental-history">
+              <div class="movie-info">
+                <p>Movie title: <span>{{ rental.movie.title|title }}</span></p>
+                <p>Rental date: <span>{{ rental.date_rented.strftime('%Y-%m-%d (%H:%M)') }}</span></p>
+                <p>Return date:
+                  {% if rental.date_returned %}
+                    <span>{{ rental.date_returned.strftime('%Y-%m-%d (%H:%M)') }}</span>
+                  {% else %}
+                    <span>Not returned yet</span>
+                    {% endif %}
+                  </p>
+                  <p>VHS tape copy number: <span>{{ rental.vhs_tape_copy.copy_number }}</span></p>
+              </div>
+              {% if not rental.date_returned %}
+              <div class="rental-actions">
                 <a href="{{ url_for('movies.vhs_return', movie_id=rental.movie.id, vhs_tape_copy_id=rental.vhs_tape_copy.id) }}" id="{{ rental.id }}">Return</a>
+              </div>
+              {% endif %}
             </div>
-            {% endif %}
-          </div>
-          <hr>
-        {% endfor %}
-      {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
     </div>
-
-    <div class="rentals-history__container">
-      <h3>Rental History</h3>
-      {% if not rental_history %}
-        <p>No rental history found.</p>
-      {% else %}
-        {% for rental in rental_history %}
-          <div class="rental-history">
-            <div class="movie-info">
-              <p>Movie title: {{ rental.movie.title }}</p>
-              <p>Movie ID: {{ rental.movie.id }}</p>
-            </div>
-            <div class="rental-info">
-              <p>Rental ID: {{ rental.id }}</p>
-              <p>Rental date: {{ rental.date_rented.strftime('%Y-%m-%d (%H:%M)') }}</p>
-              <p>Return date:
-                {% if rental.date_returned %}
-                  {{ rental.date_returned.strftime('%Y-%m-%d (%H:%M)') }}
-                {% else %}
-                  Not returned yet
-                {% endif %}
-              </p>
-            </div>
-            <div class="vhs-info">
-              <p>VHS tape copy ID: {{ rental.vhs_tape_copy.id }}</p>
-              <p>VHS tape copy number: {{ rental.vhs_tape_copy.copy_number }}</p>
-            </div>
-            {% if not rental.date_returned %}
-            <div class="rental-actions">
-              <a href="{{ url_for('movies.vhs_return', movie_id=rental.movie.id, vhs_tape_copy_id=rental.vhs_tape_copy.id) }}" id="{{ rental.id }}">Return</a>
-            </div>
-            {% endif %}
-          </div>
-          <hr>
-        {% endfor %}
-      {% endif %}
-    </div>
-  </div>
-{% endif %}
+  {% endif %}
+</div>
 
 {% endblock %}
