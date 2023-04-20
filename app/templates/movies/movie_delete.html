@@ -1,16 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>{{ movie.title }} Movie DELETE</h1>
+<div class="movie-delete__wrapper">
+  <h1>Movie Delete</h1>
 
-<form action="{{ url_for('movies.movie_delete', movie_id=movie.id) }}" method="post">
-  <div class="movie-delete__info">
-    <p>Are you sure you want to delete "{{ movie.title }}" by {{ movie.director }}?</p>
-    <p>This action cannot be undone. All vhs tape and rental history associated with them will be lost.</p>
-    <p>Please type: <span>{{ movie.title }}</span> </p>
-    <input type="text" name="title_confirm" required>
-  </div>
-  <button type="submit">Confirm</button>
-  <a href="{{ url_for('movies.index') }}">Cancel</a></>
-</form>
+  <form action="{{ url_for('movies.movie_delete', movie_id=movie.id) }}" method="post">
+    <div class="movie-delete__info">
+      <p>Are you sure you want to delete "{{ movie.title }}" by {{ movie.director }}?</p>
+      <p class="danger">This action cannot be undone. All vhs tape and rental history associated with them will be lost.</p>
+      <div class="form-control">
+        <p>Please type: <span>{{ movie.title }}</span> </p>
+        <input type="text" name="title_confirm" required>
+      </div>
+    </div>
+    <div class="delete-movie-actions">
+      <button type="submit">Confirm</button>
+      <button type="button"><a href="{{ url_for('movies.index') }}">Cancel</a></button>
+    </div>
+  </form>
+</div>
 {% endblock %}
