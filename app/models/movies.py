@@ -53,7 +53,7 @@ class Movie(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "date_added": self.date_added.strftime("%d-%m-%Y %H:%M:%S"),
+            "date_added": self.date_added.strftime("%d-%m-%Y (%I:%M:%S %p)"),
             "title": self.title,
             "director": self.director,
             "genre": self.genre,

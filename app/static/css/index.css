@@ -1016,6 +1016,8 @@ footer p {
   color: var(--black-text-color);
   font-size: 1.2rem;
   font-weight: 500;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .customer-info__wrapper {
@@ -1134,6 +1136,8 @@ footer p {
   background-color: var(--transparent-white);
   color: var(--black-text-color);
   font-weight: 500;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .rentals-active__container h3 {
@@ -1511,17 +1515,28 @@ footer p {
   z-index: 0;
 }
 
-.movie-details h1::before {
+.movie-details__wrapper h1::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 29%;
-  width: 73%;
+  left: 28%;
+  width: 74%;
   height: 3rem;
   background-color: var(--quaternary-color);
   z-index: -1;
   opacity: 0.8;
   transform: skewX(-20deg);
+}
+
+.movie-details__wrapper img {
+  width: 50%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0.3rem;
+  margin-bottom: 1rem;
+  border: 2px solid var(--grey-text-color);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .movie-details {
@@ -1534,25 +1549,27 @@ footer p {
   padding-top: 1.2rem;
   border-bottom: 1px solid var(--grey-text-color);
   border-top: 1px solid var(--grey-text-color);
-  margin-bottom: 0.6rem;
+  margin-bottom: 1rem;
   background-color: var(--transparent-white);
   color: var(--black-text-color);
   font-size: 1.2rem;
   font-weight: 500;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
-.movie-details__wrapper {
-  margin-bottom: 0.6rem;
+.movie-details__container {
+  padding: 0.5rem 2rem;
 }
 
-.movie-details__wrapper p {
+.movie-details__container p {
   font-style: italic;
 }
 
-.movie-details__wrapper p span {
+.movie-details__container p span {
   font-weight: 900;
   font-style: normal;
-  margin-right: 0.5rem;
+  margin-left: 0.2rem;
 }
 
 .movie-actions__wrapper {
@@ -1580,6 +1597,94 @@ footer p {
   text-decoration: none;
   color: var(--black-text-color);
   background-color: var(--white-color);
+}
+
+.movie-details__wrapper button {
+  padding: 0.8rem 1.2rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black-text-color);
+  background-color: var(--quaternary-color);
+}
+
+.movie-details__wrapper button a {
+  color: var(--white-color);
+  text-decoration: none;
+}
+
+.vhs-details__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  padding: 1rem;
+  padding-top: 1.2rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  margin-bottom: 1rem;
+  color: var(--black-text-color);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.vhs-details__wrapper h3 {
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 0.6rem;
+  color: var(--grey-text-color);
+}
+
+.vhs-details__wrapper table {
+  font-size: 1.1rem;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.vhs-details__wrapper table tr {
+  border-bottom: 1px solid var(--grey-text-color);
+}
+
+.vhs-details__wrapper table tr td {
+  padding: 0.4rem 0;
+  text-align: center;
+}
+
+.vhs-details__wrapper table tr td:first-child {
+  font-weight: 900;
+  color: var(--grey-text-color);
+}
+
+.vhs-details__wrapper table tr:last-child {
+  border-bottom: none;
+}
+
+.vhs-details__wrapper table tr:first-child {
+  border-bottom: none;
+}
+
+.vhs-details__wrapper table tr:last-child td {
+  padding-bottom: 0;
+}
+
+.vhs-details__wrapper table tr:last-child td:first-child {
+  padding-bottom: 0.4rem;
+}
+
+.vhs-details__wrapper table tr th {
+  padding: 0.4rem 0;
+  font-weight: 900;
+  color: var(--white-color);
+}
+
+.vhs-details__wrapper table td a {
+  color: var(--black-text-color);
+  font-weight: 600;
 }
 
 /* Movie add */

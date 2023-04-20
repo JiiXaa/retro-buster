@@ -2,15 +2,31 @@
 {% block content %}
 
 <div class="movie-details__wrapper">
-  <h1>{{ movie.title|title }} Details</h1>
+  <h1>{{ movie.title|title }}</h1>
+
+  {% if movie.image %}
+    <img src="{{ movie.image }}" alt="{{ movie.title }}">
+  {% else %}
+    <img src="/static/img/movie-default.jpg" alt="fallback image">
+  {% endif %}
 
   <div class="movie-details">
-    <div class="movie-details__wrapper">
+    <div class="movie-details__container">
       <p>Director: <span>{{ movie.director|title }}</span></p>
       <p>Genre: <span>{{ movie.genre|title }}</span></p>
       <p>Total copies: <span>{{ movie.total_count() }}</span></p>
       <p>Available copies: <span>{{ movie.available_count() }}</span></p>
       <p>Date added: <span>{{ movie.date_added.strftime('%d-%m-%Y (%I:%M %p)') }}</span></p>
+      <p>Release Year: <span>{{ movie.year }}</span></p>
+      <p>Rating: <span>{{ movie.rating }}</span></p>
+      <p>Description: <span>{{ movie.description }}</span></p>
+      <p>Is featured:
+        {% if movie.is_featured %}
+          <span>Yes</span>
+        {% else %}
+          <span>No</span>
+        {% endif %}
+      </p>
     </div>
 
     <div class="movie-actions__wrapper">
@@ -24,52 +40,52 @@
       </a>
     </div>
   </div>
-  <h3>VHS copy details:</h3>
-  <table>
-    <tr>
-      <th>Copy number</th>
-      <th>Is available</th>
-      <th>Rent</th>
-      <th>History</th>
-      <th>Actions</th>
-    </tr>
-
-    {% for vhs_tape in movie.vhs_tape_copy %}
-      <!-- Display only VHS tapes that have not been deleted. -->
-      {% if vhs_tape.is_removed == False %}
-        <tr>
-          <td>{{ vhs_tape.copy_number }}</td>
-          <td>{% if vhs_tape.is_available %}
-              Yes
-          {% else %}
-              No
-          {% endif %}
-          </td>
-          <td>
-            {% if vhs_tape.is_available %}
-              <a href="{{ url_for('movies.vhs_rent', movie_id=movie.id, vhs_tape_copy_id=vhs_tape.id) }}">Rent</a>
+  <div class="vhs-details__wrapper">
+    <h3>VHS copy details:</h3>
+    <table>
+      <tr>
+        <th>VHS code</th>
+        <th>Available</th>
+        <th>Rent</th>
+        <th>History</th>
+        <th>Actions</th>
+      </tr>
+      {% for vhs_tape in movie.vhs_tape_copy %}
+        <!-- Display only VHS tapes that have not been deleted. -->
+        {% if vhs_tape.is_removed == False %}
+          <tr>
+            <td>{{ vhs_tape.copy_number }}</td>
+            <td>{% if vhs_tape.is_available %}
+                Yes
             {% else %}
-              <a href="{{ url_for('movies.vhs_return', movie_id=movie.id, vhs_tape_copy_id=vhs_tape.id) }}">Return</a>
+                No
             {% endif %}
-          </td>
-          <td>
-            <a href="{{ url_for('movies.vhs_history', movie_id=movie.id, vhs_tape_copy_id=vhs_tape.id) }}">History</a>
-          </td>
-          <td>
-            <a href="{{ url_for('movies.vhs_remove', movie_id=movie.id, vhs_tape_copy_id=vhs_tape.id) }}">Delete</a>
-          </td>
-        </tr>
-      {% endif %}
-      {% endfor %}
+            </td>
+            <td>
+              {% if vhs_tape.is_available %}
+                <a href="{{ url_for('movies.vhs_rent', movie_id=movie.id, vhs_tape_copy_id=vhs_tape.id) }}">Rent</a>
+              {% else %}
+                <a href="{{ url_for('movies.vhs_return', movie_id=movie.id, vhs_tape_copy_id=vhs_tape.id) }}">Return</a>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{{ url_for('movies.vhs_history', movie_id=movie.id, vhs_tape_copy_id=vhs_tape.id) }}">History</a>
+            </td>
+            <td>
+              <a href="{{ url_for('movies.vhs_remove', movie_id=movie.id, vhs_tape_copy_id=vhs_tape.id) }}">Delete</a>
+            </td>
+          </tr>
+        {% endif %}
+        {% endfor %}
+        {% if movie.available_count() == 0 %}
+          <tr>
+            <td colspan="5">No VHS copies available.</td>
+          </tr>
+        {% endif %}
+    </table>
+  </div>
 
-      {% if movie.available_count() == 0 %}
-        <tr>
-          <td colspan="5">No VHS copies available.</td>
-        </tr>
-      {% endif %}
-  </table>
-
-  <a href="{{ url_for('movies.vhs_add_tape', movie_id=movie.id) }}">Add VHS copy</a>
+  <button class="btn-add-copy" type="button"><a href="{{ url_for('movies.vhs_add_tape', movie_id=movie.id) }}">Add VHS copy</a></button>
 </div>
 
 {% endblock %}
