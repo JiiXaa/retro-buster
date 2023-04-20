@@ -1,30 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3>Movies search result:</h3>
+<div class="movie-found__wrapper">
+  <h3>Movies search result:</h3>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Director</th>
-    <th>Genre</th>
-    <th>Actions</th>
-  </tr>
-  {% if movie_query %}
-  {% for movie in movie_query %}
-  <tr>
-    <td>{{ movie.title|title }}</td>
-    <td>{{ movie.director|title }}</td>
-    <td>{{ movie.genre|title }}</td>
-    <td>
-      <a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}">Details</a>
-  </tr>
-  {% endfor %}
-  {% else %}
-  <tr>
-    <td colspan="3">No movies in the database.</td>
-    <td colspan="1"><a href="{{ url_for('movies.movie_search') }}">Search Again</a></td>
-  </tr>
-  {% endif %}
-</table>
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Director</th>
+      <th>Genre</th>
+      <th>Actions</th>
+    </tr>
+    {% if movie_query %}
+    {% for movie in movie_query %}
+    <tr>
+      <td>{{ movie.title|title }}</td>
+      <td>{{ movie.director|title }}</td>
+      <td>{{ movie.genre|title }}</td>
+      <td>
+        <a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}">Details</a>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+      <td colspan="3">No movies in the database.</td>
+      <td colspan="1"><a href="{{ url_for('movies.movie_search') }}">Search Again</a></td>
+    </tr>
+    {% endif %}
+  </table>
+</div>
 {% endblock %}

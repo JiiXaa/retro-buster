@@ -1881,6 +1881,63 @@ footer p {
   font-weight: 600;
 }
 
+/* Movie found */
+
+.movie-found__wrapper {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  padding: 1rem 0;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.movie-found__wrapper h3 {
+  color: var(--grey-text-color);
+  font-family: var(--font-secondary);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  letter-spacing: 3px;
+}
+
+.movie-found__wrapper table {
+  width: 90%;
+  border-collapse: collapse;
+}
+
+.movie-found__wrapper table th {
+  padding: 0.5rem 0.5rem;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.movie-found__wrapper table tr {
+  border-bottom: 1px solid var(--grey-text-color);
+}
+
+.movie-found__wrapper table tr:first-child,
+.movie-found__wrapper table tr:last-child {
+  border-bottom: none;
+}
+
+.movie-found__wrapper table td {
+  padding: 0.5rem 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.movie-found__wrapper td a {
+  color: var(--grey-text-color);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
 @keyframes navLinkFade {
   from {
     opacity: 0;
