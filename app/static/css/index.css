@@ -1798,6 +1798,144 @@ footer p {
   font-weight: 600;
 }
 
+/* Movie edit */
+
+.movie-edit__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.movie-edit__wrapper h1 {
+  position: relative;
+  color: var(--grey-text-color);
+  font-family: var(--font-secondary);
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin-bottom: 1.6rem;
+  letter-spacing: 3px;
+  z-index: 0;
+}
+
+.movie-edit__wrapper h1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 58%;
+  width: 44%;
+  height: 3rem;
+  background-color: var(--quaternary-color);
+  z-index: -1;
+  opacity: 0.8;
+  transform: skewX(-20deg);
+}
+
+.movie-edit__wrapper form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.movie-edit__wrapper form .form-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.movie-edit__wrapper form .form-control label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 20%;
+}
+
+.movie-edit__wrapper form .form-control input,
+.movie-edit__wrapper form .form-control select,
+.movie-edit__wrapper form .form-control textarea {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.movie-edit__wrapper form .form-control select {
+  padding-left: 1rem;
+}
+
+.movie-edit__wrapper form .form-control-checkbox {
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.movie-edit__wrapper form .form-control-checkbox label {
+  margin-left: 1rem;
+}
+
+.movie-edit__wrapper form .form-control-checkbox input {
+  position: relative;
+  top: 2px;
+  margin-left: 1.2rem;
+  width: 20px;
+  height: 20px;
+}
+
+.movie-edit__wrapper form .edit-movie-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  width: 70%;
+}
+
+.movie-edit__wrapper form .edit-movie-actions button[type='submit'] {
+  background-color: var(--white-color);
+  color: var(--black-text-color);
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0 auto;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--black-text-color);
+  border-radius: 0.2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.movie-edit__wrapper form .edit-movie-actions button[type='button'] {
+  background-color: var(--quaternary-color);
+  color: var(--white-color);
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0 auto;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--black-text-color);
+  border-radius: 0.2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.movie-edit__wrapper form .edit-movie-actions button[type='button'] a {
+  color: var(--white-color);
+  text-decoration: none;
+}
+
 /* Movie search */
 
 .movie-search__wrapper {

@@ -1,83 +1,85 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>{{ movie.title }} EDIT</h1>
+<div class="movie-edit__wrapper">
+  <h1>Movie Edit</h1>
 
-<form action="{{ url_for('movies.movie_edit', movie_id=movie.id) }}" method="post">
+  <form action="{{ url_for('movies.movie_edit', movie_id=movie.id) }}" method="post">
+    <div class="form-control">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" value="{{ movie.title }}" required>
 
-  <div class="form-control">
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" value="{{ movie.title }}" required>
-    <br>
-  </div>
+    </div>
 
-  <div class="form-control">
-    <label for="director">Director:</label>
-    <input type="text" id="director" name="director" value="{{ movie.director }}" required>
-    <br>
-  </div>
+    <div class="form-control">
+      <label for="director">Director:</label>
+      <input type="text" id="director" name="director" value="{{ movie.director }}" required>
 
-  <div class="form-control">
-    <label for="genre">Genre:</label>
-    <select id="genre" name="genre" required>
-      <option value="Fantasy" {% if movie.genre == "Fantasy" %}selected{% endif %}>Fantasy</option>
-      <option value="Horror" {% if movie.genre == "Horror" %}selected{% endif %}>Horror</option>
-      <option value="Thriller" {% if movie.genre == "Thriller" %}selected{% endif %}>Thriller</option>
-      <option value="Animation" {% if movie.genre == "Animation" %}selected{% endif %}>Animation</option>
-      <option value="Adventure" {% if movie.genre == "Adventure" %}selected{% endif %}>Adventure</option>
-      <option value="Family" {% if movie.genre == "Family" %}selected{% endif %}>Family</option>
-      <option value="Crime" {% if movie.genre == "Crime" %}selected{% endif %}>Crime</option>
-      <option value="Documentary" {% if movie.genre == "Documentary" %}selected{% endif %}>Documentary</option>
-      <option value="History" {% if movie.genre == "History" %}selected{% endif %}>History</option>
-      <option value="Music" {% if movie.genre == "Music" %}selected{% endif %}>Music</option>
-      <option value="Comedy" {% if movie.genre == "Comedy" %}selected{% endif %}>Comedy</option>
-      <option value="Action" {% if movie.genre == "Action" %}selected{% endif %}>Action</option>
-      <option value="Mystery" {% if movie.genre == "Mystery" %}selected{% endif %}>Mystery</option>
-      <option value="Sci-Fi" {% if movie.genre == "Science Fiction" %}selected{% endif %}>Science Fiction</option>
-      <option value="Romance" {% if movie.genre == "Romance" %}selected{% endif %}>Romance</option>
-      <option value="Drama" {% if movie.genre == "Drama" %}selected{% endif %}>Drama</option>
-    </select> <br>
-  </div>
+    </div>
 
-  <div class="form-control">
-    <label for="length">Length</label>
-    <input type="number" name="length" id="length" value="{{ movie.length }}" required> <br>
-  </div>
+    <div class="form-control">
+      <label for="genre">Genre:</label>
+      <select id="genre" name="genre" required>
+        <option value="Fantasy" {% if movie.genre == "Fantasy" %}selected{% endif %}>Fantasy</option>
+        <option value="Horror" {% if movie.genre == "Horror" %}selected{% endif %}>Horror</option>
+        <option value="Thriller" {% if movie.genre == "Thriller" %}selected{% endif %}>Thriller</option>
+        <option value="Animation" {% if movie.genre == "Animation" %}selected{% endif %}>Animation</option>
+        <option value="Adventure" {% if movie.genre == "Adventure" %}selected{% endif %}>Adventure</option>
+        <option value="Family" {% if movie.genre == "Family" %}selected{% endif %}>Family</option>
+        <option value="Crime" {% if movie.genre == "Crime" %}selected{% endif %}>Crime</option>
+        <option value="Documentary" {% if movie.genre == "Documentary" %}selected{% endif %}>Documentary</option>
+        <option value="History" {% if movie.genre == "History" %}selected{% endif %}>History</option>
+        <option value="Music" {% if movie.genre == "Music" %}selected{% endif %}>Music</option>
+        <option value="Comedy" {% if movie.genre == "Comedy" %}selected{% endif %}>Comedy</option>
+        <option value="Action" {% if movie.genre == "Action" %}selected{% endif %}>Action</option>
+        <option value="Mystery" {% if movie.genre == "Mystery" %}selected{% endif %}>Mystery</option>
+        <option value="Sci-Fi" {% if movie.genre == "Science Fiction" %}selected{% endif %}>Science Fiction</option>
+        <option value="Romance" {% if movie.genre == "Romance" %}selected{% endif %}>Romance</option>
+        <option value="Drama" {% if movie.genre == "Drama" %}selected{% endif %}>Drama</option>
+      </select>
+    </div>
 
-  <div class="form-control">
-    <label for="year">Year</label>
-    <input type="number" name="year" id="year" value="{{ movie.year }}" required> <br>
-  </div>
+    <div class="form-control">
+      <label for="length">Length</label>
+      <input type="number" name="length" id="length" value="{{ movie.length }}" required>
+    </div>
 
-  <div class="form-control">
-    <label for="rating">Rating</label>
-    <input type="text" name="rating" id="rating" value="{{ movie.rating }}" required> <br>
-  </div>
+    <div class="form-control">
+      <label for="year">Year</label>
+      <input type="number" name="year" id="year" value="{{ movie.year }}" required>
+    </div>
 
-  <div class="form-control">
-    <label for="description">Description</label>
-    <textarea name="description" id="description" rows="4" cols="25">{{ movie.description }}</textarea>
-    <br>
-  </div>
+    <div class="form-control">
+      <label for="rating">Rating</label>
+      <input type="text" name="rating" id="rating" value="{{ movie.rating }}" required>
+    </div>
 
-  <div class="form-control">
-    <label for="image">Image URL</label>
-    <input type="text" name="image" id="image" value="{{ movie.image }}"> <br>
-  </div>
+    <div class="form-control">
+      <label for="description">Description</label>
+      <textarea name="description" id="description" rows="4" cols="25">{{ movie.description }}</textarea>
 
-  <div class="form-control">
-    <label for="is_featured">Featured?</label>
-    <input type="checkbox" name="is_featured" id="is_featured"
-      {% if movie.is_featured %}
-        checked
-      {% endif %}>
-    <br>
-  </div>
+    </div>
 
-  <button type="submit">Update</button>
-  <button type="button"><a href="{{ url_for('movies.index') }}">Cancel</a></button>
+    <div class="form-control">
+      <label for="image">Image URL</label>
+      <input type="text" name="image" id="image" value="{{ movie.image }}">
+    </div>
 
-</form>
+    <div class="form-control-checkbox">
+      <label for="is_featured">Featured?</label>
+      <input type="checkbox" name="is_featured" id="is_featured"
+        {% if movie.is_featured %}
+          checked
+        {% endif %}>
+    </div>
+
+    <div class="edit-movie-actions">
+      <button type="submit">Update</button>
+      <button type="button"><a href="{{ url_for('movies.index') }}">Cancel</a></button>
+    </div>
+
+  </form>
+</div>
 
 
 {% endblock %}
