@@ -27,9 +27,9 @@
             {% else %}
               <p>Customer: N/A</p>
             {% endif %}
-            <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%y (%H:%M)') }}</p>
+            <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
             {% if rental.date_returned %}
-              <p>Return date: {{ rental.date_returned.strftime('%d-%m-%y (%H:%M)') }}</p>
+              <p>Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
             {% else %}
               <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
             {% endif %}
@@ -65,9 +65,9 @@
             {% else %}
               <p>Customer: N/A </p>
             {% endif %}
-            <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%y (%H:%M)') }}</p>
+            <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
             {% if rental.date_returned %}
-              <p>Return date: {{ rental.date_returned.strftime('%d-%m-%y (%H:%M)') }}</p>
+              <p>Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
             {% else %}
               <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
             {% endif %}

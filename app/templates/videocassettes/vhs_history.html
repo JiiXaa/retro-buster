@@ -19,9 +19,9 @@
           <p>Director: {{ rental.vhs_director|title }}</p>
           <p>Genre: {{ rental.vhs_genre|title }}</p>
           <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
-          <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%y (%H:%M)') }}</p>
+          <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
           {% if rental.date_returned %}
-            <p>Return date: {{ rental.date_returned.strftime('%d-%m-%y (%H:%M)') }}</p>
+            <p>Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
           {% else %}
             <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
           {% endif %}
@@ -48,9 +48,9 @@
           <p>Director: {{ rental.vhs_director|title }}</p>
           <p>Genre: {{ rental.vhs_genre|title }}</p>
           <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
-          <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%y (%H:%M)') }}</p>
+          <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
           {% if rental.date_returned %}
-            <p>Return date: {{ rental.date_returned.strftime('%d-%m-%y (%H:%M)') }}</p>
+            <p>Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
           {% else %}
             <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
           {% endif %}

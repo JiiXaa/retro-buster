@@ -62,11 +62,11 @@
             <div class="rental-active">
               <div class="movie-info">
                 <p>Movie title: <span>{{ rental.movie.title|title }}</span></p>
-                <p>Rental date: <span>{{ rental.date_rented.strftime('%Y-%m-%d (%H:%M)') }}</span></p>
-                <p>Due date: <span>{{ rental.due_date.strftime('%Y-%m-%d') }}</span></p>
+                <p>Rental date: <span>{{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</span></p>
+                <p>Due date: <span>{{ rental.due_date.strftime('%d-%m-%Y (%I:%M %p)') }}</span></p>
                 <p>Return date:
                   {% if rental.date_returned %}
-                    <span>{{ rental.date_returned.strftime('%Y-%m-%d (%H:%M)') }}</span>
+                    <span>{{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</span>
                   {% else %}
                     <span>Not returned yet</span>
                   {% endif %}
@@ -92,10 +92,10 @@
             <div class="rental-history">
               <div class="movie-info">
                 <p>Movie title: <span>{{ rental.movie.title|title }}</span></p>
-                <p>Rental date: <span>{{ rental.date_rented.strftime('%Y-%m-%d (%H:%M)') }}</span></p>
+                <p>Rental date: <span>{{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</span></p>
                 <p>Return date:
                   {% if rental.date_returned %}
-                    <span>{{ rental.date_returned.strftime('%Y-%m-%d (%H:%M)') }}</span>
+                    <span>{{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</span>
                   {% else %}
                     <span>Not returned yet</span>
                     {% endif %}
