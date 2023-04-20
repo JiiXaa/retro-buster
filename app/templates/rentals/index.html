@@ -1,95 +1,97 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Show all Rentals in the database</h1>
+<div class="rental-history__wrapper">
+  <h1>Rentals History</h1>
 
-<button><a href="{{ url_for('rentals.archived_rentals') }}">Archived Rentals</a></button>
+  <button type="button"><a href="{{ url_for('rentals.archived_rentals') }}">Archived Rentals</a></button>
 
-{% if rental_data %}
-  {% set active_rentals = rental_data|selectattr('date_returned', 'none')|list %}
-  {% set returned_rentals = rental_data|rejectattr('date_returned', 'none')|list %}
+  {% if rental_data %}
+    {% set active_rentals = rental_data|selectattr('date_returned', 'none')|list %}
+    {% set returned_rentals = rental_data|rejectattr('date_returned', 'none')|list %}
 
-  <div class="rental_data__container">
-    <div class="rental_data__active">
-      <h2>Active Rentals</h2>
-      {# I had an issue with updating active_rental_found attribute within the loop, found solution here: https://serverascode.com/2018/03/15/jinja2-namespaces.html #}
-      {% set ns = namespace(active_rentals_found=False) %}
-      {% for rental in active_rentals %}
-        {% if not rental.is_removed %}
-          {% set ns.active_rentals_found=True %}
-          <div class="rental_data__item rental_data__item--active">
-            <p>Title: {{ rental.vhs_title|title }}</p>
-            <p>Copy number: {{ rental.vhs_copy_number }}</p>
-            <p>Director: {{ rental.vhs_director|title }}</p>
-            <p>Genre: {{ rental.vhs_genre|title }}</p>
-            {% if rental['customer_id'] and rental['customer_name'] %}
-              <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
-            {% else %}
-              <p>Customer: N/A</p>
-            {% endif %}
-            <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
-            {% if rental.date_returned %}
-              <p>Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
-            {% else %}
-              <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
-            {% endif %}
-            <p>Rent days
-              {% if rental.date_returned %}
-                {{ (rental.date_returned - rental.date_rented).days }}
+    <div class="rental_data__container">
+      <div class="rental_data__active">
+        <h2>Active Rentals</h2>
+        {# I had an issue with updating active_rental_found attribute within the loop, found solution here: https://serverascode.com/2018/03/15/jinja2-namespaces.html #}
+        {% set ns = namespace(active_rentals_found=False) %}
+        {% for rental in active_rentals %}
+          {% if not rental.is_removed %}
+            {% set ns.active_rentals_found=True %}
+            <div class="rental_data__item rental_data__item--active">
+              <p>Title: <span>{{ rental.vhs_title|title }}</span></p>
+              <p>Copy number: <span>{{ rental.vhs_copy_number }}</span></p>
+              <p>Director:<span> {{ rental.vhs_director|title }}</span></p>
+              <p>Genre: <span>{{ rental.vhs_genre|title }}</span></p>
+              {% if rental['customer_id'] and rental['customer_name'] %}
+                <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
               {% else %}
-                {{ (today - rental.date_rented).days }}
+                <p>Customer: <span>N/A</span></p>
               {% endif %}
-          </div>
-          <hr>
+              <p>Rent date: <span>{{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</span></p>
+              {% if rental.date_returned %}
+                <p>Return date: <span>{{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</span></p>
+              {% else %}
+                <p>Due date <span>{{ rental.due_date.strftime('%d-%m-%y') }}</span></p>
+              {% endif %}
+              <p>Rent days
+                {% if rental.date_returned %}
+                  <span>{{ (rental.date_returned - rental.date_rented).days }}</span>
+                {% else %}
+                  <span>{{ (today - rental.date_rented).days }}</span>
+                {% endif %}
+            </div>
+
+            {% endif %}
+          {% endfor %}
+
+          {% if not ns.active_rentals_found %}
+            <p>No active rentals in the database</p>
           {% endif %}
-        {% endfor %}
+      </div>
 
-        {% if not ns.active_rentals_found %}
-          <p>No active rentals in the database</p>
-        {% endif %}
-    </div>
-
-    <div class="rental_data__returned">
-      <h2>Returned Rentals</h2>
-      {% set ns = namespace(returned_rentals_found=False) %}
-      {% for rental in returned_rentals %}
-        {% if not rental.is_removed %}
-          {% set ns.returned_rentals_found = True %}
-          <div class="rental_data__item rental_data__item--returned">
-            <p>Title: {{ rental.vhs_title|title }}</p>
-            <p>Copy number: {{ rental.vhs_copy_number }}</p>
-            <p>Director: {{ rental.vhs_director|title }}</p>
-            <p>Genre: {{ rental.vhs_genre|title }}</p>
-            {% if rental['customer_id'] and rental['customer_name'] %}
-              <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
-            {% else %}
-              <p>Customer: N/A </p>
-            {% endif %}
-            <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
-            {% if rental.date_returned %}
-              <p>Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
-            {% else %}
-              <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
-            {% endif %}
-            <p>Rent days
-              {% if rental.date_returned %}
-                {{ (rental.date_returned - rental.date_rented).days }}
+      <div class="rental_data__returned">
+        <h2>Returned Rentals</h2>
+        {% set ns = namespace(returned_rentals_found=False) %}
+        {% for rental in returned_rentals %}
+          {% if not rental.is_removed %}
+            {% set ns.returned_rentals_found = True %}
+            <div class="rental_data__item rental_data__item--returned">
+              <p>Title: {{ rental.vhs_title|title }}</p>
+              <p>Copy number: {{ rental.vhs_copy_number }}</p>
+              <p>Director: {{ rental.vhs_director|title }}</p>
+              <p>Genre: {{ rental.vhs_genre|title }}</p>
+              {% if rental['customer_id'] and rental['customer_name'] %}
+                <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
               {% else %}
-                {{ (today - rental.date_rented).days }}
+                <p>Customer: N/A </p>
               {% endif %}
-          </div>
-          <hr>
-        {% endif %}
-        {% endfor %}
+              <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
+              {% if rental.date_returned %}
+                <p>Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
+              {% else %}
+                <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
+              {% endif %}
+              <p>Rent days
+                {% if rental.date_returned %}
+                  {{ (rental.date_returned - rental.date_rented).days }}
+                {% else %}
+                  {{ (today - rental.date_rented).days }}
+                {% endif %}
+            </div>
+            <hr>
+          {% endif %}
+          {% endfor %}
 
-        {% if not ns.returned_rentals_found %}
-          <p>No returned rentals in the database</p>
-        {% endif %}
+          {% if not ns.returned_rentals_found %}
+            <p>No returned rentals in the database</p>
+          {% endif %}
+      </div>
+
+      {% else %}
+        <p>No rentals in the database</p>
+      {% endif %}
     </div>
-
-    {% else %}
-      <p>No rentals in the database</p>
-    {% endif %}
-  </div>
+</div>
 
 {% endblock %}
