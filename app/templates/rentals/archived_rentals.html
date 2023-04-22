@@ -1,44 +1,45 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Archived Rentals</h1>
+    <div class="archived-rentals__wrapper">
+        <h1>Archived Rentals</h1>
+        {% if vhs_tape_copies %}
+            {% for vhs_tape_copy in vhs_tape_copies %}
+                {% if vhs_tape_copy.rentals %}
+                    <div class="archived-vhs__container">
+                        <p>Movie: <span>{{ vhs_tape_copy.movie.title|title }}</span></p>
+                        <p>VHS tape copy: <span>{{ vhs_tape_copy.copy_number }}</span></p>
+                        <p>Removed by: <span>{{ vhs_tape_copy.archived_rentals[0].user.username|title }} | {{ vhs_tape_copy.archived_rentals[0].user.email }}</span></p>
+                        <p>Removed at: <span>{{ vhs_tape_copy.archived_rentals[0].date_archived.strftime('%d-%m-%Y (%I:%M %p)') }}</span></p>
+                        <p class="associated-rentals">Associated rentals:</p>
+                        <ul>
+                        {% for rental in vhs_tape_copy.archived_rentals %}
+                            <li>
+                                <p>Rented by:
+                                {% if rental.customer %}
+                                    <span>{{ rental.customer.first_name }} {{ rental.customer.last_name }} | {{ rental.customer.email }}</span>
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                                </p>
+                                <p>Rent date: <span>{{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</span></p>
+                                <p>{% if rental.date_returned %}
+                                    Return date: <span>{{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</span>
+                                {% else %}
+                                    Return date: Not returned
+                                {% endif %}
+                                </p>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>No archived rentals in the database</p>
+        {% endif %}
 
-    {% if vhs_tape_copies %}
-        {% for vhs_tape_copy in vhs_tape_copies %}
-            {% if vhs_tape_copy.rentals %}
-                <div>
-                    <p>Movie: {{ vhs_tape_copy.movie.title }}</p>
-                    <p>VHS tape copy: {{ vhs_tape_copy.copy_number }}</p>
-                    <p>Removed by: {{ vhs_tape_copy.archived_rentals[0].user.username }} | {{ vhs_tape_copy.archived_rentals[0].user.email }}</p>
-                    <p>Removed at: {{ vhs_tape_copy.archived_rentals[0].date_archived.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
-
-                    <p>Associated rentals:</p>
-                    <ul>
-                    {% for rental in vhs_tape_copy.archived_rentals %}
-                        <li>
-                            Rented by:
-                            {% if rental.customer %}
-                                {{ rental.customer.first_name }} {{ rental.customer.last_name }} | {{ rental.customer.email }}
-                            {% else %}
-                                No customer
-                            {% endif %}
-                            | Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}
-                            {% if rental.date_returned %}
-                                | Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}
-                            {% else %}
-                                | Return date: Not returned
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </div>
-                <hr>
-                {% endif %}
-        {% endfor %}
-    {% else %}
-        <p>No archived rentals in the database</p>
-    {% endif %}
-
-<a href="{{ url_for('rentals.index') }}">Go Back</a>
+        <a href="{{ url_for('rentals.index') }}">Go Back</a>
+    </div>
 {% endblock %}
 
