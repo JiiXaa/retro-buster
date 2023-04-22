@@ -2483,6 +2483,7 @@ footer p {
   font-weight: 500;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  margin-bottom: 1.5rem;
 }
 
 .rental-history__wrapper .rental_data__container .rental_data__active h2 {
@@ -2502,6 +2503,48 @@ footer p {
   color: var(--black-text-color);
   font-size: 1.1rem;
   font-weight: 600;
+}
+
+.rental-history__wrapper .rental_data__container .rental_data__returned {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  padding: 1rem;
+  padding-top: 1.2rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  color: var(--black-text-color);
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  margin-bottom: 1.5rem;
+}
+
+.rental-history__wrapper
+  .rental_data__container
+  .rental_data__returned
+  .rental_data__item--returned {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  padding: 1rem;
+  padding-top: 1.2rem;
+  border-bottom: 1px solid var(--grey-text-color);
+  margin-bottom: 0.6rem;
+  color: var(--black-text-color);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.rental-history__wrapper
+  .rental_data__container
+  .rental_data__returned
+  .rental_data__item--returned:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
 }
 
 @keyframes navLinkFade {

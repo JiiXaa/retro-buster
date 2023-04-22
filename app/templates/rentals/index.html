@@ -57,29 +57,28 @@
           {% if not rental.is_removed %}
             {% set ns.returned_rentals_found = True %}
             <div class="rental_data__item rental_data__item--returned">
-              <p>Title: {{ rental.vhs_title|title }}</p>
-              <p>Copy number: {{ rental.vhs_copy_number }}</p>
-              <p>Director: {{ rental.vhs_director|title }}</p>
-              <p>Genre: {{ rental.vhs_genre|title }}</p>
+              <p>Title: <span>{{ rental.vhs_title|title }}</span></p>
+              <p>Copy number: <span>{{ rental.vhs_copy_number }}</span></p>
+              <p>Director: <span>{{ rental.vhs_director|title }}</span></p>
+              <p>Genre: <span>{{ rental.vhs_genre|title }}</span></p>
               {% if rental['customer_id'] and rental['customer_name'] %}
                 <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
               {% else %}
                 <p>Customer: N/A </p>
               {% endif %}
-              <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
+              <p>Rent date: <span>{{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</span></p>
               {% if rental.date_returned %}
-                <p>Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
+                <p>Return date: <span>{{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</span></p>
               {% else %}
-                <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
+                <p>Due date <span>{{ rental.due_date.strftime('%d-%m-%y') }}</span></p>
               {% endif %}
               <p>Rent days
                 {% if rental.date_returned %}
-                  {{ (rental.date_returned - rental.date_rented).days }}
+                  <span>{{ (rental.date_returned - rental.date_rented).days }}</span>
                 {% else %}
-                  {{ (today - rental.date_rented).days }}
+                  <span>{{ (today - rental.date_rented).days }}</span>
                 {% endif %}
             </div>
-            <hr>
           {% endif %}
           {% endfor %}
 
