@@ -2214,6 +2214,195 @@ footer p {
   font-weight: 600;
 }
 
+/* Add VHS tape copy */
+
+.add-tape__wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.add-tape__wrapper h1 {
+  color: var(--grey-text-color);
+  font-family: var(--font-secondary);
+  font-size: 1.6rem;
+  font-weight: 900;
+  margin-bottom: 1.6rem;
+  letter-spacing: 3px;
+  position: relative;
+  z-index: 0;
+}
+
+.add-tape__wrapper h1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 29%;
+  width: 73%;
+  height: 2.5rem;
+  background-color: var(--quaternary-color);
+  transform: skewX(-20deg);
+  z-index: -1;
+  opacity: 0.8;
+}
+
+.add-tape__wrapper img {
+  width: 50%;
+  max-width: 400px;
+  margin-bottom: 1rem;
+}
+
+.add-tape__wrapper .add-tape-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  padding-top: 1.2rem;
+  border-bottom: 1px solid var(--grey-text-color);
+  border-top: 1px solid var(--grey-text-color);
+  margin-bottom: 1rem;
+  background-color: var(--transparent-white);
+  color: var(--black-text-color);
+  font-size: 1.2rem;
+  font-weight: 500;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.add-tape__wrapper .add-tape-description p {
+  color: var(--grey-text-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.add-tape__wrapper .add-tape-description p span {
+  color: var(--black-text-color);
+  font-weight: 700;
+  margin-left: 0.2rem;
+}
+
+.add-tape__wrapper .add-tape-description a {
+  color: var(--grey-text-color);
+  background-color: var(--white-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  margin: 0 auto;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.add-tape__wrapper form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 1.8rem;
+}
+
+.add-tape__wrapper form h2 {
+  color: var(--white-color);
+  font-family: var(--font-secondary);
+  font-size: 1.6rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 0;
+  text-align: center;
+}
+
+.add-tape__wrapper form .form-control {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.2rem;
+}
+
+.add-tape__wrapper form .form-control input {
+  width: 70%;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--grey-text-color);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.add-tape__wrapper form .form-control label {
+  color: var(--grey-text-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.1rem;
+  text-align: left;
+  width: 70%;
+}
+
+.add-tape__wrapper form button[type='submit'] {
+  width: 50%;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--white-color);
+  background-color: var(--quaternary-color);
+  align-self: center;
+}
+
+.add-tape__wrapper .vhs-copies__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  padding: 1rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  margin-bottom: 1rem;
+  color: var(--black-text-color);
+  font-size: 1.2rem;
+  font-weight: 500;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.add-tape__wrapper .vhs-copies__container p {
+  color: var(--grey-text-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.add-tape__wrapper .vhs-copies__container ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.add-tape__wrapper .vhs-copies__container ul li {
+  padding: 0.4rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--grey-text-color);
+  list-style: none;
+  text-align: center;
+}
+
 /* Rental history */
 
 .rental-history__wrapper {

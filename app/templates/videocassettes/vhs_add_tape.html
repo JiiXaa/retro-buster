@@ -1,48 +1,50 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Add VHS Tape Copy</h1>
-
-<p><strong>Title:</strong> {{ movie.title|title }}</p>
-<p><strong>Director:</strong> {{ movie.director|title }}</p>
-<p><strong>Genre:</strong> {{ movie.genre|title }}</p>
-<p><strong>Length:</strong> {{ movie.length }} mins</p>
-<p><strong>Year:</strong> {{ movie.year }}</p>
-<p><strong>Rating:</strong> {{ movie.rating }}</p>
-<p><strong>Description:</strong> {{ movie.description|capitalize }}</p>
-<p><strong>Image:</strong> {{ movie.image }}</p>
-
-<a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}" id="{{ movie.id }}">{{ movie.title|title }} Movie Details</a>
-
-<hr>
-<h2>Add Copy Number</h2>
-
-<form action="{{ url_for('movies.vhs_add_tape', movie_id=movie.id) }}" method="post">
-
-   {# TODO: DEVELOPMENT TESTS ONLY delete both line below when done #}
-  <p>VHS: {{ movie.title|title }}</p>
-  <p>Test: {{ movie.vhs_tape_copy }}</p>
-
-  <div class="form-control">
-    <label for="copy_number">Copy Number (id)</label>
-    <input type="text" name="copy_number" id="copy_number" autofocus required> <br>
+<div class="add-tape__wrapper">
+  <h1>Add VHS Tape</h1>
+  {% if movie.image %}
+    <img src="{{ movie.image }}" alt="{{ movie.title|title }} image">
+  {% else %}
+    <img src="{{ url_for('static', filename='img/movie-default.jpg') }}" alt="No image available">
+  {% endif %}
+  <div class="add-tape-description">
+    <p>Title: <span>{{ movie.title|title }}</span></p>
+    <p>Director: <span>{{ movie.director|title }}</span></p>
+    <p>Genre: <span>{{ movie.genre|title }}</span></p>
+    <p>Length: <span>{{ movie.length }}</span> mins</p>
+    <p>Year: <span>{{ movie.year }}</span></p>
+    <p>Rating: <span>{{ movie.rating }}</span></p>
+    <p>Description: <span>{{ movie.description|capitalize }}</span></p>
+    <a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}" id="{{ movie.id }}">{{ movie.title|title }} Details</a>
   </div>
 
-  <button type="submit">Add Copy</button>
 
-</form>
+  <form action="{{ url_for('movies.vhs_add_tape', movie_id=movie.id) }}" method="post">
 
-<div class="vhs-copies__container">
-  <p>Copy Number:</p>
-  <ul>
-    {% for vhs_tape in movie.vhs_tape_copy %}
-      {% if vhs_tape.is_removed %}
-        <li class="item-crossed">{{ vhs_tape.copy_number }}</li>
-      {% else %}
-        <li>{{ vhs_tape.copy_number }}</li>
-      {% endif %}
-    {% endfor %}
-  </ul>
+    <h2>Add Copy Number</h2>
+
+    <div class="form-control">
+      <label for="copy_number">Copy Number (id):</label>
+      <input type="text" name="copy_number" id="copy_number" autofocus required> <br>
+    </div>
+
+    <button type="submit">Add Copy</button>
+
+  </form>
+
+  <div class="vhs-copies__container">
+    <p>VHS history:</p>
+    <ul>
+      {% for vhs_tape in movie.vhs_tape_copy %}
+        {% if vhs_tape.is_removed %}
+          <li class="item-crossed">{{ vhs_tape.copy_number }}</li>
+        {% else %}
+          <li>{{ vhs_tape.copy_number }}</li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
 </div>
 
 {% endblock %}
