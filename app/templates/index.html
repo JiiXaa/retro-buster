@@ -1,59 +1,59 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p>This is main page</p>
+<div class="main-page__wrapper">
+    <div class="loadingSpinner">Loading...</div>
+    <div class="featured-movies__container">
+        <h3>Featured Movies:</h3>
+        <div class="featured-movies--list" id="featured-movies"></div>
+    </div>
 
-<div class="loadingSpinner">Loading...</div>
-<div class="featured-movies__container">
-    <h3>Featured Movies:</h3>
-    <div class="featured-movies--list" id="featured-movies"></div>
-</div>
+    <div class="forms__container">
+        <form action="{{ url_for('movies.movie_search') }}" method="post">
+            <p>Search movies</p>
+            <div class="form-control">
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="title"> <br>
+            </div>
 
-<div class="forms__container">
-    <form action="{{ url_for('movies.movie_search') }}" method="post">
-        <p>Search movies</p>
-        <div class="form-control">
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title"> <br>
-        </div>
+            <div class="form-control">
+            <label for="director">Director:</label>
+            <input type="text" name="director" id="director"> <br>
+            </div>
 
-        <div class="form-control">
-        <label for="director">Director</label>
-        <input type="text" name="director" id="director"> <br>
-        </div>
+            <div class="form-control">
+            <label for="genre">Genre:</label>
+            <input type="text" name="genre" id="genre"> <br>
+            </div>
 
-        <div class="form-control">
-        <label for="genre">Genre</label>
-        <input type="text" name="genre" id="genre"> <br>
-        </div>
+            <input type="submit" value="Movie Search">
+        </form>
 
-        <input type="submit" value="Movie Search">
-    </form>
+        <form action="{{ url_for('customers.customer_search') }}" method="post">
+            <p>Search customers</p>
+            <div class="form-control">
+            <label for="first_name">First Name</label>
+            <input type="text" name="first_name" id="first_name"> <br>
+            </div>
 
-    <form action="{{ url_for('customers.customer_search') }}" method="post">
-        <p>Search customers</p>
-        <div class="form-control">
-        <label for="first_name">First Name</label>
-        <input type="text" name="first_name" id="first_name"> <br>
-        </div>
+            <div class="form-control">
+            <label for="last_name">Last Name</label>
+            <input type="text" name="last_name" id="last_name"> <br>
+            </div>
 
-        <div class="form-control">
-        <label for="last_name">Last Name</label>
-        <input type="text" name="last_name" id="last_name"> <br>
-        </div>
+            <div class="form-control">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email"> <br>
+            </div>
 
-        <div class="form-control">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email"> <br>
-        </div>
+            <input type="submit" value="Customer Search">
+        </form>
+    </div>
 
-        <input type="submit" value="Customer Search">
-    </form>
-</div>
-
-<div class="due-today__container">
-    <h3>Movies Due Today:</h3>
-    <div class="due-today--list" id="due-today"></div>
+    <div class="due-today__container">
+        <h3>Movies Due Today:</h3>
+        <div class="due-today--list" id="due-today"></div>
+    </div>
 </div>
 
     <script>

@@ -269,6 +269,95 @@ footer p {
   font-size: 0.8rem;
 }
 
+/* HOME PAGE */
+.main-page__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-page__wrapper .forms__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.main-page__wrapper .forms__container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--black-color);
+}
+
+.main-page__wrapper .forms__container form:last-child {
+  border-bottom: none;
+}
+
+.main-page__wrapper .forms__container form p {
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.main-page__wrapper .forms__container form .form-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.main-page__wrapper .forms__container form .form-control label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  width: 30%;
+}
+
+.main-page__wrapper .forms__container form .form-control input {
+  width: 70%;
+  padding: 0.2rem 0.5rem;
+  font-size: 1.1rem;
+  border: 1px solid var(--black-color);
+  border-radius: 3px;
+}
+
+.main-page__wrapper .forms__container form input[type='submit'] {
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  border: 1px solid var(--black-color);
+  border-radius: 3px;
+  background-color: var(--quaternary-color);
+  color: var(--white-color);
+  cursor: pointer;
+}
+
+.main-page__wrapper .forms__container form:first-child input[type='submit'] {
+  margin-bottom: 1rem;
+}
+
+.featured-movies__container h3 {
+  display: none;
+}
+
+.featured-movies--list {
+  display: none;
+}
+
+.due-today__container h3 {
+  display: none;
+}
+
+.due-today--list {
+  display: none;
+}
+
 /* Users */
 
 /* Unlogged user */
@@ -1783,14 +1872,11 @@ footer p {
 /* Movie details */
 
 .movie-details__wrapper {
-  position: relative;
-  color: var(--grey-text-color);
-  font-family: var(--font-secondary);
-  font-size: 1.8rem;
-  font-weight: 900;
-  margin-bottom: 1.6rem;
-  letter-spacing: 3px;
-  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .movie-details__wrapper h1 {
@@ -1894,7 +1980,7 @@ footer p {
   border-radius: 0.3rem;
   font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 0.2rem;
+  margin-bottom: 1.2rem;
   cursor: pointer;
   text-decoration: none;
   color: var(--black-text-color);
