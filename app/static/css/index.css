@@ -12,6 +12,8 @@
   --white-color: #ffffff;
   --transparent-white: rgba(255, 255, 255, 0.5);
 
+  --success-color: #15e6cd;
+
   /* Font */
   --font-main: 'Rajdhani', sans-serif;
   --font-secondary: 'Lato', sans-serif;
@@ -2636,6 +2638,36 @@ footer p {
   width: 100%;
   margin-bottom: 0.6rem;
   margin-top: 0.1rem;
+}
+
+/* Flash messages */
+.flashes {
+  position: fixed;
+  width: 100%;
+  padding: 1.2rem 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--grey-text-color);
+  background-color: var(--success-color);
+  margin: 0;
+}
+
+.flashes li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.flashes li p {
+  color: var(--grey-text-color);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0;
+  padding: 0 1.2rem;
 }
 
 @keyframes navLinkFade {

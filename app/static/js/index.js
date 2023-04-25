@@ -7,8 +7,6 @@ const burger = document.querySelector('.burger');
 const nav = document.querySelector('.nav-links');
 const navLinks = document.querySelectorAll('.nav-links li');
 
-console.log(nav);
-
 // Toggle Nav
 burger.addEventListener('click', () => {
   nav.classList.toggle('nav-active');
@@ -29,3 +27,10 @@ burger.addEventListener('click', () => {
   // Burger Animation
   burger.classList.toggle('toggle');
 });
+
+// Setting timeout for the alert message to disappear after 3 seconds
+setTimeout(() => {
+  const flashMessage = document.querySelector('.alert');
+
+  if (flashMessage) flashMessage.style.display = 'none';
+}, 4000);
