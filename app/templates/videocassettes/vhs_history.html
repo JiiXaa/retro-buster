@@ -1,78 +1,80 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>VHS Copy Rental History</h1>
-<h3>{{ vhs.title }} <span>(tape - {{ vhs_detail.copy_number }}</span>)</h3>
+<div class="vhs-history__wrapper">
+  <h1>VHS Rental History</h1>
+  <h3>{{ vhs.title }} <span>(tape - {{ vhs_detail.copy_number }}</span>)</h3>
 
-{% if vhs_history_data %}
+  {% if vhs_history_data %}
 
-  {% set active_rentals =  vhs_history_data|selectattr('date_returned', 'none')|list %}
-  {% set returned_rentals = vhs_history_data|rejectattr('date_returned', 'none')|list %}
+    {% set active_rentals =  vhs_history_data|selectattr('date_returned', 'none')|list %}
+    {% set returned_rentals = vhs_history_data|rejectattr('date_returned', 'none')|list %}
 
-  <div class="rental_data__container">
-    <div class="rental_data__active">
-      <h2>Active Rentals</h2>
-      {% for rental in active_rentals %}
-        <div class="rental_data__item rental_data__item--active">
-          <p>Title: {{ rental.vhs_title|title }}</p>
-          <p>Copy number: {{ rental.vhs_copy_number }}</p>
-          <p>Director: {{ rental.vhs_director|title }}</p>
-          <p>Genre: {{ rental.vhs_genre|title }}</p>
-          <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
-          <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
-          {% if rental.date_returned %}
-            <p>Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
-          {% else %}
-            <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
-          {% endif %}
-          <p>Rent days
+    <div class="rental_data__container">
+      <div class="rental_data__active">
+        <h2>Active Rental</h2>
+        {% for rental in active_rentals %}
+          <div class="rental_data__item rental_data__item--active">
+            <p>Title: {{ rental.vhs_title|title }}</p>
+            <p>Copy number: {{ rental.vhs_copy_number }}</p>
+            <p>Director: {{ rental.vhs_director|title }}</p>
+            <p>Genre: {{ rental.vhs_genre|title }}</p>
+            <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
+            <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
             {% if rental.date_returned %}
-              {{ (rental.date_returned - rental.date_rented).days }}
+              <p>Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
             {% else %}
-              {{ (today - rental.date_rented).days }}
+              <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
             {% endif %}
-          </p>
-        </div>
-        <hr>
-      {% else %}
-        <p>No active rentals in the database</p>
-      {% endfor %}
-    </div>
+            <p>Rent days
+              {% if rental.date_returned %}
+                {{ (rental.date_returned - rental.date_rented).days }}
+              {% else %}
+                {{ (today - rental.date_rented).days }}
+              {% endif %}
+            </p>
+          </div>
+          <hr>
+        {% else %}
+          <p>No active rentals in the database</p>
+        {% endfor %}
+      </div>
 
-    <div class="rental_data__returned">
-      <h2>Returned Rentals</h2>
-      {% for rental in returned_rentals %}
-        <div class="rental_data__item rental_data__item--returned">
-          <p>Title: {{ rental.vhs_title|title }}</p>
-          <p>Copy number: {{ rental.vhs_copy_number }}</p>
-          <p>Director: {{ rental.vhs_director|title }}</p>
-          <p>Genre: {{ rental.vhs_genre|title }}</p>
-          <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
-          <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
-          {% if rental.date_returned %}
-            <p>Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
-          {% else %}
-            <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
-          {% endif %}
-          <p>Rent days
+      <div class="rental_data__returned">
+        <h2>Returned Rentals</h2>
+        {% for rental in returned_rentals %}
+          <div class="rental_data__item rental_data__item--returned">
+            <p>Title: {{ rental.vhs_title|title }}</p>
+            <p>Copy number: {{ rental.vhs_copy_number }}</p>
+            <p>Director: {{ rental.vhs_director|title }}</p>
+            <p>Genre: {{ rental.vhs_genre|title }}</p>
+            <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
+            <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
             {% if rental.date_returned %}
-              {{ (rental.date_returned - rental.date_rented).days }}
+              <p>Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
             {% else %}
-              {{ (today - rental.date_rented).days }}
+              <p>Due date {{ rental.due_date.strftime('%d-%m-%y') }}</p>
             {% endif %}
-          </p>
-        </div>
-        <hr>
-      {% else %}
-        <p>No returned rentals in the database</p>
-      {% endfor %}
+            <p>Rent days
+              {% if rental.date_returned %}
+                {{ (rental.date_returned - rental.date_rented).days }}
+              {% else %}
+                {{ (today - rental.date_rented).days }}
+              {% endif %}
+            </p>
+          </div>
+          <hr>
+        {% else %}
+          <p>No returned rentals in the database</p>
+        {% endfor %}
 
+      </div>
     </div>
-  </div>
-{% else %}
-  <p>No VHS history for copy with ID: {{ vhs_detail.id }} with the copy number: <span><b>{{ vhs_detail.copy_number }}</b></span></p>
-{% endif %}
+  {% else %}
+    <p>No VHS history for copy with ID: {{ vhs_detail.id }} with the copy number: <span><b>{{ vhs_detail.copy_number }}</b></span></p>
+  {% endif %}
 
 
-<a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}"">Go Back</a>
+  <a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}"">Go Back</a>
+</div>
 {% endblock %}
