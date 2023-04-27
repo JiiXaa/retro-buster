@@ -192,13 +192,15 @@
 
   function sortByDate(sortBy) {
     if (sortAscending) {
-      movies.sort((a, b) => compareAsc(parse(a[sortBy], 'dd-MM-yyyy HH:mm:ss', new Date()), parse(b[sortBy], 'dd-MM-yyyy HH:mm:ss', new Date())));
+      movies.sort((a, b) => compareAsc(parse(a[sortBy], 'dd-MM-yyyy (hh:mm:ss a)', new Date()), parse(b[sortBy], 'dd-MM-yyyy (hh:mm:ss a)', new Date())));
     } else {
-      movies.sort((a, b) => compareDesc(parse(a[sortBy], 'dd-MM-yyyy HH:mm:ss', new Date()), parse(b[sortBy], 'dd-MM-yyyy HH:mm:ss', new Date())));
+      movies.sort((a, b) => compareDesc(parse(a[sortBy], 'dd-MM-yyyy (hh:mm:ss a)', new Date()), parse(b[sortBy], 'dd-MM-yyyy (hh:mm:ss a)', new Date())));
     }
     sortAscending = !sortAscending;
     displayMovies();
   }
+
+
 
   // Run the getMovies function when the page loads
   getMovies();
