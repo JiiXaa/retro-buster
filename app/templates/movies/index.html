@@ -65,6 +65,8 @@
             <p><span>Director:</span> ${movie.director}</p>
             <p><span>Genre:</span> ${movie.genre}</p>
             <p><span>Rating:</span> ${movie.rating}</p>
+            <p><span>Added:</span> ${movie.date_added}</p>
+            <p><span>Release date:</span> ${movie.year}</p>
           </div>
           <div class="movie-actions__container">
             <a href="{{ url_for('movies.movie_edit', movie_id="") }}${movie.id}">Edit</a>
