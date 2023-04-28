@@ -2205,6 +2205,34 @@ footer p {
   background-color: var(--white-color);
 }
 
+.vhs-delete__wrapper .vhs-cannot-remove__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.2rem;
+}
+
+.vhs-delete__wrapper .vhs-cannot-remove__container p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--white-color);
+  margin-bottom: 1.2rem;
+}
+
+.vhs-delete__wrapper .vhs-cannot-remove__container a {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--white-color);
+  background-color: var(--quaternary-color);
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
 /* VHS details */
 
 .vhs-details__wrapper {
