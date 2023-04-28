@@ -2099,6 +2099,112 @@ footer p {
   background-color: var(--white-color);
 }
 
+/* VHS delete */
+.vhs-delete__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.vhs-delete__wrapper h1 {
+  position: relative;
+  color: var(--grey-text-color);
+  font-family: var(--font-secondary);
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin-bottom: 1.6rem;
+  letter-spacing: 3px;
+  z-index: 0;
+}
+
+.vhs-delete__wrapper h1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 39%;
+  width: 65%;
+  height: 3rem;
+  background-color: var(--quaternary-color);
+  z-index: -1;
+  opacity: 0.8;
+  transform: skewX(-20deg);
+}
+
+.vhs-delete__wrapper form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+}
+
+.vhs-delete__wrapper form p:first-child {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+}
+
+.vhs-delete__wrapper form p:nth-child(2) {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--black-text-color);
+}
+
+.vhs-delete__wrapper form .form-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.2rem;
+}
+
+.vhs-delete__wrapper form .form-control input {
+  padding: 0.4rem 1.2rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 80%;
+}
+
+.vhs-delete__wrapper form .vhs-delete-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.vhs-delete__wrapper form .vhs-delete-actions input[type='submit'] {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--white-color);
+  background-color: var(--quaternary-color);
+}
+
+.vhs-delete__wrapper form .vhs-delete-actions a {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black-text-color);
+  background-color: var(--white-color);
+}
+
 /* VHS details */
 
 .vhs-details__wrapper {
@@ -3770,7 +3876,7 @@ footer p {
 
   .movie-details {
     flex-direction: column;
-    width: 100%;
+    width: 60%;
     padding: 1rem;
     padding-top: 1.2rem;
     border: 1px solid var(--grey-text-color);
@@ -3794,9 +3900,9 @@ footer p {
   .movie-actions__wrapper {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    width: 14%;
+    width: 25%;
     padding: 0.4rem 0.5rem;
   }
 
@@ -3828,7 +3934,7 @@ footer p {
   }
 
   .vhs-details__wrapper {
-    width: 100%;
+    width: 60%;
     padding: 1rem;
     padding-top: 1.2rem;
     border: 1px solid var(--grey-text-color);
