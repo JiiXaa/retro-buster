@@ -21,6 +21,8 @@
 
   /* Utility */
   --desktop-radius: 0.5rem;
+  --box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 /* Box sizing rules by Picallily */
@@ -1996,6 +1998,109 @@ footer p {
   text-decoration: none;
 }
 
+/* VHS Rent */
+.vhs-rent__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.vhs-rent__wrapper p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+  color: var(--black-text-color);
+}
+
+.vhs-rent__wrapper p:nth-child(1) span {
+  font-style: italic;
+  font-weight: normal;
+  margin-right: 0.2rem;
+}
+
+.vhs-rent__wrapper p:nth-child(1) {
+  font-weight: 900;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.vhs-rent__wrapper p:nth-child(3) {
+  font-weight: 900;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.vhs-rent__wrapper form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+}
+
+.vhs-rent__wrapper form .form-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.2rem;
+}
+
+.vhs-rent__wrapper form .form-control label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--black-text-color);
+  margin-right: 0.4rem;
+}
+
+.vhs-rent__wrapper form .form-control input {
+  padding: 0.4rem 1.2rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 100%;
+}
+
+.vhs-rent__wrapper form .vhs-rent-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.vhs-rent__wrapper form .vhs-rent-actions input[type='submit'] {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--white-color);
+  background-color: var(--quaternary-color);
+}
+
+.vhs-rent__wrapper form .vhs-rent-actions a {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black-text-color);
+  background-color: var(--white-color);
+}
+
+/* VHS details */
+
 .vhs-details__wrapper {
   display: flex;
   flex-direction: column;
@@ -2114,6 +2219,10 @@ footer p {
   color: var(--white-color);
 }
 
+.vhs-history__wrapper .no-history-parag {
+  margin-bottom: 1.2rem;
+}
+
 .vhs-history__wrapper .btn-back {
   color: var(--white-color);
   text-decoration: none;
@@ -2145,6 +2254,7 @@ footer p {
   padding: 0.6rem 1.2rem;
   border-radius: 0.3rem;
   margin-bottom: 1.2rem;
+  box-shadow: var(--box-shadow);
 }
 
 .vhs-history__wrapper .rental_data__container .rental_data__active h2 {
@@ -2179,7 +2289,7 @@ footer p {
 
 .vhs-history__wrapper .rental_data__returned th,
 .vhs-history__wrapper .rental_data__returned td {
-  padding: 6px;
+  padding: 0.3rem;
 }
 
 .vhs-history__wrapper .rental_data__returned td {
@@ -2215,6 +2325,10 @@ footer p {
 .vhs-history__wrapper .rental_data__returned th:nth-child(8),
 .vhs-history__wrapper .rental_data__returned td:nth-child(8) {
   display: none;
+}
+
+.vhs-history__wrapper .rental_data__returned .no-returned-info {
+  display: table-cell !important;
 }
 
 /* Movie add */
@@ -3778,6 +3892,152 @@ footer p {
   .vhs-details__wrapper table td a {
     color: var(--black-text-color);
     font-weight: 600;
+  }
+
+  /* VHS copy rental history */
+  .vhs-history__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    padding-top: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--black-text-color);
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  .vhs-history__wrapper h1 {
+    position: relative;
+    color: var(--grey-text-color);
+    font-family: var(--font-secondary);
+    font-size: 1.7rem;
+    font-weight: 900;
+    margin-bottom: 1.6rem;
+    letter-spacing: 3px;
+    z-index: 0;
+  }
+
+  .vhs-history__wrapper h1::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 28%;
+    width: 74%;
+    height: 3rem;
+    background-color: var(--quaternary-color);
+    z-index: -1;
+    opacity: 0.8;
+    transform: skewX(-20deg);
+  }
+
+  .vhs-history__wrapper h3 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    color: var(--white-color);
+  }
+
+  .vhs-history__wrapper .no-history-parag {
+    margin-bottom: 1.2rem;
+    font-size: 1.2rem;
+  }
+
+  .vhs-history__wrapper .btn-back {
+    color: var(--white-color);
+    text-decoration: none;
+    background-color: var(--quaternary-color);
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.3rem;
+    border: 1px solid var(--grey-text-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .vhs-history__wrapper .rental_data__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin-bottom: 1.2rem;
+  }
+
+  .vhs-history__wrapper .rental_data__container .rental_data__active {
+    width: 30%;
+    background-color: var(--transparent-white);
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.3rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--box-shadow);
+  }
+
+  .vhs-history__wrapper .rental_data__container .rental_data__active h2 {
+    color: var(--grey-text-color);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .vhs-history__wrapper .rental_data__returned h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .vhs-history__wrapper .rental_data__returned table {
+    font-size: 1.2rem;
+  }
+
+  .vhs-history__wrapper .rental_data__returned thead {
+    background-color: var(--white-color);
+    color: var(--grey-text-color);
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 1px solid var(--black-text-color);
+  }
+
+  .vhs-history__wrapper .rental_data__returned th,
+  .vhs-history__wrapper .rental_data__returned td {
+    padding: 1rem;
+  }
+
+  .vhs-history__wrapper .rental_data__returned td {
+    border-bottom: 1px solid var(--grey-text-color);
+    text-align: center;
+  }
+
+  .vhs-history__wrapper .rental_data__returned td a,
+  .vhs-history__wrapper .rental_data__container .rental_data__active a {
+    color: var(--black-text-color);
+    font-weight: 600;
+  }
+
+  .vhs-history__wrapper .rental_data__returned th:nth-child(1),
+  .vhs-history__wrapper .rental_data__returned td:nth-child(1) {
+    display: table-cell;
+  }
+
+  .vhs-history__wrapper .rental_data__returned th:nth-child(2),
+  .vhs-history__wrapper .rental_data__returned td:nth-child(2) {
+    display: table-cell;
+  }
+
+  .vhs-history__wrapper .rental_data__returned th:nth-child(3),
+  .vhs-history__wrapper .rental_data__returned td:nth-child(3) {
+    display: table-cell;
+  }
+
+  .vhs-history__wrapper .rental_data__returned th:nth-child(4),
+  .vhs-history__wrapper .rental_data__returned td:nth-child(4) {
+    display: table-cell;
+  }
+  .vhs-history__wrapper .rental_data__returned th:nth-child(8),
+  .vhs-history__wrapper .rental_data__returned td:nth-child(8) {
+    display: table-cell;
   }
 }
 
