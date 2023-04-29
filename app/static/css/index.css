@@ -3270,6 +3270,123 @@ footer p {
   letter-spacing: 2px;
 }
 
+.rental-history__wrapper .rental_data__container .rental_data__active p {
+  color: var(--grey-text-color);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.rental-history__wrapper
+  .rental_data__container
+  .rental_data__active
+  .rental_data__item--active {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  padding: 1rem;
+  border-bottom: 1px solid #000;
+  margin-bottom: 1rem;
+  color: var(--black-text-color);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.rental-history__wrapper
+  .rental_data__container
+  .rental_data__active
+  .rental_data__item--active:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.rental-history__wrapper
+  .rental_data__container
+  .rental_data__active
+  .rental_data__item--active
+  p {
+  color: var(--grey-text-color);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.rental-history__wrapper
+  .rental_data__container
+  .rental_data__active
+  .rental_data__item--active
+  p
+  span {
+  color: var(--black-text-color);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.rental-history__wrapper
+  .rental_data__container
+  .rental_data__active
+  .rental_data__item--active
+  a {
+  color: var(--black-text-color);
+  font-size: 1rem;
+}
+
+.rental-history__wrapper .rental_data__container .rental_data__returned h2 {
+  color: var(--white-color);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.rental-history__wrapper .rental_data__container .rental_data__returned {
+  margin-bottom: 1.5rem;
+}
+
+.rental-history__wrapper .rental_data__container .rental_data__returned p {
+  color: var(--grey-text-color);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.rental-history__wrapper
+  .rental_data__container
+  .rental_data__returned
+  p:last-child {
+  margin-bottom: 0.6rem;
+}
+
+.rental-history__wrapper .rental_data__container .rental_data__returned p span {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.rental-history__wrapper .rental_data__container .rental_data__returned a {
+  color: var(--grey-text-color);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.rental-history__wrapper
+  .rental_data__container
+  .rental_data__returned
+  .rental_data__item--returned {
+  border-bottom: 1px solid var(--grey-text-color);
+  margin-bottom: 0.6rem;
+}
+
+.rental-history__wrapper
+  .rental_data__container
+  .rental_data__returned
+  .rental_data__item--returned:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
 /* Archived rentals */
 .archived-rentals__wrapper {
   width: 100%;
