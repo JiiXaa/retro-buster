@@ -4291,7 +4291,243 @@ footer p {
     display: table-cell;
   }
 
-  /* Rental history */
+  /* Customer profile */
+
+  .customer-profile__wrapper {
+    width: 100%;
+    padding-bottom: 1rem;
+  }
+
+  .customer-profile__wrapper h1 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 1.6rem;
+  }
+
+  .customer-profile__wrapper h1::before {
+    left: 29%;
+    width: 73%;
+    height: 3rem;
+  }
+
+  .customer-profile__wrapper h2 {
+    margin-bottom: 0.6rem;
+  }
+
+  .customer-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--grey-text-color);
+    border-bottom: 1px solid var(--grey-text-color);
+    margin-bottom: 1.2rem;
+    background-color: var(--transparent-white);
+    color: var(--black-text-color);
+    font-size: 1.2rem;
+    font-weight: 500;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+
+  .customer-info__wrapper {
+    margin-bottom: 0.6rem;
+  }
+
+  .customer-info__wrapper p {
+    font-style: italic;
+  }
+
+  .customer-info__wrapper p span {
+    font-weight: 900;
+    font-style: normal;
+    margin-right: 0.5rem;
+  }
+
+  .customer-actions__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 12%;
+    padding: 0.4rem 0.5rem;
+  }
+
+  .customer-actions__wrapper a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--grey-text-color);
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--black-text-color);
+    background-color: var(--white-color);
+  }
+
+  .customer-profile__wrapper form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--grey-text-color);
+    margin-bottom: 0.6rem;
+  }
+
+  .customer-profile__wrapper form .form-control {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+  }
+
+  .customer-profile__wrapper form .form-control label {
+    text-align: right;
+    margin-right: 1rem;
+    width: 20%;
+  }
+
+  .customer-profile__wrapper form .form-control input {
+    width: 20%;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid var(--grey-text-color);
+    border-radius: 0.3rem;
+    color: var(--grey-text-color);
+  }
+
+  .customer-profile__wrapper form input[type='submit'] {
+    width: 6%;
+    background-color: var(--quaternary-color);
+    color: var(--white-color);
+    cursor: pointer;
+    font-weight: 600;
+    margin: 0 auto;
+    margin-top: 0.5rem;
+    margin-bottom: 1.6rem;
+    padding: 0.6rem 0.2rem;
+    border: 1px solid var(--black-text-color);
+    border-radius: 0.2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  /* Customer rental history */
+
+  .rental {
+    width: 100%;
+  }
+
+  /* Active rentals */
+
+  .rentals-active__container {
+    width: 100%;
+    padding: 1rem;
+    border-bottom: 1px solid var(--grey-text-color);
+    border-top: 1px solid var(--grey-text-color);
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+  }
+
+  .rentals-active__container h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .rentals-active__container .rental-active {
+    width: 20%;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--grey-text-color);
+    border-radius: 0.3rem;
+  }
+
+  .rentals-active__container .rental-active .movie-info {
+    padding: 0.5rem;
+  }
+
+  .rentals-active__container .rental-active .movie-info p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+  }
+
+  .rentals-active__container .rental-active .movie-info p span {
+    font-weight: 900;
+    font-style: normal;
+    margin-right: 0.5rem;
+  }
+
+  .rentals-active__container .rental-actions {
+    align-self: self-end;
+    margin-right: 2rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .rentals-active__container .rental-actions a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--grey-text-color);
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--black-text-color);
+    background-color: var(--white-color);
+  }
+
+  /* Customer Rental history */
+
+  .rentals-history__container {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .rentals-history__container h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .rentals-history__container .rental-history {
+    width: 20%;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .rentals-history__container .rental-history .movie-info {
+    padding: 0.5rem;
+  }
+
+  .rentals-history__container .rental-history .movie-info p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+  }
+
+  .rentals-history__container .rental-history .movie-info p span {
+    font-weight: 900;
+    font-style: normal;
+    margin-right: 0.5rem;
+  }
+
+  /* Rental history page */
 
   .rental-history__wrapper {
     width: 100%;
