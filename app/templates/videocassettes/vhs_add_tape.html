@@ -9,14 +9,16 @@
     <img src="{{ url_for('static', filename='img/movie-default.jpg') }}" alt="No image available">
   {% endif %}
   <div class="add-tape-description">
-    <p>Title: <span>{{ movie.title|title }}</span></p>
-    <p>Director: <span>{{ movie.director|title }}</span></p>
-    <p>Genre: <span>{{ movie.genre|title }}</span></p>
-    <p>Length: <span>{{ movie.length }}</span> mins</p>
-    <p>Year: <span>{{ movie.year }}</span></p>
-    <p>Rating: <span>{{ movie.rating }}</span></p>
-    <p>Description: <span>{{ movie.description|capitalize }}</span></p>
-    <a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}" id="{{ movie.id }}">{{ movie.title|title }} Details</a>
+    <div class="description__container">
+      <p>Title: <span>{{ movie.title|title }}</span></p>
+      <p>Director: <span>{{ movie.director|title }}</span></p>
+      <p>Genre: <span>{{ movie.genre|title }}</span></p>
+      <p>Length: <span>{{ movie.length }}</span> mins</p>
+      <p>Year: <span>{{ movie.year }}</span></p>
+      <p>Rating: <span>{{ movie.rating }}</span></p>
+      <p>Description: <span>{{ movie.description|capitalize }}</span></p>
+      <a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}" id="{{ movie.id }}">Movie Details</a>
+    </div>
   </div>
 
 
