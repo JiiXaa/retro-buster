@@ -12,6 +12,7 @@
 
   <div class="movie-details">
     <div class="movie-details__container">
+      <p>Title: <span>{{ movie.title|title }}</span></p>
       <p>Director: <span>{{ movie.director|title }}</span></p>
       <p>Genre: <span>{{ movie.genre|title }}</span></p>
       <p>Total copies: <span>{{ movie.total_count() }}</span></p>

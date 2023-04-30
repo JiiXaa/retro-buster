@@ -3018,6 +3018,10 @@ footer p {
   width: 50%;
   max-width: 400px;
   margin-bottom: 1rem;
+  border: 2px solid var(--grey-text-color);
+  border-radius: 0.3rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .add-tape__wrapper .add-tape-description {
@@ -3166,6 +3170,10 @@ footer p {
   margin: 0;
 }
 
+.add-tape__wrapper .vhs-copies__container ul li:first-child {
+  border-left: 1px solid var(--grey-text-color);
+}
+
 .add-tape__wrapper .vhs-copies__container ul li {
   padding: 0.4rem;
   font-size: 1.4rem;
@@ -3173,6 +3181,7 @@ footer p {
   color: var(--grey-text-color);
   list-style: none;
   text-align: center;
+  border-right: 1px solid var(--grey-text-color);
 }
 
 /* Rental history */
@@ -3565,6 +3574,7 @@ footer p {
   /* HEADER - NAVBAR */
 
   .menu {
+    width: 90%;
     background-color: var(--black-color);
     display: flex;
     align-items: center;
@@ -3572,10 +3582,12 @@ footer p {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     z-index: 99;
+    margin: 0 auto;
   }
 
   .menu > ol > .menu-item > a {
     position: relative;
+    font-size: 1.5rem;
   }
 
   .menu > ol > .menu-item > a::after {
@@ -3594,7 +3606,7 @@ footer p {
   }
   .main__wrapper header nav .main-logo {
     color: var(--white-color);
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 600;
     text-decoration: none;
   }
@@ -4028,7 +4040,7 @@ footer p {
   }
 
   .movie-details__container {
-    padding: 0.5rem 2rem;
+    padding: 1rem 2rem 0.2rem;
     margin-bottom: 1rem;
   }
 
