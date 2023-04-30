@@ -348,7 +348,7 @@ footer p {
   margin-bottom: 1rem;
 }
 
-.featured-movies__container h3 {
+.featured-movies__container {
   display: none;
 }
 
@@ -3940,64 +3940,6 @@ footer p {
     border-bottom: none;
   }
 
-  /* Home page */
-  .featured-movies__container {
-    margin: 1rem auto;
-    padding: 1rem;
-    display: none;
-    flex-direction: column;
-    border: 1px solid black;
-  }
-
-  .featured-movies--list {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .featured-movies--list-item {
-    border: 1px solid blue;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 1rem;
-    padding: 1rem;
-  }
-
-  .forms__container {
-    margin: 1rem auto;
-    padding: 3rem;
-    display: flex;
-    max-width: 30%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid black;
-  }
-
-  .due-today__container {
-    margin: 0 auto;
-    padding: 1rem;
-    display: none;
-    flex-direction: column;
-    border: 1px solid black;
-  }
-
-  .due-today--list {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .due-today--list-item {
-    border: 1px solid blue;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 1rem;
-    padding: 1rem;
-  }
-
   /* Movie details */
 
   .movie-details__wrapper {
@@ -4888,6 +4830,97 @@ footer p {
     .rental_data__item--returned:last-child {
     border-bottom: none;
     margin-bottom: 0;
+  }
+
+  /* HOME PAGE */
+  .main-page__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .main-page__wrapper .forms__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .main-page__wrapper .forms__container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--black-color);
+  }
+
+  .main-page__wrapper .forms__container form:last-child {
+    border-bottom: none;
+  }
+
+  .main-page__wrapper .forms__container form p {
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .main-page__wrapper .forms__container form .form-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .main-page__wrapper .forms__container form .form-control label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    width: 30%;
+  }
+
+  .main-page__wrapper .forms__container form .form-control input {
+    width: 70%;
+    padding: 0.2rem 0.5rem;
+    font-size: 1.1rem;
+    border: 1px solid var(--black-color);
+    border-radius: 3px;
+  }
+
+  .main-page__wrapper .forms__container form input[type='submit'] {
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    border: 1px solid var(--black-color);
+    border-radius: 3px;
+    background-color: var(--quaternary-color);
+    color: var(--white-color);
+    cursor: pointer;
+  }
+
+  .main-page__wrapper .forms__container form:first-child input[type='submit'] {
+    margin-bottom: 1rem;
+  }
+
+  .featured-movies--list {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .featured-movies__container {
+    display: block;
+  }
+
+  .due-today__container h3 {
+    display: flex;
+  }
+
+  .due-today--list {
+    display: flex;
+    flex-direction: row;
   }
 }
 
