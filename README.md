@@ -4,15 +4,55 @@
 
 The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed for customers who enjoy the nostalgia of old-school films. This app provides an easy and convenient way to manage a VHS cassettes rental shop. With its user-friendly design, this app makes it simple to manage the available cassettes, keep track of new and existing customers, and stay up to date on who has borrowed what movie and when.
 
+## Quick Overview:
+
+A registered cashier (main user) can login and get the access to the list of available VHS tapes for all movies, list of registered customers and manage rental data associated with them:
+
+- User have a access to the all movies available in the store and see all information like title, director, genre, total copies, available copies, date added etc.
+- User can add movies and vhs tape copies associated with them.
+- User can edit / delete movies and vhs tape copies associated with them.
+- User can search movie by title, director or genre criteria (functionality works for multiple criteria search i.e. can look for a movie tile and genre etc.)
+- User can see which copies are available or rented.
+- User can rent/check-in movies for a existing customer.
+- User can see history for a specific VHS tape copy from the movie details page. History data contains information: director, genre, customer, rent date, return date, due date, rent days.
+- User can add, edit, delete and view customer page information.
+  - Customer details page contains the information about customer, form to rent a movie from the customer page (need to specify a movie title and available copy number). Also user can access rental history for all active or previously rented movies.
+- User can search customer by first name, last name and email (functionality works for multiple criteria search i.e. can look for a last name and email etc.)
+- User can see all rental history (active and returned)
+- User can access archived rentals from the rentals page
+
+  - if deleted VHS tape copy has a rental history it is considered and added to archived rentals.
+
+- Deleting movies from the database uses a hard deletion and all associated history is also deleted,
+- Deleting VHS copy of a movie uses a soft deletion to be able to preserve all history of VHS tapes.
+- Deleting customer uses hard deletion but all associated rental history is available after deleting. Every information with deleted customer says that customer does not exist or N/A.
+
+Every user interaction/actions are confirmed with use of Flask's flash messages, i.e. after user edits a movie, app displays information that "movie updated successfully". Every pop up information disappear after 5 seconds.
+
+**Home page** have quick access to the search movies/customers functionality and see the list of the movies that are due to be returned today.
+
+**Main movies** page displays list of paginated movies (8 movies per page). Movies can be sorted by date added, title, director, genre or rating. Each movie container shows:
+
+- image (image can be only added with existing URL, upload images is not implemented at this point),
+- list of vhs tape copies (available / rented out),
+- information about a movie,
+- actions to edit, delete, view details page for a movie.
+
+**Main customers** page displays list of customers, each container render customer first name, last name, email and actions such as edit, delete, view details for a customer.
+
+**Rental history** page displays all rental history (active / returned).
+
+**Archive rentals** page can be accessed from the rental history page, and display data for the deleted VHS copies.
+
 ## Pseudocode:
 
-- [] Create navigation for the project for the following endpoints:
+- [x] Create navigation for the project for the following endpoints:
 
   - [] main page (Could use advertisement data for cashiers to easily promote new or featured VHS tapes, and other deals to customers. Display this information to quickly recommend products and increase sales. This can also help manage inventory and promote slow-moving products.) - (loose design idea: could have 10 featured record shown, and if there is less featured tapes at the time in the database, could add if statement for adding popular tapes to populate missing numbers),
   - [x] Customers,
   - [x] Customers search/filter,
   - [x] Customer add,
-  - [x] Movies main page, show all available movies with necessary details (this would be good idea to incorporate pagination to help improve loading time of the page by requesting 10-20 records or so)
+  - [x] Movies main page, show all available movies with necessary details (this would be good idea to incorporate pagination to help improve loading time of the page by requesting 8 records)
   - [x] Movies search/sort by date, title, director, genre and rating,
   - [x] Movie add (Add movie title to database),
     - [x] VHS tape copy add (Add copy tapes of the movie),
@@ -44,10 +84,10 @@ The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed f
 
   - [x] When a user clicks the edit button, a form is displayed with inputs pre-filled with the corresponding videocassette (VHS) data. Upon submitting the form, the entry for that videocassette is updated in the database.
 
-- [] Rental history - active/archived
+- [x] Rental history - active/archived
   - [x] Deleting a VHS tape copy will not delete it from the database but set the is_removed flag to True. That is to avoid the constraint errors and keep relations between removed VHS tape copies, active rentals and archived rentals.
   - [x] Show active rentals on the rentals page.
-  - [] Archived rentals link located in the rentals page to be able to see archived rentals for deleted VHS tape copy.
+  - [x] Archived rentals link located in the rentals page to be able to see archived rentals for deleted VHS tape copy.
 
 ### Database features:
 
@@ -67,10 +107,16 @@ Database prototyping/building uses the SQLite library and the final version is s
 - [x] 'ArchivedRental' class needs to have many-to-one relationship with 'Movie' meaning that one movie can have multiple archived rentals.
 - [x] 'VhsTapeCopy' needs to have many-to-one relationship with 'ArchivedRental' and 'VhsRental' meaning that one VHS tape copy can have multiple rentals or archived rentals.
 
-## TEST/BUGS:
+## BUGS/IMPROVEMENTS:
 
-- bugs:
+- **Bugs:** <br>
   [x] videocassette (VHS) search only works for the single input search, need to fix the query for multiple inputs.
+  [] flash messages need to have separate styles for success and error state. For now all messages are displayed with the same green background pop-up. Would be nice to have a distinction between them i.e. success action = green popup, error = red popup.
+  [] When a user attempts to delete or edit a movie and presses the cancel button, they are currently redirected to the main movie page. It would be more convenient if the user could be redirected back to the specific movie page they were on before attempting the action.
+  [] When a user attempts to delete or edit a customer profile and presses the cancel button, they are currently redirected to the main customer page. It would be more convenient if the user could be redirected back to the specific customer profile page they were on before attempting the action.
+
+- **Improvements:** <br>
+  [] To help users recommend certain movies to customers, it is planned to display featured movies on the main page in a slider/carousel format. The backend functionality for this feature is complete, and the front-end functionality using JavaScript has also been implemented and is currently displayed on desktop. However, to make the slider/carousel interactive, a third-party library will need to be added.
 
 ## dirty notes for the development only!
 
