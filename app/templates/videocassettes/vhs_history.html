@@ -19,7 +19,11 @@
             <p>Copy number: {{ rental.vhs_copy_number }}</p>
             <p>Director: {{ rental.vhs_director|title }}</p>
             <p>Genre: {{ rental.vhs_genre|title }}</p>
-            <p>Customer: <a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
+            {% if rental['customer_id'] is not none %}
+            <p><a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></p>
+            {% else %}
+            <p>No customer</p>
+            {% endif %}
             <p>Rent date: {{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
             {% if rental.date_returned %}
               <p>Return date: {{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</p>
@@ -63,7 +67,12 @@
                 <td>{{ rental.vhs_copy_number }}</td>
                 <td>{{ rental.vhs_director|title }}</td>
                 <td>{{ rental.vhs_genre|title }}</td>
+                {% if rental['customer_id'] is not none %}
                 <td><a href="{{ url_for('customers.customer_profile', customer_id=rental['customer_id']) }}">{{ rental['customer_name']|title }}</a></td>
+                {% else %}
+                <td>No customer</td>
+                {% endif %}
+
                 <td>{{ rental.date_rented.strftime('%d-%m-%Y (%I:%M %p)') }}</td>
                 {% if rental.date_returned %}
                   <td>{{ rental.date_returned.strftime('%d-%m-%Y (%I:%M %p)') }}</td>
