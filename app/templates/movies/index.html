@@ -76,7 +76,7 @@
           </div>
         </section>
         <article class="vhs-copy__details">
-          <p>${movie.vhs_copies.filter(copy => !copy.is_removed).length} VHS copies available.</p>
+          <p>${movie.vhs_copies.filter(copy => !copy.is_removed).length} VHS copies in stock.</p>
           <ul>
             ${movie.vhs_copies.map(function(copy) {
               if (!copy.is_removed) return `

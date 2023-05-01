@@ -715,6 +715,7 @@ footer p {
   border-radius: 0.2rem;
   font-size: 1.2rem;
   font-weight: 600;
+  box-shadow: var(--box-shadow);
 }
 
 /* Customers list */
@@ -779,6 +780,7 @@ footer p {
   text-decoration: none;
   color: var(--black-text-color);
   background-color: var(--white-color);
+  box-shadow: var(--box-shadow);
 }
 
 .customer-list__actions a:last-child {
@@ -1672,6 +1674,7 @@ footer p {
   border: 1px solid var(--black-text-color);
   cursor: pointer;
   font-size: 1.1rem;
+  box-shadow: var(--box-shadow);
 }
 
 .all-movies__wrapper .sort-btns__container {
@@ -1980,6 +1983,7 @@ footer p {
   text-decoration: none;
   color: var(--black-text-color);
   background-color: var(--quaternary-color);
+  box-shadow: var(--box-shadow);
 }
 
 .movie-details__wrapper button a {
@@ -2103,7 +2107,7 @@ footer p {
   font-family: var(--font-secondary);
   font-size: 1.8rem;
   font-weight: 900;
-  margin-bottom: 1.6rem;
+  margin-bottom: 2rem;
   letter-spacing: 3px;
   z-index: 0;
 }
@@ -2201,13 +2205,20 @@ footer p {
   align-items: center;
   width: 100%;
   margin-bottom: 1.2rem;
+  padding: 0rem 1rem;
 }
 
 .vhs-delete__wrapper .vhs-cannot-remove__container p {
   font-size: 1.2rem;
   font-weight: 600;
   color: var(--white-color);
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.6rem;
+}
+
+.vhs-delete__wrapper .vhs-cannot-remove__container p span {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--black-text-color);
 }
 
 .vhs-delete__wrapper .vhs-cannot-remove__container a {
@@ -2215,11 +2226,12 @@ footer p {
   font-weight: 600;
   color: var(--white-color);
   background-color: var(--quaternary-color);
-  padding: 0.6rem 1.2rem;
+  padding: 0.5rem 1.2rem;
   border: 1px solid var(--grey-text-color);
   border-radius: 0.3rem;
   cursor: pointer;
   text-decoration: none;
+  box-shadow: var(--box-shadow);
 }
 
 /* VHS details */
@@ -3230,6 +3242,7 @@ footer p {
   border-radius: 0.2rem;
   font-size: 1rem;
   font-weight: 600;
+  box-shadow: var(--box-shadow);
 }
 
 .rental-history__wrapper button[type='button'] a {
@@ -3435,6 +3448,7 @@ footer p {
   border: 1px solid var(--grey-text-color);
   border-radius: 0.3rem;
   margin-bottom: 1.6rem;
+  box-shadow: var(--box-shadow);
 }
 
 .archived-rentals__wrapper p {
@@ -3507,8 +3521,8 @@ footer p {
 
 .flashes li p {
   color: var(--grey-text-color);
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 1.2rem;
+  font-weight: 600;
   margin-bottom: 0;
   padding: 0 1.2rem;
 }
@@ -3685,7 +3699,6 @@ footer p {
     padding: 1rem;
     min-width: 1260px;
     width: 80%;
-    /* border: 3px solid tomato; */
   }
 
   .all-movies__wrapper h1 {
@@ -3724,9 +3737,8 @@ footer p {
   .all-movies__wrapper form .form-control input {
     font-size: 1.4rem;
     font-weight: 500;
-    width: 90%;
-    padding: 0.4rem 1rem;
-    width: 70%;
+    padding: 0.2rem 0.8rem;
+    width: 50%;
   }
 
   .all-movies__wrapper form input[type='submit'] {
@@ -3736,7 +3748,7 @@ footer p {
     border-radius: var(--desktop-radius);
     cursor: pointer;
     font-size: 1.5rem;
-    padding: 0.6rem 3rem;
+    padding: 0.4rem 2rem;
     transition: all 0.3s ease-in-out;
   }
 
@@ -4134,8 +4146,8 @@ footer p {
 
   .add-tape__wrapper .add-tape-description p {
     color: var(--grey-text-color);
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 1.3rem;
+    font-weight: 500;
   }
 
   .add-tape__wrapper .add-tape-description p span {
@@ -4214,7 +4226,7 @@ footer p {
     padding: 0.4rem 0.9rem;
     border: 1px solid var(--grey-text-color);
     border-radius: 0.3rem;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 500;
     color: var(--white-color);
     background-color: var(--quaternary-color);
@@ -4243,7 +4255,7 @@ footer p {
 
   .add-tape__wrapper .vhs-copies__container p {
     color: var(--grey-text-color);
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 0;
   }
@@ -4257,8 +4269,8 @@ footer p {
   }
 
   .add-tape__wrapper .vhs-copies__container ul li {
-    padding: 0.4rem;
-    font-size: 1.4rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 1.6rem;
     font-weight: 500;
     color: var(--grey-text-color);
     list-style: none;
@@ -4922,6 +4934,19 @@ footer p {
     display: flex;
     flex-direction: row;
   }
+
+  /* Customer main page */
+  .customer-list__name h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .customer-list__email p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
 }
 
 /* Utility Classes */
@@ -4946,6 +4971,7 @@ footer p {
 
 .item-crossed {
   text-decoration: line-through;
+  opacity: 0.6;
 }
 
 /* Active menu link */

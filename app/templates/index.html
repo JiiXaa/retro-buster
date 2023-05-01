@@ -4,7 +4,6 @@
 <div class="main-page__wrapper">
     <div class="loadingSpinner">Loading...</div>
     <div class="featured-movies__container">
-        <h3>Featured Movies:</h3>
         <div class="featured-movies--list" id="featured-movies"></div>
     </div>
 
@@ -104,8 +103,6 @@
                 console.log('Movies due today: ', movies);
 
                 document.querySelector(".loadingSpinner").style.display = "none";
-                // Show container after data fetched
-                document.querySelector(".due-today__container").style.display = "flex";
 
                 const moviesDueTodayList = document.getElementById("due-today");
                 movies.movies_due_today.forEach(movie => {
@@ -121,7 +118,9 @@
                             <a href="{{ url_for('movies.movie_details', movie_id="") }}${movie.id}">Details</a>
                     `;
                     moviesDueTodayList.appendChild(movieDiv);
+                    // Show container after data fetched
                 });
+                document.querySelector(".due-today__container").style.display = "flex";
             } catch (error) {
                 console.error(error);
                 moviesDueTodayList.innerHTML = `<p>There was an error loading the movies, Please contact developer. Error: ${error}</p>`;

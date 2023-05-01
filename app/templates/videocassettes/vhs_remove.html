@@ -21,7 +21,7 @@
 
   {% else %}
   <div class="vhs-cannot-remove__container">
-    <p>This VHS copy is rented and cannot be deleted.</p>
+    <p>VHS copy: <span>"{{ vhs_tape_copy.copy_number }}"</span> for <span>{{ movie.title|title }}</span> is rented and cannot be deleted.</p>
     <a href="{{ url_for('movies.movie_details', movie_id=movie_id) }}">Go Back</a>
   </div>
 </div>
