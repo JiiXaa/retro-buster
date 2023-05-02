@@ -28,9 +28,9 @@ burger.addEventListener('click', () => {
   burger.classList.toggle('toggle');
 });
 
-// Setting timeout for the alert message to disappear after 3 seconds
+// Setting timeout for the alert message to disappear after 5 seconds
 setTimeout(() => {
   const flashMessage = document.querySelector('.alert');
 
   if (flashMessage) flashMessage.style.display = 'none';
-}, 4000);
+}, 5000);

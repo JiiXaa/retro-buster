@@ -44,7 +44,63 @@ Every user interaction/actions are confirmed with use of Flask's flash messages,
 
 **Archive rentals** page can be accessed from the rental history page, and display data for the deleted VHS copies.
 
-## Pseudocode:
+## Database
+
+### Database features:
+
+- App using ElephantSQL hosting platform for storing Postgres database,
+- Used soft delete technique to mark records as deleted without actually removing them from the database, it helps with:
+  - Data recovery, accidentally removed data or recover historical data (Rentals vs. ArchivedRentals)
+  - Data integrity, foreign key constraints, and complex relationships between tables.
+    More information about soft delete can be found here: https://blog.miguelgrinberg.com/post/implementing-the-soft-delete-pattern-with-flask-and-sqlalchemy
+
+### Database relationship model prototyping:
+
+Database prototyping/building uses the SQLite library and the final version is stored on the ElephantSQL (PostgreSQL database hosting service)
+
+- [x] 'Movie' class needs to have a one-to-many relationship with the 'VhsTapeCopy' class. 'VhsTapeCopy' instance will hold all important information about the all instances (vhs copies) connected to it (copy number/id, date added, is available, is removed).
+- [x] 'VhsTapeCopy' (tape copy) class needs to have many-to-one relationship with the 'VhsRental' model to be able to track rental information such as which customer has rented that particular copy, when was borrowed, due to bring back.
+- [x] 'VhsRental' class needs to have many-to-one relationship with 'Customer' as one customer can have multiple rental transaction/movies rented at the same time.
+- [x] 'ArchivedRental' class needs to have many-to-one relationship with 'Movie' meaning that one movie can have multiple archived rentals.
+- [x] 'VhsTapeCopy' needs to have many-to-one relationship with 'ArchivedRental' and 'VhsRental' meaning that one VHS tape copy can have multiple rentals or archived rentals.
+
+### Database relationships final:
+
+The database schema is represented using Python classes:
+
+- **Movie**: Represents a movie title, with attributes such as title, director, genre, length, year, rating, description, and image. Each movie can have multiple VhsTapeCopy entries, multiple VhsRental entries, and multiple ArchivedRental entries associated with it.
+
+  - Movie table has a one-to-many relationship with VhsTapeCopy table (physical representation of a VHS tape for a movie). Each movie can have multiple VhsTapeCopy entries (each VhsTapeCopy instance belongs to only one movie)
+
+  - Movie table also has a one-to-many relationship with VhsRental table. Each movie can be rented multiple times, but each VhsRental entry belongs to only one movie.
+
+  - Movie table has a one-to-many relationship with ArchivedRental table. Each movie can be archived multiple times, but each ArchivedRental entry belongs to only one movie.
+
+- **VhsTapeCopy**: Represents a physical VHS tape copy for a movie, with attributes such as date added, copy number, availability status, and removed status. Each VhsTapeCopy entry belongs to only one movie and can have multiple VhsRental entries and multiple ArchivedRental entries associated with it.
+
+  - VhsTapeCopy table has a one-to-many relationship with VhsRental table. Each VhsTapeCopy entry can be rented multiple times, but each VhsRental entry belongs to only one VhsTapeCopy entry.
+
+  - VhsTapeCopy table also has a one-to-many relationship with ArchivedRental table. Each VhsTapeCopy entry can be archived multiple times, but each ArchivedRental entry belongs to only one VhsTapeCopy entry.
+
+- **Customer**: Represents a customer, with attributes such as first name, last name, and email. Each customer can have multiple VhsRental entries and multiple ArchivedRental entries associated with it.
+
+  - Customer table has a one-to-many relationship with VhsRental table. Each customer can rent multiple movies, but each VhsRental entry belongs to only one customer.
+
+  - Customer table also has a one-to-many relationship with ArchivedRental table. Each customer can have multiple archived rentals, but each ArchivedRental entry belongs to only one customer.
+
+- **User**: Represents a user (cashier) account, with attributes such as username, first name, last name, email, and hashed password. Each user can have multiple VhsTapeCopy entries and multiple ArchivedRental entries associated with it (It allow to see cashier history for removing/renting specific vhs tapes).
+
+  - User table has a one-to-many relationship with VhsTapeCopy table. Each user can have multiple VhsTapeCopy entries, but each VhsTapeCopy entry belongs to only one user.
+
+  - User table also has a one-to-many relationship with ArchivedRental table. Each user can have multiple archived rentals, but each ArchivedRental entry belongs to only one user.
+
+- **VhsRental**: Represents rental history for a specific VHS tape copy, with attributes such as date rented, due date, return date, late status, and removed status (soft deletetion). Each VhsRental entry belongs to one customer, one VhsTapeCopy entry, and one movie.
+
+**ArchivedRental**: Represents archived rental history for a deleted VHS tape copy, with attributes such as date rented, date returned, date archived, and user ID. Each ArchivedRental entry belongs to one customer, one VhsTapeCopy entry, and one movie.
+
+## Development
+
+### Pseudocode:
 
 - [x] Create navigation for the project for the following endpoints:
 
@@ -89,34 +145,16 @@ Every user interaction/actions are confirmed with use of Flask's flash messages,
   - [x] Show active rentals on the rentals page.
   - [x] Archived rentals link located in the rentals page to be able to see archived rentals for deleted VHS tape copy.
 
-### Database features:
-
-- App using ElephantSQL hosting platform for storing Postgres database,
-- Used soft delete technique to mark records as deleted without actually removing them from the database, it helps with:
-  - Data recovery, accidentally removed data or recover historical data (Rentals vs. ArchivedRentals)
-  - Data integrity, foreign key constraints, and complex relationships between tables.
-    More information about soft delete can be found here: https://blog.miguelgrinberg.com/post/implementing-the-soft-delete-pattern-with-flask-and-sqlalchemy
-
-### Database relationship model prototyping:
-
-Database prototyping/building uses the SQLite library and the final version is stored on the ElephantSQL (PostgreSQL database hosting service)
-
-- [x] 'Movie' class needs to have a one-to-many relationship with the 'VhsTapeCopy' class. 'VhsTapeCopy' instance will hold all important information about the all instances (vhs copies) connected to it (copy number/id, date added, is available, is removed).
-- [x] 'VhsTapeCopy' (tape copy) class needs to have many-to-one relationship with the 'VhsRental' model to be able to track rental information such as which customer has rented that particular copy, when was borrowed, due to bring back.
-- [x] 'VhsRental' class needs to have many-to-one relationship with 'Customer' as one customer can have multiple rental transaction/movies rented at the same time.
-- [x] 'ArchivedRental' class needs to have many-to-one relationship with 'Movie' meaning that one movie can have multiple archived rentals.
-- [x] 'VhsTapeCopy' needs to have many-to-one relationship with 'ArchivedRental' and 'VhsRental' meaning that one VHS tape copy can have multiple rentals or archived rentals.
-
-## BUGS/IMPROVEMENTS:
+### BUGS/IMPROVEMENTS:
 
 - **Bugs:** <br>
-  [x] videocassette (VHS) search only works for the single input search, need to fix the query for multiple inputs.
-  [] flash messages need to have separate styles for success and error state. For now all messages are displayed with the same green background pop-up. Would be nice to have a distinction between them i.e. success action = green popup, error = red popup.
-  [] When a user attempts to delete or edit a movie and presses the cancel button, they are currently redirected to the main movie page. It would be more convenient if the user could be redirected back to the specific movie page they were on before attempting the action.
-  [] When a user attempts to delete or edit a customer profile and presses the cancel button, they are currently redirected to the main customer page. It would be more convenient if the user could be redirected back to the specific customer profile page they were on before attempting the action.
+  [x] videocassette (VHS) search only works for the single input search, need to fix the query for multiple inputs.<br>
+  [] flash messages need to have separate styles for success and error state. For now all messages are displayed with the same green background pop-up. Would be nice to have a distinction between them i.e. success action = green popup, error = red popup.<br>
+  [] When a user attempts to delete or edit a movie and presses the cancel button, they are currently redirected to the main movie page. It would be more convenient if the user could be redirected back to the specific movie page they were on before attempting the action.<br>
+  [] When a user attempts to delete or edit a customer profile and presses the cancel button, they are currently redirected to the main customer page. It would be more convenient if the user could be redirected back to the specific customer profile page they were on before attempting the action.<br>
 
 - **Improvements:** <br>
-  [] To help users recommend certain movies to customers, it is planned to display featured movies on the main page in a slider/carousel format. The backend functionality for this feature is complete, and the front-end functionality using JavaScript has also been implemented and is currently displayed on desktop. However, to make the slider/carousel interactive, a third-party library will need to be added.
+  [] To help users recommend certain movies to customers, it is planned to display featured movies on the main page in a slider/carousel format. The backend functionality for this feature is complete, and the front-end functionality using JavaScript has also been implemented and is currently displayed on desktop. However, to make the slider/carousel interactive, a third-party library will need to be added.<br>
 
 ## dirty notes for the development only!
 
