@@ -1,6 +1,7 @@
 # retroBuster
 
 <img width="1260" alt="Movie list displayed" src="https://github.com/JiiXaa/retro-buster/raw/main/screenshots/retrobuster-img.png">
+
 ## About
 
 The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed for customers who enjoy the nostalgia of old-school films. This app provides an easy and convenient way to manage a VHS cassettes rental shop. With its user-friendly design, this app makes it simple to manage the available cassettes, keep track of new and existing customers, and stay up to date on who has borrowed what movie and when.
@@ -161,7 +162,11 @@ The database schema is represented using Python classes:
 
 UUID used for generating unique primary keys for tables in database.
 
-### Credits:
+## Testing
+
+Full testing process and results can be found [here](https://github.com/JiiXaa/retro-buster/raw/main/docs/TESTING.md).
+
+## Credits:
 
 - I have decided to create a well organized folder and file structure in my project, as I believe it greatly improves code readability and makes navigating the codebase way easier. After thorough research, I have implemented a common folder and file structure. Article can be found here: <br>
   https://stackoverflow.com/questions/14415500/
