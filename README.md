@@ -156,8 +156,6 @@ The database schema is represented using Python classes:
 - **Improvements:** <br>
   [] To help users recommend certain movies to customers, it is planned to display featured movies on the main page in a slider/carousel format. The backend functionality for this feature is complete, and the front-end functionality using JavaScript has also been implemented and is currently displayed on desktop. However, to make the slider/carousel interactive, a third-party library will need to be added.<br>
 
-## dirty notes for the development only!
-
 ### Third-party packages used:
 
 UUID used for generating unique primary keys for tables in database.
