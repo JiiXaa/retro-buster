@@ -13,7 +13,7 @@ I used lighthouse in chrome developer tools to test each of the pages for:
 - Best practices - how does the site conform to industry best practices.
 - SEO - search engine optimization. Is the site optimized for search engine result rankings.
 
-<img width="460" alt="Lighthouse audit result" src="https://raw.githubusercontent.com/JiiXaa/retro-buster/main/.github/screenshots/lighthouse-audit.png">
+<img width="460" alt="Lighthouse audit result" src="https://github.com/JiiXaa/retro-buster/raw/main/screenshots/lighthouse-audit.png">
 
 ### W3C HTML Validator
 
