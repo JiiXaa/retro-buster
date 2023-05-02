@@ -102,6 +102,26 @@ The database schema is represented using Python classes:
 
 ## Development
 
+### Technologies used:
+
+- [HTML5](https://developer.mozilla.org/en-US/docs/Web/HTML/)
+- [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS/)
+- [Python](https://www.python.org/)
+- [Flask](https://flask.palletsprojects.com)
+- [SQLAlchemy](https://www.sqlalchemy.org/)
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/)
+
+### Other Tools
+
+- [Git](https://git-scm.com/)
+- [GitHub](https://github.com/)
+- [FontAwesome](https://fontawesome.com/)
+- [Photoshop](https://www.adobe.com/products/photoshop.html/)
+- [Favicon.io](https://favicon.io/)
+- [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview/)
+- [Markup Validation Service](https://validator.w3.org/)
+- [CSS Validation Service](https://jigsaw.w3.org/css-validator/)
+
 ### Pseudocode:
 
 - [x] Create navigation for the project for the following endpoints:
@@ -164,7 +184,7 @@ UUID used for generating unique primary keys for tables in database.
 
 ## Testing
 
-Full testing process and results can be found [here](https://github.com/JiiXaa/retro-buster/raw/main/docs/TESTING.md).
+Full testing process and results can be found [here](https://github.com/JiiXaa/retro-buster/blob/main/docs/TESTING.md).
 
 ## Credits:
 
