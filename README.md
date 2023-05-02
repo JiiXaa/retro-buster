@@ -1,5 +1,6 @@
 # retroBuster
 
+<img width="1260" alt="Movie list displayed" src="https://github.com/JiiXaa/retro-buster/raw/main/screenshots/retrobuster-img.png">
 ## About
 
 The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed for customers who enjoy the nostalgia of old-school films. This app provides an easy and convenient way to manage a VHS cassettes rental shop. With its user-friendly design, this app makes it simple to manage the available cassettes, keep track of new and existing customers, and stay up to date on who has borrowed what movie and when.

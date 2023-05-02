@@ -136,7 +136,10 @@ VHS tape also can be rented from the customer profile page:
 
 - [x] Rental history information with deleted customer shows "Customer: N/A"
 
-### Rental History for deleted customer
+### Rental History for deleted VHS tape
+
+- [x] Rental history for deleted VHS tape copy is moved to the archived rental history.
+- [x] Deleted VHS tape is not removed from database (soft deletion), its is_removed flag in the database model is set to true and removed from VHS stock.
 
 ## Applications used to test the project:
 
