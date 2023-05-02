@@ -6,6 +6,7 @@ from datetime import datetime
 
 bp = Blueprint("rentals", __name__, url_prefix="/rentals")
 
+
 ### Login required decorator before all requests for rentals related routes ###
 @bp.before_request
 def before_request():
@@ -61,7 +62,7 @@ def index():
 @bp.route("/archived_rentals", methods=["GET"])
 def archived_rentals():
     vhs_tape_copies = VhsTapeCopy.query.filter(VhsTapeCopy.is_removed == True).all()
-    print("archived_rentals", vhs_tape_copies)
+    vhs_tape_copies.reverse()
 
     return render_template(
         "rentals/archived_rentals.html", vhs_tape_copies=vhs_tape_copies

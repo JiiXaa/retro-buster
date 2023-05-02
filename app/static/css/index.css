@@ -4974,6 +4974,26 @@ footer p {
     font-size: 1.1rem;
     font-weight: 500;
   }
+
+  .archived-rentals__wrapper .archived-vhs__container {
+    width: 50%;
+  }
+
+  .archived-rentals__wrapper .archived-vhs__container ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .archived-rentals__wrapper .archived-vhs__container li {
+    margin-bottom: 1rem;
+    width: 100%;
+    margin-left: 2rem;
+  }
 }
 
 /* Utility Classes */
