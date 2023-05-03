@@ -56,7 +56,7 @@
 </div>
 
     <script>
-        // TODO: add loading spinner to all fetches
+        // Fetch featured movies and display on the home page
         async function fetchFeaturedMovies() {
             try {
                 const response = await fetch("/movies/featured_movies");
@@ -65,7 +65,6 @@
                 }
 
                 const movies = await response.json();
-                console.log(movies);
 
                 document.querySelector(".loadingSpinner").style.display = "none";
                 // Show container after data fetched
@@ -92,6 +91,7 @@
             }
         }
 
+        // Fetch movies due today and display on the home page
         async function fetchMoviesDueToday() {
             try {
                 const response = await fetch("/movies/movies_due_today");
@@ -100,26 +100,40 @@
                 }
 
                 const movies = await response.json();
-                console.log('Movies due today: ', movies);
+                console.log('due today', movies);
 
                 document.querySelector(".loadingSpinner").style.display = "none";
 
                 const moviesDueTodayList = document.getElementById("due-today");
+               // create a table element and its header row
+                const moviesTable = document.createElement("table");
+                const headerRow = document.createElement("tr");
+                headerRow.innerHTML = `
+                    <th>Title</th>
+                    <th>Director</th>
+                    <th>Genre</th>
+                    <th>Description</th>
+                    <th>Rating</th>
+                    <th>Available to Rent</th>
+                `;
+                moviesTable.appendChild(headerRow);
+
+                // loop through each movie and create a row in the table
                 movies.movies_due_today.forEach(movie => {
-                    const movieDiv = document.createElement("div");
-                    movieDiv.classList.add("due-today--list-item");
-                    movieDiv.innerHTML = `
-                            <h3>${movie.title}</h3>
-                            <p>${movie.director}</p>
-                            <p>${movie.genre}</p>
-                            <p>${movie.description}</p>
-                            <p>${movie.rating}</p>
-                            <p>${movie.available_count} available to rent</p>
-                            <a href="{{ url_for('movies.movie_details', movie_id="") }}${movie.id}">Details</a>
+                    const movieRow = document.createElement("tr");
+                    movieRow.innerHTML = `
+                        <td><a href="{{ url_for('movies.movie_details', movie_id="") }}${movie.id}">${movie.title}</a></td>
+                        <td>${movie.director}</td>
+                        <td>${movie.genre}</td>
+                        <td>${movie.description}</td>
+                        <td>${movie.rating}</td>
+                        <td>${movie.available_count} available to rent</td>
                     `;
-                    moviesDueTodayList.appendChild(movieDiv);
-                    // Show container after data fetched
+                    moviesTable.appendChild(movieRow);
                 });
+
+                // add the table to the moviesDueTodayList container
+                moviesDueTodayList.appendChild(moviesTable);
                 document.querySelector(".due-today__container").style.display = "flex";
             } catch (error) {
                 console.error(error);

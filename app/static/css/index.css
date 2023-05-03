@@ -4926,13 +4926,64 @@ footer p {
     display: block;
   }
 
-  .due-today__container h3 {
+  .due-today__container {
     display: flex;
+    flex-direction: column;
+  }
+
+  .due-today__container h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 1rem 0;
+    letter-spacing: 2px;
+    color: var(--grey-text-color);
+    text-align: center;
+    display: block;
+    text-decoration: underline;
   }
 
   .due-today--list {
     display: flex;
     flex-direction: row;
+  }
+
+  .due-today--list table {
+    width: 80%;
+    border-collapse: collapse;
+    border: 0.1px solid var(--black-color);
+    margin: 0 auto;
+    margin-bottom: 2rem;
+    box-shadow: var(--box-shadow);
+    color: var(--black-color);
+  }
+
+  .due-today--list table tr {
+    background-color: #fff;
+  }
+
+  .due-today--list table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .due-today--list table tr th {
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid var(--black-color);
+  }
+
+  .due-today--list table tr td {
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid var(--black-color);
+  }
+
+  .due-today--list table tr td a {
+    color: var(--black-color);
+    font-weight: 600;
   }
 
   /* Customer main page */

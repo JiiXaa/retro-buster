@@ -12,6 +12,7 @@ from app.models import Movie, VhsTapeCopy, Customer, VhsRental, ArchivedRental, 
 from app import db
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql import func
+from sqlalchemy import and_
 import math
 from datetime import datetime, timedelta
 from app.utils.utility_functions import find_movie
@@ -124,7 +125,10 @@ def movies_due_today():
 
     # Get all movies that are due today. Used func.date() to convert the due_date column to a date object
     due_today = VhsRental.query.filter(
-        func.date(VhsRental.due_date) == test_today
+        and_(
+            func.date(VhsRental.due_date) == test_today,
+            (VhsRental.date_returned.is_(None)),
+        )
     ).all()
 
     movies_due_today = [movie.movie.to_dict() for movie in due_today]
