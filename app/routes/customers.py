@@ -23,8 +23,8 @@ def before_request():
 
 @bp.route("/", methods=["GET", "POST"])
 def index():
-    customers_all = Customer.query.all()
-    print("customers_all", customers_all)
+    # User list is sorted by last name in ascending order
+    customers_all = Customer.query.order_by(Customer.last_name.asc()).all()
     return render_template("customers/index.html", customers_all=customers_all)
 
 

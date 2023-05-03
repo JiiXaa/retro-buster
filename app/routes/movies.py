@@ -120,13 +120,11 @@ def featured_movies():
 @bp.route("/movies_due_today", methods=["GET"])
 def movies_due_today():
     today = datetime.utcnow().date()
-    # TODO: Remove the test_today line and replace it with today when testing is done
-    test_today = today + timedelta(days=3)  # Add 3 days for testing purposes
 
     # Get all movies that are due today. Used func.date() to convert the due_date column to a date object
     due_today = VhsRental.query.filter(
         and_(
-            func.date(VhsRental.due_date) == test_today,
+            func.date(VhsRental.due_date) == today,
             (VhsRental.date_returned.is_(None)),
         )
     ).all()

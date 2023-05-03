@@ -4888,10 +4888,12 @@ footer p {
 
   .main-page__wrapper .forms__container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     width: 100%;
+    gap: 3rem;
+    margin-top: 1.4rem;
   }
 
   .main-page__wrapper .forms__container form {
@@ -4900,7 +4902,7 @@ footer p {
     align-items: center;
     justify-content: center;
     margin-bottom: 1rem;
-    border-bottom: 1px solid var(--black-color);
+    border-bottom: none;
   }
 
   .main-page__wrapper .forms__container form:last-child {
@@ -4981,6 +4983,13 @@ footer p {
     flex-direction: row;
   }
 
+  .due-today--list p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 auto;
+    margin-bottom: 1.6rem;
+  }
+
   .due-today--list table {
     width: 80%;
     border-collapse: collapse;
@@ -5016,6 +5025,75 @@ footer p {
   }
 
   .due-today--list table tr td a {
+    color: var(--black-color);
+    font-weight: 600;
+  }
+
+  /* Featured movies */
+
+  .featured-movies__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .featured-movies__container h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 1rem 0;
+    letter-spacing: 2px;
+    color: var(--grey-text-color);
+    text-align: center;
+    display: block;
+    text-decoration: underline;
+  }
+
+  .featured-movies--list {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .featured-movies--list p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 auto;
+    margin-bottom: 1.6rem;
+  }
+
+  .featured-movies__container table {
+    width: 77%;
+    border-collapse: collapse;
+    border: 0.1px solid var(--black-color);
+    margin: 0 auto;
+    margin-bottom: 2rem;
+    box-shadow: var(--box-shadow);
+    color: var(--black-color);
+  }
+
+  .main-page__wrapper table tr {
+    background-color: #fff;
+  }
+
+  .main-page__wrapper table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .main-page__wrapper table tr th {
+    padding: 0.2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid var(--black-color);
+  }
+
+  .main-page__wrapper table tr td {
+    padding: 0.2rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid var(--black-color);
+  }
+
+  .main-page__wrapper table tr td a {
     color: var(--black-color);
     font-weight: 600;
   }
