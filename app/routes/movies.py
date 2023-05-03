@@ -66,10 +66,6 @@ def movies_data():
     # Convert the movie objects to dictionaries
     movies = [movie.to_dict() for movie in movies_page]
 
-    print("movies", movies)
-    print("page", page)
-    print("total_pages", total_pages)
-
     # Return the movies, current page, and total pages as a JSON object
     return jsonify(movies=movies, current_page=page, total_pages=total_pages)
 
@@ -267,7 +263,6 @@ def vhs_add_tape(movie_id):
 
             db.session.add(vhs_tape_copy)
             db.session.commit()
-            print("tape copy: ", vhs_tape_copy)
 
             flash("VHS tape copy added successfully.")
             return redirect(url_for("movies.vhs_add_tape", movie_id=movie_id))

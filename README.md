@@ -6,6 +6,13 @@
 
 The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed for customers who enjoy the nostalgia of old-school films. This app provides an easy and convenient way to manage a VHS cassettes rental shop. With its user-friendly design, this app makes it simple to manage the available cassettes, keep track of new and existing customers, and stay up to date on who has borrowed what movie and when.
 
+**Link to** [live site](https://retro-buster.onrender.com)
+
+## Main Goal:
+
+The main focus of the app was to practice a database structure (SQL) with ORM (object relational mapping) and utilizing Python's framework "Flask" and its MVT (model - view - template) structure and build app that combine together lets a user interact with the Front-End and send requests to the server and obtain responses from the database that align with the intended behavior.
+Also wanted to implement strict front end functionality with javascript for some elements. Specifically, the Flask route for displaying movies returns a JSON response and the JavaScript code dynamically updates DOM elements without having to refresh the entire page. This demonstrates a modern approach to web development, where the front-end and back-end are decoupled, and the front-end can be updated without having to reload the entire page.
+
 ## Quick Overview:
 
 A registered cashier (main user) can login and get the access to the list of available VHS tapes for all movies, list of registered customers and manage rental data associated with them:
@@ -30,6 +37,8 @@ A registered cashier (main user) can login and get the access to the list of ava
 - Deleting customer uses hard deletion but all associated rental history is available after deleting. Every information with deleted customer says that customer does not exist or N/A.
 
 Every user interaction/actions are confirmed with use of Flask's flash messages, i.e. after user edits a movie, app displays information that "movie updated successfully". Every pop up information disappear after 5 seconds.
+
+App has a restriction on the maximum number of VHS tape rentals that a user can have, which is five. The app will not allow a cashier to rent more VHS tapes if the limit is exceeded. This is a good practice for managing the rentals and ensuring that the system remains fair to all users.
 
 **Home page** have quick access to the search movies/customers functionality and see the list of the movies that are due to be returned today.
 
@@ -96,7 +105,7 @@ The database schema is represented using Python classes:
 
   - User table also has a one-to-many relationship with ArchivedRental table. Each user can have multiple archived rentals, but each ArchivedRental entry belongs to only one user.
 
-- **VhsRental**: Represents rental history for a specific VHS tape copy, with attributes such as date rented, due date, return date, late status, and removed status (soft deletetion). Each VhsRental entry belongs to one customer, one VhsTapeCopy entry, and one movie.
+- **VhsRental**: Represents rental history for a specific VHS tape copy, with attributes such as date rented, due date, return date, late status, and removed status (soft deletion). Each VhsRental entry belongs to one customer, one VhsTapeCopy entry, and one movie.
 
 **ArchivedRental**: Represents archived rental history for a deleted VHS tape copy, with attributes such as date rented, date returned, date archived, and user ID. Each ArchivedRental entry belongs to one customer, one VhsTapeCopy entry, and one movie.
 
@@ -110,6 +119,10 @@ The database schema is represented using Python classes:
 - [Flask](https://flask.palletsprojects.com)
 - [SQLAlchemy](https://www.sqlalchemy.org/)
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/)
+
+### Database:
+
+- [ElephantSQL](https://www.elephantsql.com/)
 
 ### Other Tools
 
@@ -178,6 +191,8 @@ The database schema is represented using Python classes:
 - **Improvements:** <br>
   [] To help users recommend certain movies to customers, it is planned to display featured movies on the main page in a slider/carousel format. The backend functionality for this feature is complete, and the front-end functionality using JavaScript has also been implemented and is currently displayed on desktop. However, to make the slider/carousel interactive, a third-party library will need to be added.<br>
 
+  [] Create one reusable form component as many forms are very similar and use different CSS styles attributes (bloat the CSS styles file). That could help to reduce the amount of duplicated code in the project and to minimize the size of CSS file.
+
 ### Third-party packages used:
 
 UUID used for generating unique primary keys for tables in database.
@@ -185,6 +200,23 @@ UUID used for generating unique primary keys for tables in database.
 ## Testing
 
 Full testing process and results can be found [here](https://github.com/JiiXaa/retro-buster/blob/main/docs/TESTING.md).
+
+## Deployment
+
+retroBuster app is hosted on **Render** [live site](https://retro-buster.onrender.com) hosting.
+
+- Development process:
+  - Create a new Web Service
+  - Connect a GitHub repository
+  - Use the following values during creation:
+    - Environment Python
+    - Build Command pip install -r requirements.txt
+    - Start Command gunicorn app:app
+  - Add environment variables:
+    - DATABASE_URI
+    - SECRET_KEY
+    - SQLALCHEMY_DATABASE_URI
+  - Going forward, every push to the repo will automatically build app and deploy it in production. If the build fails, Render will automatically stop the deploy process and the existing version of the app will keep running until the next successful deploy.
 
 ## Credits:
 

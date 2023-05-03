@@ -141,6 +141,23 @@ VHS tape also can be rented from the customer profile page:
 - [x] Rental history for deleted VHS tape copy is moved to the archived rental history.
 - [x] Deleted VHS tape is not removed from database (soft deletion), its is_removed flag in the database model is set to true and removed from VHS stock.
 
+### Flash Messages
+
+- [x] Adding movie show message to the user that movie was added to the database.
+- [x] Searching for movie displays:
+  - if found: Search results for (searched query)
+  - if not found: No results found
+- [x] Editing movie show message that movie was updated successfully.
+- [x] Deleting movie show message that movie was deleted successfully.
+- [x] Adding VHS tape copy shows message that copy was added to the database.
+- [x] Renting VHS tape copy shows:
+  - if available: "VHS tape rented successfully"
+  - if customer have 5 active rentals: "Customer has already rented out the maximum number of VHS tapes."
+- [x] Deleting VHS tape copy:
+  - Deleting VHS tape requires a title confirmation, and if is not correct: "Movie title does not match."
+  - If title confirmation matches: "Movie deleted successfully."
+  - If movie have active VHS rentals" "Cannot delete movie with tapes checked out."
+
 ## Applications used to test the project:
 
 - DBeaver used to test the SQL database
