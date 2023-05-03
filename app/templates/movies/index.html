@@ -50,7 +50,6 @@
   function displayMovies() {
     const moviesList = document.getElementById('moviesList');
     moviesList.innerHTML = '';
-    console.log('all movies: ', movies);
     if (movies.length === 0 || movies === undefined) {
       moviesList.innerHTML = '<p>No movies in the database.</p>';
       return;
@@ -114,7 +113,6 @@
 
   // Create pagination buttons
   function createPagination(currentPage, totalPages) {
-    console.log(totalPages);
     const paginationContainer = document.getElementById('pagination');
     paginationContainer.innerHTML = '';
 

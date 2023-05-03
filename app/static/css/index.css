@@ -4947,6 +4947,7 @@ footer p {
     background-color: var(--quaternary-color);
     color: var(--white-color);
     cursor: pointer;
+    margin-top: 0.6rem;
   }
 
   .main-page__wrapper .forms__container form:first-child input[type='submit'] {

@@ -1,5 +1,3 @@
-console.log('Hello from app/static/js/index.js!');
-
 // Navigation:
 
 // Toggle Nav
