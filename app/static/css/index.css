@@ -3527,6 +3527,31 @@ footer p {
   padding: 0 1.2rem;
 }
 
+/* 404 page */
+.not-found__wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.not-found__wrapper h1 {
+  color: var(--grey-text-color);
+  font-family: var(--font-secondary);
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 0.6rem;
+  letter-spacing: 2px;
+}
+
+.not-found__wrapper a {
+  color: var(--white-color);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
 /* Loading spinner */
 
 .loadingSpinner p {
@@ -3535,6 +3560,15 @@ footer p {
   font-weight: 500;
   margin-bottom: 0;
   padding: 0 1.2rem;
+}
+
+.loadingSpinner a {
+  color: var(--grey-text-color);
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 0;
+  padding: 0 1.2rem;
+  text-decoration: none;
 }
 
 @keyframes navLinkFade {

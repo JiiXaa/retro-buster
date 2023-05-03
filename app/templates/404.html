@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>That page does not exists!</h1>
-<p>Go back <a href="{{ url_for('main.index') }}">home</a></p>
+<div class="not-found__wrapper">
+  <h1>That page does not exists!</h1>
+  <a href="{{ url_for('main.index') }}">Home</a>
+</div>
 {% endblock %}
