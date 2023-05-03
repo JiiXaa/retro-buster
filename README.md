@@ -2,6 +2,17 @@
 
 <img width="1260" alt="Movie list displayed" src="https://github.com/JiiXaa/retro-buster/raw/main/screenshots/retrobuster-img.png">
 
+## Contents
+
+- [About](#about)
+- [Main Goal](#main-goal)
+- [Quick Overview](#quick-overview)
+- [Database](#database)
+- [Development](#development)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Credits](#credits)
+
 ## About
 
 The **"retroBuster"** VHS Cassettes Rental Management app, a solution designed for customers who enjoy the nostalgia of old-school films. This app provides an easy and convenient way to manage a VHS cassettes rental shop. With its user-friendly design, this app makes it simple to manage the available cassettes, keep track of new and existing customers, and stay up to date on who has borrowed what movie and when.
@@ -48,6 +59,10 @@ App has a restriction on the maximum number of VHS tape rentals that a user can 
 - list of vhs tape copies (available / rented out),
 - information about a movie,
 - actions to edit, delete, view details page for a movie.
+
+The movies list is retrieved from the 'movies/movies-data' Flask endpoint in JSON format using an AJAX request. This allows for more efficient updating of specific page elements without having to reload the entire page, making the app more responsive and user-friendly.
+
+The Movie class represents not only the database structure but also includes custom methods for creating a movie dictionary, checking the total count of VHS tapes for a movie, and determining how many VHS tapes are available for a movie. This approach makes the code more readable and concise.
 
 **Main customers** page displays list of customers, each container render customer first name, last name, email and actions such as edit, delete, view details for a customer.
 
@@ -126,6 +141,7 @@ The database schema is represented using Python classes:
 
 ### Other Tools
 
+- [VSCode](https://code.visualstudio.com/)
 - [Git](https://git-scm.com/)
 - [GitHub](https://github.com/)
 - [FontAwesome](https://fontawesome.com/)
@@ -220,7 +236,7 @@ retroBuster app is hosted on **Render** [live site](https://retro-buster.onrende
 
 ## Credits:
 
-- I have decided to create a well organized folder and file structure in my project, as I believe it greatly improves code readability and makes navigating the codebase way easier. After thorough research, I have implemented a common folder and file structure. Article can be found here: <br>
+- I have decided to create a well organized folder and file structure in my project, as I believe it greatly improves code readability and makes navigating the codebase way easier. After thorough research, I have implemented a **common folder and file** structure. Article can be found here: <br>
   https://stackoverflow.com/questions/14415500/
 
 - I also chosen to use the Flask Blueprint Architecture, the article can be found here: <br>
