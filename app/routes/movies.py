@@ -71,7 +71,7 @@ def movies_data():
     return jsonify(movies=movies, current_page=page, total_pages=total_pages)
 
 
-@bp.route("/movie_search", methods=["GET"])
+@bp.route("/movie_search", methods=["GET", "POST"])
 def movie_search():
     if request.method == "POST":
         search_queries = {
